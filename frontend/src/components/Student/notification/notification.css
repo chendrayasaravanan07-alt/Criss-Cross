@@ -1,0 +1,225 @@
+.notification-page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 4%;
+  background-color: #f7f8fc;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+.header h1 {
+  font-size: 3vh;
+}
+
+.header p {
+  font-size: 1.8vh;
+  margin-top: 1%;
+}
+
+/* ---------- Tabs ---------- */
+.tabs {
+  margin-top: 3%;
+}
+
+.tabs button {
+  padding: 1% 3%;
+  margin-right: 2%;
+  font-size: 1.6vh;
+  border-radius: 2vh;
+  border: none;
+  background-color: #eaeaf0;
+}
+
+.tabs .active {
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  color: white;
+}
+
+/* ---------- Notification List ---------- */
+.notification-list {
+  flex: 1;             /* 👈 take remaining space */
+  overflow-y: auto;    /* 👈 scroll only messages */
+  padding-right: 1%;  /* 👈 prevent scrollbar overlap */
+}
+
+/* ---------- Hover Effect ---------- */
+.notification-card {
+  transition: 
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.notification-card:hover {
+  box-shadow: 
+    0vh 0.6vh 2vh rgba(0, 0, 0, 0.12);
+  transform: translateY(-0.6vh);
+}
+
+
+.notification-card {
+  width: 100%;
+  padding: 3%;
+  margin-bottom: 3%;
+  border-radius: 2vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;   /* 👈 KEY CHANGE */
+  gap: 2vh;
+}
+
+.notification-card.unread {
+  border: 0.3vh solid #3b82f6;
+}
+
+/* ---------- Card Left ---------- */
+.card-left .icon {
+  width: 5%;
+  height: 6vh;
+  border-radius: 50%;
+}
+
+.icon.event {
+  background-color: #e0edff;
+}
+
+.icon.warning {
+  background-color: #ffecec;
+}
+
+.icon.success {
+  background-color: #eaffea;
+}
+.icon-box {
+  width: 6%;
+  height: 6vh;
+  border-radius: 1.5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4vh;
+}
+/* Event / Sparkle */
+.icon-box.event {
+  background-color: #eef4ff;
+  color: #3b82f6;
+}
+
+/* Warning / Deadline */
+.icon-box.warning {
+  background-color: #fff1f2;
+  color: #ef4444;
+}
+
+/* Success / Confirmed */
+.icon-box.success {
+  background-color: #ecfdf5;
+  color: #22c55e;
+}
+
+/* Calendar / Starting */
+.icon-box.calendar {
+  background-color: #eef2ff;
+  color: #6366f1;
+}
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 3%;
+}
+.unread-dot {
+  width: 1vh;
+  height: 1vh;
+  border-radius: 50%;
+  background-color: #2563eb;
+  margin-left: auto;
+  margin-top: 1vh;
+}
+.section-title {
+  font-size: 2vh;
+  font-weight: 600;
+  margin: 3% 0 1%;
+  color: #6b7280;
+}
+
+
+/* ---------- Card Center ---------- */
+.card-center h3 {
+  font-size: 2vh;
+}
+
+.card-center p {
+  font-size: 1.6vh;
+  margin-top: 1%;
+}
+
+.tag {
+  display: inline-block;
+  margin-top: 1%;
+  padding: 0.5% 2%;
+  font-size: 1.4vh;
+  border-radius: 2vh;
+  background-color: #eef2ff;
+}
+
+.time {
+  display: block;
+  margin-top: 1%;
+  font-size: 1.4vh;
+  color: gray;
+}
+
+.mark-all-btn {
+  height: 5vh;
+  padding: 1% 3%;
+  margin: 0;
+  font-size: 1.6vh;
+  border-radius: 2vh;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  color: #3b82f6;
+  align-self: flex-end;
+  box-shadow: 0 0.5vh 1vh rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+/* ---------- Card Action ---------- */
+.card-action button {
+  width: 100%;
+  padding: 1.5% 5%;
+  font-size: 1.6vh;
+  border-radius: 2vh;
+  border: none;
+  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  color: white;
+}
+
+/* ---------- Empty State ---------- */
+.empty {
+  height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.empty h2 {
+  font-size: 2.5vh;
+}
+
+.empty p {
+  font-size: 1.8vh;
+}
+
+/* ---------- Responsive (Mobile) ---------- */
+@media (max-width: 900px) {
+  .notification-page {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+

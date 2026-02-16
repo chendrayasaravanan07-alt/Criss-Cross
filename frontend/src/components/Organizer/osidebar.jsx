@@ -1,27 +1,30 @@
-// Sidebar.jsx
-import { useState } from "react";
-import { FaHome, FaCompass, FaTrophy, FaBookmark, FaBell, FaUser, FaCog, FaLink } from "react-icons/fa";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import {
+  FaHome,
+  FaCalendarAlt,
+  FaUsers,
+  FaUserCircle,
+  FaCog,
+  FaSignOutAlt,
+  FaLink,          // ✅ missing import fixed
+} from "react-icons/fa";
 
 const mainMenuItems = [
-  { name: "Dashboard", icon: <FaHome />,path:"/student/dashboard" },
-  { name: "Discover", icon: <FaCompass /> },
-  { name: "My Events", icon: <FaTrophy /> },
-  { name: "Bookmarked", icon: <FaBookmark /> },
-  { name: "Notifications", icon: <FaBell /> },
+  { name: "Dashboard", icon: <FaHome /> },
+  { name: "My Events", icon: <FaCalendarAlt /> },
+  { name: "Participants", icon: <FaUsers /> },
+  { name: "Settings", icon: <FaCog /> },
 ];
 
 const bottomMenuItems = [
-  { name: "Profile", icon: <FaUser /> },
-  { name: "Settings", icon: <FaCog />, path: "/Settings" },
+  { name: "Profile", icon: <FaUserCircle /> },
+  { name: "Logout", icon: <FaSignOutAlt />, isLogout: true },
 ];
 
 export default function Sidebar() {
-    const navigate = useNavigate();
-    const [active, setActive] = useState("Dashboard");
+  const [active, setActive] = useState("Dashboard"); // ✅ works now
 
   const sidebarStyle = {
-    position: "fixed",
     height: "100vh",
     width: "18vw",
     minWidth: "200px",
@@ -31,7 +34,6 @@ export default function Sidebar() {
     flexDirection: "column",
     padding: "20px",
     boxSizing: "border-box",
-    flexShrink: 0,
   };
 
   const logoStyle = {
@@ -40,7 +42,6 @@ export default function Sidebar() {
     marginBottom: "40px",
     fontSize: "24px",
     fontWeight: "bold",
-    color: "#fff", // fallback color
   };
 
   const logoIconStyle = {
@@ -57,14 +58,6 @@ export default function Sidebar() {
     WebkitTextFillColor: "transparent",
   };
 
-  const menuContainerStyle = {
-    flex: 1,
-  };
-
-  const bottomMenuContainerStyle = {
-    marginTop: "auto", // pushes it to bottom
-  };
-
   const menuItemStyle = (isActive) => ({
     display: "flex",
     alignItems: "center",
@@ -72,7 +65,9 @@ export default function Sidebar() {
     marginBottom: "10px",
     borderRadius: "8px",
     cursor: "pointer",
-    background: isActive ? "linear-gradient(90deg, #7b61ff, #a17cff)" : "transparent",
+    background: isActive
+      ? "linear-gradient(90deg, #7b61ff, #a17cff)"
+      : "transparent",
     transition: "all 0.3s ease",
   });
 
@@ -81,48 +76,49 @@ export default function Sidebar() {
     fontSize: "18px",
   };
 
-  const textStyle = {
-    fontSize: "16px",
+  const handleLogout = () => {
+    console.log("User logged out");
+    // localStorage.clear();
+    // navigate("/login");
   };
 
   return (
     <div style={sidebarStyle}>
-      {/* Logo with Link Icon */}
+      {/* Logo */}
       <div style={logoStyle}>
         <FaLink style={logoIconStyle} />
         <span style={logoTextStyle}>Criss-Cross</span>
       </div>
 
       {/* Main Menu */}
-      <div style={menuContainerStyle}>
+      <div style={{ flex: 1 }}>
         {mainMenuItems.map((item) => (
           <div
             key={item.name}
-            onClick={() => {
-                setActive(item.name);
-                navigate(item.path);
-            }}
+            onClick={() => setActive(item.name)}
             style={menuItemStyle(active === item.name)}
           >
             <div style={iconStyle}>{item.icon}</div>
-            <div style={textStyle}>{item.name}</div>
+            {item.name}
           </div>
         ))}
       </div>
 
       {/* Bottom Menu */}
-      <div style={bottomMenuContainerStyle}>
+      <div>
         {bottomMenuItems.map((item) => (
           <div
             key={item.name}
-            onClick={() => {
-                setActive(item.name);
-                navigate(item.path);
+            onClick={() =>
+              item.isLogout ? handleLogout() : setActive(item.name)
+            }
+            style={{
+              ...menuItemStyle(active === item.name),
+              ...(item.isLogout ? { color: "#ff6b6b" } : {}),
             }}
-            style={menuItemStyle(active === item.name)}
           >
             <div style={iconStyle}>{item.icon}</div>
-            <div style={textStyle}>{item.name}</div>
+            {item.name}
           </div>
         ))}
       </div>
