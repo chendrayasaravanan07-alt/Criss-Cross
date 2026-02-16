@@ -101,11 +101,11 @@ export default function Studentsettings() {
         }
 
         .container {
-          margin-left: 260px;   /* SAME width as Sidebar */
+          margin-left: 18vw;   /* SAME width as Sidebar */
           padding: 24px;
           min-height: 100%;
           background: #f7f8fc; 
-          max-width: calc(100% - 260px);
+          max-width: calc(100% - 18vw);
         }
 
         h1 {

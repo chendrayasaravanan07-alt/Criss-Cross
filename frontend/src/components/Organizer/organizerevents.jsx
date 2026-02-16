@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Sidebar from "./osidebar";
 import {
   Calendar,
   MapPin,
@@ -288,7 +288,6 @@ const handleCreateEvent = () => {
 
         /* Content */
         .content {
-          margin-left: clamp(200px, 18vw, 280px);
           padding: 24px;
           width: calc(100vw - clamp(200px, 18vw, 280px));
           min-height: 100vh;
@@ -437,10 +436,7 @@ const handleCreateEvent = () => {
 
       <div className="layout">
         {/* Sidebar */}
-        <aside className="sidebar">
-         
-          
-        </aside>
+        <Sidebar/>
 
         {/* Content */}
         <main className="content">
@@ -468,7 +464,7 @@ const handleCreateEvent = () => {
     />
   </div>
 
-  <button className="filter-btn">Filters</button>
+  
 </div>
 
 

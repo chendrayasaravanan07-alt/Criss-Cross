@@ -221,9 +221,9 @@ const styles = {
   },
   
   main: {
-    marginLeft: "260px",
+    marginLeft: "18vw",
     padding: "32px",
-    width: "calc(100% - 260px)",
+    width: "calc(100% - 18vw)",
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
