@@ -2,7 +2,8 @@ import React from 'react'
 
 function discoverevents() {
   return (
-    <div>discoverevents</div>
+    <div>Hey!! This is Discover Events Page</div>
+    
   )
 }
 
