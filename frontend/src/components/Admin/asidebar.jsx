@@ -28,13 +28,8 @@ export default function Sidebar() {
     display: "flex",
     flexDirection: "column",
     padding: "20px",
-<<<<<<< HEAD
-    boxSizing: "border-box",
-    position: "fixed",
-=======
     position: "fixed",
     boxSizing: "border-box",
->>>>>>> be8858ffda51e2cf67823161203aa2df557aa349
   };
 
   const logoStyle = {

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaCalendarAlt, FaUsers, FaEye, FaArrowUp } from "react-icons/fa";
-import Sidebar from "./sidebar";
+import Sidebar from "./osidebar";
 
 export default function OrganizerDash() {
   return (

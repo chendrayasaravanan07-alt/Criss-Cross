@@ -98,10 +98,7 @@ export default function Sidebar() {
         {mainMenuItems.map((item) => (
           <div
             key={item.name}
-            onClick={() => {
-                setActive(item.name);
-                navigate(item.path);
-            }}
+            onClick={() => setActivePage(item.name)}
             style={menuItemStyle(active === item.name)}
           >
             <div style={iconStyle}>{item.icon}</div>

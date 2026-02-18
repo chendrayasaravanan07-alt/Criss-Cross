@@ -1,9 +1,8 @@
 import React from "react";
 import { FaGraduationCap, FaUsers, FaShieldAlt, FaLink } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 export default function Selection() {
-  const navigate = useNavigate();
 
   const containerStyle = {
     height: "100vh",
@@ -46,23 +45,24 @@ export default function Selection() {
   const cardsContainerStyle = {
     width: "100%",
     display: "flex",
-    justifyContent: "space-between",
-    gap: "3%",
-    padding: "1%",
+    justifyContent: "center",
+    gap: "60px",
+    marginTop: "40px",
   };
 
   const cardStyle = {
-    width: "30%",
-    height: "48vh",
-    border: "0.35vh solid #1e293b",
-    borderRadius: "2.3vh",
-    padding: "3%",
+    width: "300px", // fixed medium width
+    height: "360px", // medium height
+    border: "3px solid #1e293b",
+    borderRadius: "20px",
+    padding: "20px",
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
     textAlign: "center",
-    cursor: "pointer", // ✅ clickable
+    cursor: "pointer",
   };
 
   const iconBoxStyle = {
@@ -98,9 +98,7 @@ export default function Selection() {
       {/* Logo */}
       <div style={headerStyle}>
         <FaLink style={headerIconStyle} />
-        <span style={{ fontSize: "3vh", fontWeight: "700" }}>
-          Criss-Cross
-        </span>
+        <span style={{ fontSize: "3vh", fontWeight: "700" }}>Criss-Cross</span>
       </div>
 
       {/* Title */}
@@ -112,46 +110,54 @@ export default function Selection() {
       {/* Cards */}
       <div style={cardsContainerStyle}>
         {/* STUDENT */}
-        <div
-          style={cardStyle}
-          onClick={() => navigate("/student-login")}
+        <Link
+          to="/student-login"
+          style={{ textDecoration: "none", color: "inherit" }}
         >
-          <div style={{ ...iconBoxStyle, backgroundColor: "#eefaff" }}>
-            <FaGraduationCap size="7vh" color="#2563eb" />
+          <div style={cardStyle}>
+            <div style={{ ...iconBoxStyle, backgroundColor: "#eefaff" }}>
+              <FaGraduationCap size="7vh" color="#2563eb" />
+            </div>
+            <div style={roleTitleStyle}>STUDENT</div>
+            <div style={roleDescStyle}>
+              Discover and participate in hackathons
+            </div>
           </div>
-          <div style={roleTitleStyle}>STUDENT</div>
-          <div style={roleDescStyle}>
-            Discover and participate in hackathons
-          </div>
-        </div>
+        </Link>
 
         {/* ORGANIZER */}
-        <div style={cardStyle}>
-          <div style={{ ...iconBoxStyle, backgroundColor: "#faf5ff" }}>
-            <FaUsers size="7vh" color="#9333ea" />
+        <Link
+          to="/organizer-login"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div style={cardStyle}>
+            <div style={{ ...iconBoxStyle, backgroundColor: "#faf5ff" }}>
+              <FaUsers size="7vh" color="#9333ea" />
+            </div>
+            <div style={roleTitleStyle}>ORGANIZER</div>
+            <div style={roleDescStyle}>Create and manage hackathon events</div>
           </div>
-          <div style={roleTitleStyle}>ORGANIZER</div>
-          <div style={roleDescStyle}>
-            Create and manage hackathon events
-          </div>
-        </div>
+        </Link>
 
         {/* ADMIN */}
-        <div style={cardStyle}>
-          <div style={{ ...iconBoxStyle, backgroundColor: "#eff6ff" }}>
-            <FaShieldAlt size="7vh" color="#4f46e5" />
+        <Link
+          to="/admin-login"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div style={cardStyle}>
+            <div style={{ ...iconBoxStyle, backgroundColor: "#eff6ff" }}>
+              <FaShieldAlt size="7vh" color="#4f46e5" />
+            </div>
+            <div style={roleTitleStyle}>ADMIN</div>
+            <div style={roleDescStyle}>
+              Oversee platform and manage operations
+            </div>
           </div>
-          <div style={roleTitleStyle}>ADMIN</div>
-          <div style={roleDescStyle}>
-            Oversee platform and manage operations
-          </div>
-        </div>
+        </Link>
       </div>
 
       {/* Footer */}
-      <div style={footerStyle}>
-        Hackathon Discovery & Management Platform
-      </div>
+      <div style={footerStyle}>Hackathon Discovery & Management Platform</div>
     </div>
   );
 }
