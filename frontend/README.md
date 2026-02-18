@@ -1,16 +1,189 @@
-# React + Vite
+🎯 Criss-Cross – Event & Hackathon Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Criss-Cross is a full-stack web application that allows students to discover and register for events, organizers to create and manage events, and admins to manage users and platform activities.
 
-Currently, two official plugins are available:
+This platform is designed to simplify hackathon and event management in colleges or communities.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Features
+👨‍🎓 Student
 
-## React Compiler
+Register & Login
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Discover events based on interests
 
-## Expanding the ESLint configuration
+Search and filter events
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Register for events
+
+Bookmark events
+
+View registered events
+
+🧑‍💼 Organizer
+
+Create new events
+
+Update existing events
+
+Manage event details
+
+View registered participants
+
+Delete events
+
+🛡️ Admin
+
+Manage Students & Organizers
+
+Approve / Remove events
+
+Monitor platform activity
+
+Control user access
+
+🏗️ Tech Stack
+Frontend
+
+React.js
+
+React Router
+
+Tailwind CSS (if used)
+
+Axios
+
+React Icons
+
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB
+
+Mongoose
+
+JWT Authentication
+
+📂 Project Structure
+criss-cross/
+│
+├── frontend/
+│   ├── components/
+│   ├── pages/
+│   ├── sidebar.jsx
+│   ├── discoverevents.jsx
+│   └── updateevent.jsx
+│
+├── backend/
+│   ├── models/
+│   ├── routes/
+│   ├── controllers/
+│   ├── config/
+│   └── server.js
+│
+└── README.md
+
+⚙️ Installation & Setup
+1️⃣ Clone the Repository
+git clone https://github.com/your-username/criss-cross.git
+cd criss-cross
+
+2️⃣ Backend Setup
+cd backend
+npm install
+
+
+Create a .env file inside backend folder:
+
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+
+
+Start backend server:
+
+npm start
+
+3️⃣ Frontend Setup
+cd frontend
+npm install
+npm start
+
+
+App will run at:
+
+http://localhost:3000
+
+
+Backend runs at:
+
+http://localhost:5000
+
+🗄️ Database Design (MongoDB Collections)
+Users Collection
+
+name
+
+email
+
+password
+
+role (student / organizer / admin)
+
+interests
+
+Events Collection
+
+title
+
+description
+
+date
+
+location
+
+category
+
+organizerId
+
+participants
+
+status (approved / pending)
+
+🔐 Authentication
+
+JWT-based authentication
+
+Role-based access control
+
+Protected routes for Admin and Organizer
+
+📌 Future Enhancements
+
+Email notifications
+
+Event approval workflow
+
+Real-time event updates
+
+Dashboard analytics
+
+Payment integration
+
+Deployment using Docker
+
+🤝 Contributing
+
+Fork the repository
+
+Create a new branch
+
+Make your changes
+
+Submit a Pull Request
+
+📄 License
+
+This project is developed for educational and project purposes
