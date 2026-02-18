@@ -1,189 +1,168 @@
-🎯 Criss-Cross – Event & Hackathon Management System
+# Criss-Cross – Event Management System
 
-Criss-Cross is a full-stack web application that allows students to discover and register for events, organizers to create and manage events, and admins to manage users and platform activities.
+## Overview
 
-This platform is designed to simplify hackathon and event management in colleges or communities.
+Criss-Cross is a full-stack web application built using the MERN stack that enables event and hackathon management with role-based access control.
 
-🚀 Features
-👨‍🎓 Student
+The system supports three user roles:
+- Student
+- Organizer
+- Admin
 
-Register & Login
+The application allows event creation, discovery, registration, and administrative management with secure authentication.
 
-Discover events based on interests
+---
 
-Search and filter events
+## Architecture
 
-Register for events
+Client-Server Architecture:
 
-Bookmark events
+- Frontend: React.js (Single Page Application)
+- Backend: Node.js + Express.js (REST API)
+- Database: MongoDB
+- Authentication: JWT (JSON Web Token)
+- Authorization: Role-Based Access Control
 
-View registered events
+---
 
-🧑‍💼 Organizer
+## Core Modules
 
-Create new events
+### 1. Authentication Module
+- User registration
+- User login
+- Password hashing using bcrypt
+- JWT token generation
+- Protected routes using middleware
 
-Update existing events
+---
 
-Manage event details
+### 2. Student Module
+- View approved events
+- Search events by category or interest
+- Register for events
+- View registered events
 
-View registered participants
+---
 
-Delete events
+### 3. Organizer Module
+- Create new events
+- Update existing events
+- Delete events
+- View registered participants
 
-🛡️ Admin
+---
 
-Manage Students & Organizers
+### 4. Admin Module
+- Manage students and organizers
+- Monitor events
+- Approve or remove events
+- Platform-level control
 
-Approve / Remove events
+---
 
-Monitor platform activity
+## Database Schema
 
-Control user access
+### User Schema
+- name: String
+- email: String (unique)
+- password: String (hashed)
+- role: Enum (student, organizer, admin)
+- interests: Array
 
-🏗️ Tech Stack
-Frontend
+### Event Schema
+- title: String
+- description: String
+- category: String
+- date: Date
+- location: String
+- organizerId: ObjectId (reference to User)
+- participants: Array of User IDs
+- status: Enum (pending, approved)
 
-React.js
+---
 
-React Router
+## API Endpoints
 
-Tailwind CSS (if used)
+Authentication:
+- POST /api/auth/register
+- POST /api/auth/login
 
-Axios
+Events:
+- GET /api/events
+- POST /api/events
+- PUT /api/events/:id
+- DELETE /api/events/:id
+- POST /api/events/register/:id
 
-React Icons
+---
 
-Backend
+## Setup Instructions
 
-Node.js
+### Backend Setup
 
-Express.js
-
-MongoDB
-
-Mongoose
-
-JWT Authentication
-
-📂 Project Structure
-criss-cross/
-│
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   ├── sidebar.jsx
-│   ├── discoverevents.jsx
-│   └── updateevent.jsx
-│
-├── backend/
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
-│   ├── config/
-│   └── server.js
-│
-└── README.md
-
-⚙️ Installation & Setup
-1️⃣ Clone the Repository
-git clone https://github.com/your-username/criss-cross.git
-cd criss-cross
-
-2️⃣ Backend Setup
+```bash
 cd backend
 npm install
+npm start
+```
 
+Create a `.env` file inside backend folder:
 
-Create a .env file inside backend folder:
-
+```
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+```
 
+---
 
-Start backend server:
+### Frontend Setup
 
-npm start
-
-3️⃣ Frontend Setup
+```bash
 cd frontend
 npm install
 npm start
+```
 
-
-App will run at:
-
+Frontend runs on:
+```
 http://localhost:3000
+```
 
-
-Backend runs at:
-
+Backend runs on:
+```
 http://localhost:5000
+```
 
-🗄️ Database Design (MongoDB Collections)
-Users Collection
+---
 
-name
+## Security
 
-email
+- Password hashing using bcrypt
+- JWT-based authentication
+- Role-based authorization middleware
+- Server-side input validation
 
-password
+---
 
-role (student / organizer / admin)
+## Tech Stack
 
-interests
+- React.js
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JWT
+- bcrypt
 
-Events Collection
+---
 
-title
+## Purpose
 
-description
-
-date
-
-location
-
-category
-
-organizerId
-
-participants
-
-status (approved / pending)
-
-🔐 Authentication
-
-JWT-based authentication
-
-Role-based access control
-
-Protected routes for Admin and Organizer
-
-📌 Future Enhancements
-
-Email notifications
-
-Event approval workflow
-
-Real-time event updates
-
-Dashboard analytics
-
-Payment integration
-
-Deployment using Docker
-
-🤝 Contributing
-
-Fork the repository
-
-Create a new branch
-
-Make your changes
-
-Submit a Pull Request
-
-📄 License
-
-This project is developed for educational and project purposes
+This project demonstrates:
+- Full-stack application development
+- REST API design
+- Role-based access control
+- CRUD operations
+- MongoDB data modeling
+- Authentication & Authorization
