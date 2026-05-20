@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Sidebar from "./sidebar";
 
 function DiscoverEvents() {
   const [search, setSearch] = useState("");
@@ -48,14 +49,13 @@ function DiscoverEvents() {
 
   return (
     <div style={{ display: "flex", height: "100vh", background: "#f8fafc" }}>
-      
-      {/* 🔵 20% Sidebar */}
-      <div style={{ width: "20%", background: "#111827" }}>
-        {/* <Sidebar /> */}
+      <div>
+        <Sidebar/>
       </div>
 
+
       {/* 🔵 80% Main Content */}
-      <div style={{ width: "80%", padding: "30px" }}>
+      <div style={{ width: "80%", padding: "30px" ,marginLeft: "18vw"}}>
         <h2>Discover Events</h2>
         <p style={{ color: "gray", marginBottom: "25px" }}>
           Find events based on your interests

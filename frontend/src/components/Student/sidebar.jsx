@@ -1,24 +1,26 @@
 // Sidebar.jsx
-import { useState } from "react";
 import { FaHome, FaCompass, FaTrophy, FaBookmark, FaBell, FaUser, FaCog, FaLink } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const mainMenuItems = [
-  { name: "Dashboard", icon: <FaHome />,path:"/student/dashboard" },
-  { name: "Discover", icon: <FaCompass /> },
-  { name: "My Events", icon: <FaTrophy /> },
-  { name: "Bookmarked", icon: <FaBookmark /> },
-  { name: "Notifications", icon: <FaBell /> },
+  { name: "Dashboard", icon: <FaHome />, path: "/student/dashboard" },
+  { name: "Discover", icon: <FaCompass />, path: "/student/discover" },
+  { name: "My Events", icon: <FaTrophy />, path: "/student/myevents" },
+  { name: "Bookmarked", icon: <FaBookmark />, path: "/student/bookmarked" },
+  { name: "Notifications", icon: <FaBell />, path: "/student/notifications" },
 ];
 
 const bottomMenuItems = [
-  { name: "Profile", icon: <FaUser /> },
-  { name: "Settings", icon: <FaCog />, path: "/Settings" },
+  { name: "Profile", icon: <FaUser />, path: "/student/profile" },
+  { name: "Settings", icon: <FaCog />, path: "/student/settings" },
 ];
 
 export default function Sidebar() {
-    const navigate = useNavigate();
-    const [active, setActive] = useState("Dashboard");
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // ✅ active based on current URL
+  const isActive = (path) => location.pathname === path;
 
   const sidebarStyle = {
     position: "fixed",
@@ -40,7 +42,7 @@ export default function Sidebar() {
     marginBottom: "40px",
     fontSize: "24px",
     fontWeight: "bold",
-    color: "#fff", // fallback color
+    color: "#fff",
   };
 
   const logoIconStyle = {
@@ -57,37 +59,26 @@ export default function Sidebar() {
     WebkitTextFillColor: "transparent",
   };
 
-  const menuContainerStyle = {
-    flex: 1,
-  };
+  const menuContainerStyle = { flex: 1 };
+  const bottomMenuContainerStyle = { marginTop: "auto" };
 
-  const bottomMenuContainerStyle = {
-    marginTop: "auto", // pushes it to bottom
-  };
-
-  const menuItemStyle = (isActive) => ({
+  const menuItemStyle = (active) => ({
     display: "flex",
     alignItems: "center",
     padding: "12px 16px",
     marginBottom: "10px",
     borderRadius: "8px",
     cursor: "pointer",
-    background: isActive ? "linear-gradient(90deg, #7b61ff, #a17cff)" : "transparent",
+    background: active ? "linear-gradient(90deg, #7b61ff, #a17cff)" : "transparent",
     transition: "all 0.3s ease",
   });
 
-  const iconStyle = {
-    marginRight: "12px",
-    fontSize: "18px",
-  };
-
-  const textStyle = {
-    fontSize: "16px",
-  };
+  const iconStyle = { marginRight: "12px", fontSize: "18px" };
+  const textStyle = { fontSize: "16px" };
 
   return (
     <div style={sidebarStyle}>
-      {/* Logo with Link Icon */}
+      {/* Logo */}
       <div style={logoStyle}>
         <FaLink style={logoIconStyle} />
         <span style={logoTextStyle}>Criss-Cross</span>
@@ -98,8 +89,8 @@ export default function Sidebar() {
         {mainMenuItems.map((item) => (
           <div
             key={item.name}
-            onClick={() => setActivePage(item.name)}
-            style={menuItemStyle(active === item.name)}
+            onClick={() => navigate(item.path)}
+            style={menuItemStyle(isActive(item.path))}
           >
             <div style={iconStyle}>{item.icon}</div>
             <div style={textStyle}>{item.name}</div>
@@ -112,11 +103,8 @@ export default function Sidebar() {
         {bottomMenuItems.map((item) => (
           <div
             key={item.name}
-            onClick={() => {
-                setActive(item.name);
-                navigate(item.path);
-            }}
-            style={menuItemStyle(active === item.name)}
+            onClick={() => navigate(item.path)}
+            style={menuItemStyle(isActive(item.path))}
           >
             <div style={iconStyle}>{item.icon}</div>
             <div style={textStyle}>{item.name}</div>

@@ -2,146 +2,15 @@ import React, { useState } from "react";
 import "./notification.css";
 import initialNotifications from "./notification";
 
-/* ---------------- SIDEBAR ICONS ---------------- */
-import {
-  FaHome,
-  FaCompass,
-  FaTrophy,
-  FaBookmark,
-  FaBell,
-  FaUser,
-  FaCog,
-  FaLink,
-  FaSignOutAlt,
-} from "react-icons/fa";
+// ✅ import the SAME sidebar used in other student pages
+import Sidebar from "../sidebar"; // adjust path if needed
 
-/* ---------------- NOTIFICATION ICONS ---------------- */
 import { HiSparkles } from "react-icons/hi2";
 import { FiClock, FiCheckCircle, FiCalendar, FiCheck } from "react-icons/fi";
 
 /* =====================================================
-   🔥 SIDEBAR (INLINE — NOT SEPARATE COMPONENT)
+   GROUPING LOGIC (UNCHANGED)
 ===================================================== */
-
-const mainMenuItems = [
-  { name: "Dashboard", icon: <FaHome /> },
-  { name: "Discover", icon: <FaCompass /> },
-  { name: "My Events", icon: <FaTrophy /> },
-  { name: "Bookmarked", icon: <FaBookmark /> },
-  { name: "Notifications", icon: <FaBell /> },
-];
-
-const bottomMenuItems = [
-  { name: "Profile", icon: <FaUser /> },
-  { name: "Settings", icon: <FaCog /> },
-  { name: "Logout", icon: <FaSignOutAlt />, isLogout: true },
-];
-
-function Sidebar() {
-  const [active, setActive] = useState("Notifications");
-
-  const sidebarStyle = {
-    height: "100vh",
-    width: "260px",
-    backgroundColor: "#1f1f2e",
-    color: "#fff",
-    display: "flex",
-    flexDirection: "column",
-    padding: "20px",
-    boxSizing: "border-box",
-  };
-
-  const logoStyle = {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "40px",
-    fontSize: "24px",
-    fontWeight: "bold",
-  };
-
-  const logoIconStyle = {
-    marginRight: "10px",
-    fontSize: "28px",
-    background: "linear-gradient(90deg, #7b61ff, #a17cff)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  };
-
-  const logoTextStyle = {
-    background: "linear-gradient(90deg, #7b61ff, #a17cff)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  };
-
-  const menuItemStyle = (isActive) => ({
-    display: "flex",
-    alignItems: "center",
-    padding: "12px 16px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    background: isActive
-      ? "linear-gradient(90deg, #7b61ff, #a17cff)"
-      : "transparent",
-  });
-
-  const iconStyle = {
-    marginRight: "12px",
-    fontSize: "18px",
-  };
-
-  const handleLogout = () => {
-    console.log("Logout");
-  };
-
-  return (
-    <div style={sidebarStyle}>
-      {/* Logo */}
-      <div style={logoStyle}>
-        <FaLink style={logoIconStyle} />
-        <span style={logoTextStyle}>Criss-Cross</span>
-      </div>
-
-      {/* Main Menu */}
-      <div style={{ flex: 1 }}>
-        {mainMenuItems.map((item) => (
-          <div
-            key={item.name}
-            onClick={() => setActive(item.name)}
-            style={menuItemStyle(active === item.name)}
-          >
-            <div style={iconStyle}>{item.icon}</div>
-            <div>{item.name}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom Menu */}
-      <div>
-        {bottomMenuItems.map((item) => (
-          <div
-            key={item.name}
-            onClick={() =>
-              item.isLogout ? handleLogout() : setActive(item.name)
-            }
-            style={{
-              ...menuItemStyle(active === item.name),
-              ...(item.isLogout ? { color: "#ff6b6b" } : {}),
-            }}
-          >
-            <div style={iconStyle}>{item.icon}</div>
-            <div>{item.name}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* =====================================================
-   🔥 GROUPING LOGIC (UNCHANGED)
-===================================================== */
-
 const groupNotifications = (notifications) => {
   const today = [];
   const thisWeek = [];
@@ -149,22 +18,13 @@ const groupNotifications = (notifications) => {
 
   notifications.forEach((n) => {
     const time = n.time.toLowerCase();
-
-    if (time.includes("hour") || time.includes("min")) {
-      today.push(n);
-    } else if (time.includes("day") || time.includes("yesterday")) {
-      thisWeek.push(n);
-    } else {
-      earlier.push(n);
-    }
+    if (time.includes("hour") || time.includes("min")) today.push(n);
+    else if (time.includes("day") || time.includes("yesterday")) thisWeek.push(n);
+    else earlier.push(n);
   });
 
   return { today, thisWeek, earlier };
 };
-
-/* =====================================================
-   🔥 MAIN NOTIFICATION PAGE (UNCHANGED — ONLY WRAPPED)
-===================================================== */
 
 export default function Notifications() {
   const [notifications, setNotifications] = useState(initialNotifications);
@@ -184,9 +44,7 @@ export default function Notifications() {
   };
 
   const markAllAsRead = () => {
-    setNotifications((prev) =>
-      prev.map((n) => ({ ...n, unread: false }))
-    );
+    setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
   };
 
   const renderCard = (item) => (
@@ -211,10 +69,7 @@ export default function Notifications() {
         </div>
 
         {item.unread && (
-          <button
-            className="mark-read-btn"
-            onClick={() => markAsRead(item.id)}
-          >
+          <button className="mark-read-btn" onClick={() => markAsRead(item.id)}>
             <FiCheck />
           </button>
         )}
@@ -230,8 +85,9 @@ export default function Notifications() {
 
   return (
     <div style={{ display: "flex" }}>
+      
       <Sidebar />
-
+      {/* ✅ push content right (same as bookmarked fix) */}
       <div className="notification-page">
         <div className="header header-row">
           <div>

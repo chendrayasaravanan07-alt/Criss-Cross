@@ -10,7 +10,7 @@ import {
   FaLink,
   FaSignOutAlt,
 } from "react-icons/fa";
-
+import Sidebar from "./sidebar";
 /* ---------------- SIDEBAR DATA ---------------- */
 const mainMenuItems = [
   { name: "Dashboard", icon: <FaHome /> },
@@ -138,107 +138,6 @@ const bookmarks = [
   },
 ];
 
-/* ---------------- SIDEBAR COMPONENT ---------------- */
-function Sidebar() {
-  const [active, setActive] = useState("Dashboard");
-
-  const sidebarStyle = {
-     minHeight: "100vh",   // ⭐ Instead of height
-  width: "18vw",
-  minWidth: "200px",
-  backgroundColor: "#1f1f2e",
-  color: "#fff",
-  display: "flex",
-  flexDirection: "column",
-  padding: "2%",
-  boxSizing: "border-box",
-  };
-
-  const logoStyle = {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "12%",
-    fontSize: "140%",
-    fontWeight: "bold",
-  };
-
-  const logoIconStyle = {
-    marginRight: "6%",
-    fontSize: "160%",
-    background: "linear-gradient(90deg, #7b61ff, #a17cff)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  };
-
-  const logoTextStyle = {
-    background: "linear-gradient(90deg, #7b61ff, #a17cff)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-  };
-
-  const menuItemStyle = (isActive) => ({
-    display: "flex",
-    alignItems: "center",
-    padding: "4% 6%",
-    marginBottom: "3%",
-    borderRadius: "999px",
-    cursor: "pointer",
-    background: isActive
-      ? "linear-gradient(90deg, #7b61ff, #a17cff)"
-      : "rgba(255,255,255,0.04)",
-    transition: "all 0.25s ease",
-  });
-
-  const iconStyle = {
-    marginRight: "8%",
-    fontSize: "110%",
-  };
-
-  const handleLogout = () => {
-    console.log("User logged out");
-  };
-
-  return (
-    <div style={sidebarStyle}>
-      <div style={logoStyle}>
-        <FaLink style={logoIconStyle} />
-        <span style={logoTextStyle}>Criss-Cross</span>
-      </div>
-
-      <div style={{ flex: 1 }}>
-        {mainMenuItems.map((item) => (
-          <div
-            key={item.name}
-            onClick={() => setActive(item.name)}
-            style={menuItemStyle(active === item.name)}
-          >
-            <div style={iconStyle}>{item.icon}</div>
-            <div>{item.name}</div>
-          </div>
-        ))}
-      </div>
-
-      <div>
-        {bottomMenuItems.map((item) => (
-          <div
-            key={item.name}
-            onClick={() =>
-              item.isLogout ? handleLogout() : setActive(item.name)
-            }
-            style={{
-              ...menuItemStyle(active === item.name),
-              ...(item.isLogout ? { color: "#ff6b6b" } : {}),
-            }}
-          >
-            <div style={iconStyle}>{item.icon}</div>
-            <div>{item.name}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 /* ---------------- MAIN BOOKMARK PAGE ---------------- */
 export default function Bookmarked() {
   const [search, setSearch] = useState("");
@@ -300,7 +199,7 @@ export default function Bookmarked() {
 /* ---------------- CSS (UNCHANGED) ---------------- */
 const css = `
 .bookmark-page {
-  margin-left: 0;
+  margin-left: 18vw;
   padding: 2rem;
   background: #f9fafb;
   min-height: 100vh;

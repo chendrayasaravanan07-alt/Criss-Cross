@@ -147,7 +147,7 @@ export default function MyEvents() {
           flex: 1;
           padding: 40px;
           overflow-x: hidden;
-          margin-left: 280px;
+          margin-left: 320px;
         }
 
         .page-title {
