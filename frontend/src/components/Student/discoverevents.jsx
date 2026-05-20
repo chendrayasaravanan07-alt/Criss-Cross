@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Sidebar from "./sidebar";
 
 function DiscoverEvents() {
   const [search, setSearch] = useState("");
@@ -39,36 +40,33 @@ function DiscoverEvents() {
     const matchesSearch = event.title
       .toLowerCase()
       .includes(search.toLowerCase());
-
     const matchesCategory =
       selectedCategory === "All" || event.category === selectedCategory;
-
     return matchesSearch && matchesCategory;
   });
 
   return (
-    <div style={{ display: "flex", height: "100vh", background: "#f8fafc" }}>
-      
-      {/* 🔵 20% Sidebar */}
-      <div style={{ width: "20%", background: "#111827" }}>
-        {/* <Sidebar /> */}
-      </div>
+    <div style={{ display: "flex", minHeight: "100vh", background: "#f8fafc" }}>
 
-      {/* 🔵 80% Main Content */}
-      <div style={{ width: "80%", padding: "30px" }}>
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main Content */}
+      <div
+        style={{
+          marginLeft: "18vw",
+          width: "calc(100% - 18vw)",
+          padding: "30px",
+          boxSizing: "border-box",
+        }}
+      >
         <h2>Discover Events</h2>
         <p style={{ color: "gray", marginBottom: "25px" }}>
           Find events based on your interests
         </p>
 
-        {/* 🔹 Search & Filter Section */}
-        <div
-          style={{
-            display: "flex",
-            gap: "20px",
-            marginBottom: "30px",
-          }}
-        >
+        {/* Search & Filter */}
+        <div style={{ display: "flex", gap: "20px", marginBottom: "30px" }}>
           <input
             type="text"
             placeholder="Search events..."
@@ -99,7 +97,7 @@ function DiscoverEvents() {
           </select>
         </div>
 
-        {/* 🔹 Events Grid */}
+        {/* Events Grid */}
         <div
           style={{
             display: "grid",
@@ -122,9 +120,7 @@ function DiscoverEvents() {
                 <p style={{ color: "#2563eb", fontWeight: "bold" }}>
                   {event.category}
                 </p>
-                <p style={{ marginTop: "10px" }}>
-                  📅 {event.date}
-                </p>
+                <p style={{ marginTop: "10px" }}>📅 {event.date}</p>
                 <p>📍 {event.location}</p>
 
                 <button
