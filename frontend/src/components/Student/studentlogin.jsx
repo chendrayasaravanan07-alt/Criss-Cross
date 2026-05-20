@@ -140,7 +140,7 @@ export default function StudentLogin() {
         </div>
 
         {/* Button */}
-        <Link to="/student" style={{ textDecoration: "none" }}>
+        <Link to="/student/dashboard" style={{ textDecoration: "none" }}>
           <button style={buttonStyle}>Sign In →</button>
         </Link>
     

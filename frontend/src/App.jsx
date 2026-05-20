@@ -1,13 +1,21 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+<<<<<<< HEAD
 /* Landing + Selection */
+=======
+import Selection from "./components/selection";
+import StudentDashboard from "./components/Student/studentdash";
+import OrganizerDashboard from "./components/Organizer/organizerdash";
+import AdminDashboard from "./components/Admin/admindash";
+>>>>>>> 7b7af1e7c0a6c15278cc81d50e3fa2e576862834
 import LandingPage from "./components/LandingPage";
 import Selection from "./components/selection";
 /* Login Pages */
 import StudentLogin from "./components/Student/studentlogin";
 import OrganizerLogin from "./components/Organizer/organizerlogin";
 import AdminLogin from "./components/Admin/adminlogin";
+<<<<<<< HEAD
 /* Dashboards */
 import Studentdash from "./components/Student/studentdash";
 import OrganizerDashboard from "./components/Organizer/organizerdash";
@@ -27,10 +35,22 @@ import Organizersettings from "./components/Organizer/organizersettings.jsx";
 import UserManagement from "./components/Admin/usermanagement";
 import EventApprovals from "./components/Admin/eventapprovals";
 import AdminSettings from "./components/Admin/adminsettings";
+=======
+
+// Student pages
+import DiscoverEvents from "./components/Student/discoverevents";
+import MyEvents from "./components/Student/myevents";
+import Bookmarked from "./components/Student/Bookmarked";
+import Notifications from "./components/Student/notifications";
+import StudentProfile from "./components/Student/studentprofile";
+import StudentSettings from "./components/Student/studentsettings";
+
+>>>>>>> 7b7af1e7c0a6c15278cc81d50e3fa2e576862834
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+<<<<<<< HEAD
         {/* Landing */}
         <Route path="/" element={<LandingPage />} />
 
@@ -38,11 +58,18 @@ const App = () => {
         <Route path="/selection" element={<Selection />} />
 
         {/* Login */}
+=======
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/selection" element={<Selection />} />
+
+        {/* Login Pages */}
+>>>>>>> 7b7af1e7c0a6c15278cc81d50e3fa2e576862834
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/organizer-login" element={<OrganizerLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
 
         {/* Dashboards */}
+<<<<<<< HEAD
         <Route path="/student/*" element={<Studentdash />} />
         <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -67,6 +94,19 @@ const App = () => {
         <Route path="/organizer/settings" element={<Organizersettings />} />
         {/* Default fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
+=======
+        <Route path="/organizer" element={<OrganizerDashboard />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+
+        {/* Student routes */}
+        <Route path="/student/dashboard" element={<StudentDashboard />} />
+        <Route path="/student/discover" element={<DiscoverEvents />} />
+        <Route path="/student/myevents" element={<MyEvents />} />
+        <Route path="/student/bookmarked" element={<Bookmarked />} />
+        <Route path="/student/notifications" element={<Notifications />} />
+        <Route path="/student/profile" element={<StudentProfile />} />
+        <Route path="/student/settings" element={<StudentSettings />} />
+>>>>>>> 7b7af1e7c0a6c15278cc81d50e3fa2e576862834
       </Routes>
     </BrowserRouter>
   );

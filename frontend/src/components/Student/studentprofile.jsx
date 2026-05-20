@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "./sidebar";
 
-
 function StudentProfile() {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -52,18 +51,27 @@ function StudentProfile() {
   };
 
   return (
-    <div style={{marginLeft:"280px" ,display: "flex", minHeight: "100vh", background: "#f5f6fa" }}>
+    <div style={{ display: "flex", minHeight: "100vh", background: "#f5f6fa" }}>
+
+      {/* Sidebar */}
       <Sidebar />
 
-      <div style={{ flex: 1, padding: "30px" }}>
+      {/* Main Content */}
+      <div
+        style={{
+          marginLeft: "18vw",
+          width: "calc(100% - 18vw)",
+          padding: "30px",
+          boxSizing: "border-box",
+        }}
+      >
         {/* Profile Header */}
         <div style={styles.header}>
           <div style={styles.banner}></div>
 
           <div style={styles.profileRow}>
             <div style={{ position: "relative" }}>
-              <img src={profile.image} style={styles.avatar} />
-
+              <img src={profile.image} alt="avatar" style={styles.avatar} />
               {isEditing && (
                 <label style={styles.uploadBtn}>
                   Change
@@ -92,7 +100,6 @@ function StudentProfile() {
               )}
             </div>
 
-            {/* EDIT BUTTON ON LEFT */}
             <button
               style={styles.editBtnLeft}
               onClick={() => setIsEditing(!isEditing)}
@@ -102,50 +109,50 @@ function StudentProfile() {
           </div>
         </div>
 
-        {/* EVENTS */}
+        {/* Events Count */}
         <div style={styles.card}>
           <h2>3</h2>
           <p>Events Participated</p>
         </div>
 
-        {/* SKILLS */}
+        {/* Skills */}
         <div style={styles.section}>
           <h3>💡 Skills</h3>
           <div style={styles.tags}>
             {skills.map((s, i) => (
-              <span key={i}>{s}</span>
+              <span key={i} style={styles.tag}>{s}</span>
             ))}
           </div>
-
           {isEditing && (
             <div style={styles.addBox}>
               <input
                 placeholder="Add new skill"
                 value={newSkill}
                 onChange={(e) => setNewSkill(e.target.value)}
+                style={styles.addInput}
               />
-              <button onClick={addSkill}>Add</button>
+              <button onClick={addSkill} style={styles.addBtn}>Add</button>
             </div>
           )}
         </div>
 
-        {/* INTERESTS */}
+        {/* Interests */}
         <div style={styles.section}>
           <h3>⭐ Interests</h3>
           <div style={styles.tags}>
-            {interests.map((i, idx) => (
-              <span key={idx}>{i}</span>
+            {interests.map((item, idx) => (
+              <span key={idx} style={styles.tag}>{item}</span>
             ))}
           </div>
-
           {isEditing && (
             <div style={styles.addBox}>
               <input
                 placeholder="Add interest"
                 value={newInterest}
                 onChange={(e) => setNewInterest(e.target.value)}
+                style={styles.addInput}
               />
-              <button onClick={addInterest}>Add</button>
+              <button onClick={addInterest} style={styles.addBtn}>Add</button>
             </div>
           )}
         </div>
@@ -159,18 +166,18 @@ const styles = {
     background: "#fff",
     borderRadius: "16px",
     marginBottom: "25px",
-    position: "relative"
+    position: "relative",
   },
   banner: {
     height: "120px",
-    background: "linear-gradient(90deg,#6366f1,#ec4899)",
-    borderRadius: "16px 16px 0 0"
+    background: "linear-gradient(90deg, #6366f1, #ec4899)",
+    borderRadius: "16px 16px 0 0",
   },
   profileRow: {
     display: "flex",
     gap: "20px",
     padding: "20px",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     width: "120px",
@@ -178,7 +185,7 @@ const styles = {
     borderRadius: "16px",
     border: "4px solid white",
     marginTop: "-60px",
-    objectFit: "cover"
+    objectFit: "cover",
   },
   uploadBtn: {
     position: "absolute",
@@ -189,7 +196,7 @@ const styles = {
     fontSize: "12px",
     padding: "4px 8px",
     borderRadius: "6px",
-    cursor: "pointer"
+    cursor: "pointer",
   },
   editBtnLeft: {
     height: "40px",
@@ -199,7 +206,7 @@ const styles = {
     background: "#4f46e5",
     color: "#fff",
     cursor: "pointer",
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
   },
   input: {
     display: "block",
@@ -207,7 +214,7 @@ const styles = {
     padding: "8px",
     marginBottom: "8px",
     borderRadius: "6px",
-    border: "1px solid #ccc"
+    border: "1px solid #ccc",
   },
   textarea: {
     width: "100%",
@@ -215,31 +222,53 @@ const styles = {
     padding: "8px",
     marginBottom: "8px",
     borderRadius: "6px",
-    border: "1px solid #ccc"
+    border: "1px solid #ccc",
   },
   card: {
     background: "#fff",
     padding: "20px",
     borderRadius: "16px",
     width: "260px",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
   section: {
     background: "#fff",
     padding: "20px",
     borderRadius: "16px",
-    marginBottom: "20px"
+    marginBottom: "20px",
   },
   tags: {
     display: "flex",
     gap: "10px",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+  },
+  tag: {
+    background: "#eef2ff",
+    color: "#4f46e5",
+    padding: "6px 14px",
+    borderRadius: "999px",
+    fontSize: "13px",
+    fontWeight: "500",
   },
   addBox: {
     marginTop: "10px",
     display: "flex",
-    gap: "8px"
-  }
+    gap: "8px",
+  },
+  addInput: {
+    flex: 1,
+    padding: "8px",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+  },
+  addBtn: {
+    padding: "8px 16px",
+    borderRadius: "6px",
+    border: "none",
+    background: "#4f46e5",
+    color: "#fff",
+    cursor: "pointer",
+  },
 };
 
 export default StudentProfile;

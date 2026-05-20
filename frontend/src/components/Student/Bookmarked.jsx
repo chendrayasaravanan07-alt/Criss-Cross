@@ -1,32 +1,14 @@
-import React, { useState } from "react";
-import {
-  FaHome,
-  FaCompass,
-  FaTrophy,
-  FaBookmark,
-  FaBell,
-  FaUser,
-  FaCog,
-  FaLink,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import React, { useState, useMemo } from "react";
 import Sidebar from "./sidebar";
-/* ---------------- SIDEBAR DATA ---------------- */
-const mainMenuItems = [
-  { name: "Dashboard", icon: <FaHome /> },
-  { name: "Discover", icon: <FaCompass /> },
-  { name: "My Events", icon: <FaTrophy /> },
-  { name: "Bookmarked", icon: <FaBookmark /> },
-  { name: "Notifications", icon: <FaBell /> },
-];
 
-const bottomMenuItems = [
-  { name: "Profile", icon: <FaUser /> },
-  { name: "Settings", icon: <FaCog /> },
-  { name: "Logout", icon: <FaSignOutAlt />, isLogout: true },
-];
+/* ─── Image Optimizer ────────────────────────────────────── */
+const optimize = (url) => {
+  // strip any existing query string then add our params
+  const base = url.split("?")[0];
+  return `${base}?w=400&h=210&fit=crop&q=70&auto=format`;
+};
 
-/* ---------------- MOCK BOOKMARK DATA ---------------- */
+/* ─── Static Data (outside component) ───────────────────── */
 const bookmarks = [
   {
     id: 1,
@@ -37,8 +19,7 @@ const bookmarks = [
     tag: "Finance",
     prize: "$60,000",
     daysLeft: "18 days left",
-    image:
-      "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a",
+    image: optimize("https://images.unsplash.com/photo-1520607162513-77705c0f0d4a"),
   },
   {
     id: 2,
@@ -49,8 +30,7 @@ const bookmarks = [
     tag: "AR/VR",
     prize: "$28,000",
     daysLeft: "41 days left",
-    image:
-      "https://images.unsplash.com/photo-1593508512255-86ab42a8e620",
+    image: optimize("https://images.unsplash.com/photo-1593508512255-86ab42a8e620"),
   },
   {
     id: 3,
@@ -61,8 +41,7 @@ const bookmarks = [
     tag: "Data Science",
     prize: "$38,000",
     daysLeft: "64 days left",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+    image: optimize("https://images.unsplash.com/photo-1551288049-bebda4e38f71"),
   },
   {
     id: 4,
@@ -73,8 +52,7 @@ const bookmarks = [
     tag: "Social Impact",
     prize: "$25,000",
     daysLeft: "15 days left",
-    image:
-      "https://images.unsplash.com/photo-1509099836639-18ba1795216d",
+    image: optimize("https://images.unsplash.com/photo-1509099836639-18ba1795216d"),
   },
   {
     id: 5,
@@ -85,8 +63,7 @@ const bookmarks = [
     tag: "Music & Audio",
     prize: "$18,000",
     daysLeft: "85 days left",
-    image:
-      "https://images.unsplash.com/photo-1511379938547-c1f69419868d",
+    image: optimize("https://images.unsplash.com/photo-1511379938547-c1f69419868d"),
   },
   {
     id: 6,
@@ -97,8 +74,7 @@ const bookmarks = [
     tag: "Robotics",
     prize: "$65,000",
     daysLeft: "104 days left",
-    image:
-      "https://images.unsplash.com/photo-1581091012184-5c7c9b2b7b2d",
+    image: optimize("https://images.unsplash.com/photo-1581091012184-5c7c9b2b7b2d"),
   },
   {
     id: 7,
@@ -109,8 +85,7 @@ const bookmarks = [
     tag: "Food Tech",
     prize: "$22,000",
     daysLeft: "21 days left",
-    image:
-      "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1200&q=80",
+    image: optimize("https://images.unsplash.com/photo-1504754524776-8f4f37790ca0"),
   },
   {
     id: 8,
@@ -121,8 +96,7 @@ const bookmarks = [
     tag: "Space & Aerospace",
     prize: "$80,000",
     daysLeft: "93 days left",
-    image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    image: optimize("https://images.unsplash.com/photo-1451187580459-43490279c0fa"),
   },
   {
     id: 9,
@@ -133,210 +107,235 @@ const bookmarks = [
     tag: "Renewable Energy",
     prize: "$48,000",
     daysLeft: "70 days left",
-    image:
-      "https://images.unsplash.com/photo-1509395176047-4a66953fd231?auto=format&fit=crop&w=1200&q=80",
+    image: optimize("https://images.unsplash.com/photo-1509395176047-4a66953fd231"),
   },
 ];
 
-/* ---------------- MAIN BOOKMARK PAGE ---------------- */
+/* ─── Styles (defined once, never re-created) ────────────── */
+const styles = {
+  layout: {
+    display: "flex",
+    minHeight: "100vh",
+    background: "#f9fafb",
+    fontFamily: "Inter, system-ui, sans-serif",
+  },
+  page: {
+    marginLeft: "18vw",
+    padding: "2rem",
+    width: "calc(100% - 18vw)",
+    boxSizing: "border-box",
+    minHeight: "100vh",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "1rem",
+  },
+  h1: {
+    fontSize: "2rem",
+    fontWeight: 700,
+    margin: 0,
+  },
+  subtitle: {
+    color: "#6b7280",
+    marginTop: "0.4rem",
+    marginBottom: 0,
+  },
+  searchInput: {
+    padding: "0.6rem 1rem",
+    borderRadius: "0.6rem",
+    border: "1px solid #e5e7eb",
+    fontSize: "0.9rem",
+    width: 260,
+    outline: "none",
+  },
+  grid: {
+    marginTop: "2rem",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(18rem, 1fr))",
+    gap: "2rem",
+  },
+  card: {
+    background: "#fff",
+    borderRadius: "1rem",
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    cursor: "pointer",
+  },
+  cardImageWrap: {
+    position: "relative",
+    height: "12rem",
+  },
+  img: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    display: "block",
+  },
+  prize: {
+    position: "absolute",
+    top: "0.8rem",
+    left: "0.8rem",
+    background: "#fff",
+    padding: "0.3rem 0.7rem",
+    borderRadius: "1rem",
+    fontWeight: 600,
+    fontSize: "0.85rem",
+  },
+  cardBody: {
+    padding: "1.2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.6rem",
+    flex: 1,
+  },
+  cardTitle: {
+    fontSize: "1.1rem",
+    fontWeight: 700,
+    margin: 0,
+  },
+  org: {
+    color: "#6b7280",
+    fontSize: "0.9rem",
+    margin: 0,
+  },
+  meta: {
+    fontSize: "0.85rem",
+    color: "#6b7280",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.2rem",
+  },
+  tag: {
+    alignSelf: "flex-start",
+    background: "#eef2ff",
+    color: "#4f46e5",
+    fontSize: "0.75rem",
+    padding: "0.3rem 0.7rem",
+    borderRadius: "1rem",
+  },
+  cardFooter: {
+    marginTop: "auto",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  daysLeft: {
+    color: "#f97316",
+    fontSize: "0.85rem",
+  },
+  viewBtn: {
+    background: "linear-gradient(135deg, #3b82f6, #9333ea)",
+    color: "#fff",
+    border: "none",
+    borderRadius: "0.7rem",
+    padding: "0.6rem 1.2rem",
+    fontSize: "0.85rem",
+    cursor: "pointer",
+  },
+  empty: {
+    color: "#9ca3af",
+    marginTop: "3rem",
+    textAlign: "center",
+    fontSize: "1rem",
+  },
+};
+
+/* ─── BookmarkCard (memoized) ────────────────────────────── */
+const BookmarkCard = React.memo(({ item }) => (
+  <div
+    style={styles.card}
+    onMouseEnter={(e) => {
+      e.currentTarget.style.transform = "translateY(-4px)";
+      e.currentTarget.style.boxShadow = "0 1.5rem 3rem rgba(0,0,0,0.08)";
+    }}
+    onMouseLeave={(e) => {
+      e.currentTarget.style.transform = "translateY(0)";
+      e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)";
+    }}
+  >
+    {/* Image */}
+    <div style={styles.cardImageWrap}>
+      <img
+        src={item.image}
+        alt={item.title}
+        loading="lazy"
+        decoding="async"
+        width="400"
+        height="192"
+        style={styles.img}
+      />
+      <span style={styles.prize}>{item.prize}</span>
+    </div>
+
+    {/* Body */}
+    <div style={styles.cardBody}>
+      <h3 style={styles.cardTitle}>{item.title}</h3>
+      <p style={styles.org}>{item.org}</p>
+
+      <div style={styles.meta}>
+        <span>{item.date}</span>
+        <span>{item.location}</span>
+      </div>
+
+      <span style={styles.tag}>{item.tag}</span>
+
+      <div style={styles.cardFooter}>
+        <span style={styles.daysLeft}>{item.daysLeft}</span>
+        <button style={styles.viewBtn}>View Details</button>
+      </div>
+    </div>
+  </div>
+));
+
+/* ─── Main Page ──────────────────────────────────────────── */
 export default function Bookmarked() {
   const [search, setSearch] = useState("");
 
+  /* useMemo — only recomputes when search changes */
+  const filtered = useMemo(
+    () =>
+      bookmarks.filter((item) =>
+        item.title.toLowerCase().includes(search.toLowerCase())
+      ),
+    [search]
+  );
+
   return (
-    <div style={{ display: "flex" }}>
+    <div style={styles.layout}>
       <Sidebar />
 
-      <div className="bookmark-page">
-        <style>{css}</style>
-
-        <div className="bookmark-header">
+      <div style={styles.page}>
+        {/* Header */}
+        <div style={styles.header}>
           <div>
-            <h1>Bookmarked Events</h1>
-            <p>Your saved hackathons for quick access</p>
+            <h1 style={styles.h1}>Bookmarked Events</h1>
+            <p style={styles.subtitle}>Your saved hackathons for quick access</p>
           </div>
-
           <input
             type="text"
             placeholder="Search bookmarked events..."
-            className="search-input"
+            style={styles.searchInput}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
 
-        <div className="bookmark-grid">
-          {bookmarks.map((item) => (
-            <div className="bookmark-card" key={item.id}>
-              <div className="card-image">
-                <img src={item.image} alt={item.title} />
-                <span className="prize">{item.prize}</span>
-              </div>
-
-              <div className="card-body">
-                <h3>{item.title}</h3>
-                <p className="org">{item.org}</p>
-
-                <div className="meta">
-                  <span>{item.date}</span>
-                  <span>{item.location}</span>
-                </div>
-
-                <span className="tag">{item.tag}</span>
-
-                <div className="card-footer">
-                  <span className="time">{item.daysLeft}</span>
-                  <button className="view-btn">View Details</button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Grid */}
+        {filtered.length === 0 ? (
+          <p style={styles.empty}>No bookmarks match your search.</p>
+        ) : (
+          <div style={styles.grid}>
+            {filtered.map((item) => (
+              <BookmarkCard key={item.id} item={item} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-/* ---------------- CSS (UNCHANGED) ---------------- */
-const css = `
-.bookmark-page {
-  margin-left: 18vw;
-  padding: 2rem;
-  background: #f9fafb;
-  min-height: 100vh;
-  width: 100%;
-}
-
-.bookmark-header h1 {
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.bookmark-header p {
-  color: #6b7280;
-  margin-top: 0.4rem;
-}
-
-.bookmark-grid {
-  margin-top: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-  gap: 2rem;
-}
-
-.bookmark-card {
-  background: #ffffff;
-  border-radius: 1rem;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.bookmark-card:hover {
-  transform: translateY(-0.4rem);
-  box-shadow: 0 1.5rem 3rem rgba(0, 0, 0, 0.08);
-}
-
-.card-image {
-  position: relative;
-  height: 12rem;
-}
-
-.card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.prize {
-  position: absolute;
-  top: 0.8rem;
-  left: 0.8rem;
-  background: #ffffff;
-  padding: 0.3rem 0.7rem;
-  border-radius: 1rem;
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-
-.card-body {
-  padding: 1.2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.card-body h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
-
-.org {
-  color: #6b7280;
-  font-size: 0.9rem;
-}
-
-.meta {
-  font-size: 0.85rem;
-  color: #6b7280;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.tag {
-  align-self: flex-start;
-  background: #eef2ff;
-  color: #4f46e5;
-  font-size: 0.75rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 1rem;
-}
-
-.card-footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.time {
-  color: #f97316;
-  font-size: 0.85rem;
-}
-
-.bookmark-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.search-input {
-  padding: 0.6rem 1rem;
-  border-radius: 0.6rem;
-  border: 1px solid #e5e7eb;
-  font-size: 0.9rem;
-  width: 260px;
-  outline: none;
-}
-
-.search-input:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
-}
-
-.view-btn {
-  background: linear-gradient(135deg, #3b82f6, #9333ea);
-  color: #ffffff;
-  border: none;
-  border-radius: 0.7rem;
-  padding: 0.6rem 1.2rem;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
-
-.view-btn:hover {
-  opacity: 0.9;
-}
-`;
