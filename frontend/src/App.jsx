@@ -12,6 +12,13 @@ import StudentLogin from "./components/Student/studentlogin";
 import OrganizerLogin from "./components/Organizer/organizerlogin";
 import AdminLogin from "./components/Admin/adminlogin";
 
+// Organizer pages
+import OrganizerEvents from "./components/Organizer/organizerevents";
+import OrganizerParticipants from "./components/Organizer/Participants";
+import OrganizerSettings from "./components/Organizer/organizersettings";
+import OrganizerProfile from "./components/Organizer/organizerprofile";
+import UpdateEvent from "./components/Organizer/updateevent";
+
 // Student pages
 import DiscoverEvents from "./components/Student/discoverevents";
 import MyEvents from "./components/Student/myevents";
@@ -37,7 +44,7 @@ const App = () => {
         <Route path="/organizer-login" element={<OrganizerLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />
 
-        {/* Dashboards */}
+        {/* Organizer routes */}
         <Route path="/organizer" element={<OrganizerDashboard />} />
         <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
