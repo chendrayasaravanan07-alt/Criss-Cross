@@ -12,14 +12,14 @@ import StudentLogin from "./components/Student/studentlogin";
 import OrganizerLogin from "./components/Organizer/organizerlogin";
 import AdminLogin from "./components/Admin/adminlogin";
 
-// Organizer pages
+/* Organizer pages */
 import OrganizerEvents from "./components/Organizer/organizerevents";
 import OrganizerParticipants from "./components/Organizer/Participants";
 import OrganizerSettings from "./components/Organizer/organizersettings";
 import OrganizerProfile from "./components/Organizer/organizerprofile";
 import UpdateEvent from "./components/Organizer/updateevent";
 
-// Student pages
+/* Student pages */
 import DiscoverEvents from "./components/Student/discoverevents";
 import MyEvents from "./components/Student/myevents";
 import Bookmarked from "./components/Student/Bookmarked";
@@ -27,7 +27,7 @@ import Notifications from "./components/Student/notifications";
 import StudentProfile from "./components/Student/studentprofile";
 import StudentSettings from "./components/Student/studentsettings";
 
-//admin pages
+/* Admin pages */
 import UserManagement from "./components/Admin/UserManagement";
 import EventApproval from "./components/Admin/eventapprovals";
 import AdminSettingsWithSidebar from "./components/Admin/adminsettings";
@@ -46,9 +46,12 @@ const App = () => {
 
         {/* Organizer routes */}
         <Route path="/organizer" element={<OrganizerDashboard />} />
-        <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        
+        <Route path="/organizer/myevents" element={<OrganizerEvents />} />
+        <Route path="/organizer/participants" element={<OrganizerParticipants />} />
+        <Route path="/organizer/settings" element={<OrganizerSettings />} />
+        <Route path="/organizer/profile" element={<OrganizerProfile />} />
+        <Route path="/organizer/update-event/:id" element={<UpdateEvent />} />
+
         {/* Student routes */}
         <Route path="/student/dashboard" element={<StudentDashboard />} />
         <Route path="/student/discover" element={<DiscoverEvents />} />
@@ -59,10 +62,11 @@ const App = () => {
         <Route path="/student/settings" element={<StudentSettings />} />
 
         {/* Admin routes */}
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/admin/user-management" element={<UserManagement />} />
         <Route path="/admin/event-approval" element={<EventApproval />} />
         <Route path="/admin/settings" element={<AdminSettingsWithSidebar />} />
-
       </Routes>
     </BrowserRouter>
   );
