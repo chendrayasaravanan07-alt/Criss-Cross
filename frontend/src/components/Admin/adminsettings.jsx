@@ -8,6 +8,7 @@ import {
   FaSignOutAlt,
   FaShieldAlt,
 } from "react-icons/fa";
+import Sidebar from "./asidebar";   // ✅ Import Sidebar
 
 const mainMenuItems = [
   { name: "Dashboard", icon: <FaThLarge /> },
@@ -33,49 +34,7 @@ export default function AdminSettingsWithSidebar() {
 
       <div className="layout">
         {/* SIDEBAR */}
-        <div className="sidebar">
-          {/* Logo */}
-          <div className="logo">
-            <div className="logo-icon">
-              <FaShieldAlt />
-            </div>
-            <div>
-              <div className="logo-title">Criss-Cross</div>
-              <div className="logo-sub">Admin Portal</div>
-            </div>
-          </div>
-
-          {/* Menu */}
-          <div className="menu">
-            {mainMenuItems.map((item) => (
-              <div
-                key={item.name}
-                className={`menu-item ${active === item.name ? "active" : ""}`}
-                onClick={() => setActive(item.name)}
-              >
-                {item.icon}
-                {item.name}
-              </div>
-            ))}
-          </div>
-
-          {/* Bottom */}
-          <div className="sidebar-bottom">
-            <div className="user-card">
-              <div className="avatar">
-                <FaUserCircle />
-              </div>
-              <div>
-                <div className="user-name">Admin User</div>
-                <div className="user-role">System Administrator</div>
-              </div>
-            </div>
-
-            <button className="logout-btn">
-              <FaSignOutAlt /> Logout
-            </button>
-          </div>
-        </div>
+        <Sidebar />
 
         {/* MAIN CONTENT */}
         <div className="admin-settings-page">
@@ -186,112 +145,13 @@ const css = `
   min-height: 100%;
 }
 
-/* SIDEBAR */
-.sidebar {
-  width: 18%;
-  min-width: 18%;
-  background: #1b1c2b;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 3%;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 5%;
-  margin-bottom: 20%;
-}
-
-.logo-icon {
-  width: 40%;
-  height: 40%;
-  max-width: 60%;
-  max-height: 60%;
-  background: #2a2b3d;
-  border-radius: 30%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-title {
-  font-weight: 700;
-  color: #8f7bff;
-  font-size: 120%;
-}
-
-.logo-sub {
-  color: #cfcfe6;
-  font-size: 90%;
-}
-
-.menu {
-  flex: 1;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 8%;
-  padding: 6% 8%;
-  margin-bottom: 6%;
-  border-radius: 20%;
-  cursor: pointer;
-}
-
-.menu-item.active {
-  background: #9b7bff;
-}
-
-.sidebar-bottom {
-  margin-top: auto;
-}
-
-.user-card {
-  display: flex;
-  gap: 6%;
-  align-items: center;
-  margin-bottom: 10%;
-}
-
-.avatar {
-  width: 25%;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #2a2b3d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.user-name {
-  font-weight: 600;
-}
-
-.user-role {
-  font-size: 85%;
-  color: #cfcfe6;
-}
-
-.logout-btn {
-  width: 100%;
-  padding: 6%;
-  border-radius: 20%;
-  border: none;
-  background: transparent;
-  color: #ff5c5c;
-  display: flex;
-  gap: 5%;
-  cursor: pointer;
-}
 
 /* MAIN PAGE */
 .admin-settings-page {
   width: 82%;
   padding: 3%;
   background: #f9fafb;
+  margin-left: 18vw; /* Account for fixed sidebar */
 }
 
 .page-header h1 {

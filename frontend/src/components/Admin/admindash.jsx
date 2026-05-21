@@ -20,7 +20,7 @@ export default function Admindash() {
       <Sidebar />
 
       {/* ✅ Main Content */}
-      <div style={{ marginLeft: "260px",flex: 1, padding: "30px", background: "#f8fafc" }}>
+      <div style={{ marginLeft: "18vw",flex: 1, padding: "30px", background: "#f8fafc" }}>
         <h1 style={{ fontSize: "28px", marginBottom: "5px" }}>
           Admin Dashboard
         </h1>

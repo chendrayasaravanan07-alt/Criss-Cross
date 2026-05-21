@@ -8,17 +8,19 @@ import {
   FaSignOutAlt,
   FaShieldAlt,
 } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const mainMenuItems = [
-  { name: "Dashboard", icon: <FaThLarge /> },
-  { name: "User Management", icon: <FaUsers /> },
-  { name: "Event Approvals", icon: <FaCheckCircle /> },
-  { name: "Settings", icon: <FaCog /> },
+  { name: "Dashboard", icon: <FaThLarge />, path: "/admin/dashboard" },
+  { name: "User Management", icon: <FaUsers />, path: "/admin/user-management" },
+  { name: "Event Approvals", icon: <FaCheckCircle />, path: "/admin/event-approval" },
+  { name: "Settings", icon: <FaCog />, path: "/admin/settings" },
 ];
 
 export default function Sidebar() {
+  const navigate = useNavigate();
   const [active, setActive] = useState("Dashboard");
-
   const sidebarStyle = {
     height: "100vh",
     width: "18vw",
@@ -131,15 +133,23 @@ export default function Sidebar() {
       {/* Menu */}
       <div style={{ flex: 1 }}>
         {mainMenuItems.map((item) => (
-          <div
-            key={item.name}
-            style={menuItemStyle(active === item.name)}
-            onClick={() => setActive(item.name)}
-          >
-            {item.icon}
-            {item.name}
-          </div>
-        ))}
+  <NavLink
+    key={item.name}
+    to={item.path}
+    style={{
+      textDecoration: "none",
+      color: "inherit",
+    }}
+  >
+    <div
+      style={menuItemStyle(active === item.name)}
+      onClick={() => setActive(item.name)}
+    >
+      {item.icon}
+      {item.name}
+    </div>
+  </NavLink>
+))}
       </div>
 
       {/* Bottom */}
@@ -156,7 +166,7 @@ export default function Sidebar() {
           </div>
         </div>
 
-        <button style={logoutBtn}>
+        <button style={logoutBtn} onClick={()=>navigate("/selection") }>
           <FaSignOutAlt /> Logout
         </button>
       </div>
