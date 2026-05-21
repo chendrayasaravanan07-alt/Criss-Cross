@@ -15,7 +15,7 @@ const mainMenuItems = [
 const bottomMenuItems = [
   { name: "Profile",  icon: <FaUser />,       path: "/student/profile" },
   { name: "Settings", icon: <FaCog />,        path: "/student/settings" },
-  { name: "Logout",   icon: <FaSignOutAlt />, path: "/",  isLogout: true },
+  { name: "Logout",   icon: <FaSignOutAlt />, path: "/selection",  isLogout: true },
 ];
 
 export default function Sidebar() {

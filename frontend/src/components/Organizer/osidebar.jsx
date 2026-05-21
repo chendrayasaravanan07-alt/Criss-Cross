@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   FaHome,
   FaCalendarAlt,
@@ -6,28 +7,30 @@ import {
   FaUserCircle,
   FaCog,
   FaSignOutAlt,
-  FaLink,          // ✅ missing import fixed
+  FaLink,
 } from "react-icons/fa";
 
 const mainMenuItems = [
-  { name: "Dashboard", icon: <FaHome /> },
-  { name: "My Events", icon: <FaCalendarAlt /> },
-  { name: "Participants", icon: <FaUsers /> },
-  { name: "Settings", icon: <FaCog /> },
+  { name: "Dashboard", icon: <FaHome />, path: "/organizer" },
+  { name: "My Events", icon: <FaCalendarAlt />, path: "/organizer/myevents" },
+  { name: "Participants", icon: <FaUsers />, path: "/organizer/participants" },
+  { name: "Settings", icon: <FaCog />, path: "/organizer/settings" },
 ];
 
 const bottomMenuItems = [
-  { name: "Profile", icon: <FaUserCircle /> },
+  { name: "Profile", icon: <FaUserCircle />, path: "/organizer/profile" },
   { name: "Logout", icon: <FaSignOutAlt />, isLogout: true },
 ];
 
 export default function Sidebar() {
-  const [active, setActive] = useState("Dashboard"); // ✅ works now
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const sidebarStyle = {
     height: "100vh",
     width: "18vw",
     minWidth: "200px",
+     position: "fixed", 
     backgroundColor: "#1f1f2e",
     color: "#fff",
     display: "flex",
@@ -77,9 +80,8 @@ export default function Sidebar() {
   };
 
   const handleLogout = () => {
-    console.log("User logged out");
     // localStorage.clear();
-    // navigate("/login");
+    navigate("/selection");
   };
 
   return (
@@ -95,8 +97,8 @@ export default function Sidebar() {
         {mainMenuItems.map((item) => (
           <div
             key={item.name}
-            onClick={() => setActive(item.name)}
-            style={menuItemStyle(active === item.name)}
+            onClick={() => navigate(item.path)}
+            style={menuItemStyle(location.pathname === item.path)}
           >
             <div style={iconStyle}>{item.icon}</div>
             {item.name}
@@ -110,10 +112,10 @@ export default function Sidebar() {
           <div
             key={item.name}
             onClick={() =>
-              item.isLogout ? handleLogout() : setActive(item.name)
+              item.isLogout ? handleLogout() : navigate(item.path)
             }
             style={{
-              ...menuItemStyle(active === item.name),
+              ...menuItemStyle(location.pathname === item.path),
               ...(item.isLogout ? { color: "#ff6b6b" } : {}),
             }}
           >

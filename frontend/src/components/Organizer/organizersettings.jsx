@@ -10,7 +10,7 @@ import {
   EyeOff,
   CheckCircle2
 } from "lucide-react";
-import Sidebar from "./sidebar";
+import Sidebar from "./osidebar";
 
 export default function Organizersettings() {
   const [showPassword, setShowPassword] = useState(false);

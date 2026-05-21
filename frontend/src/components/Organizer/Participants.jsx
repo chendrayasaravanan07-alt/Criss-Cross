@@ -1,110 +1,83 @@
 import React, { useState } from "react";
-import {
-  FaHome,
-  FaCompass,
-  FaTrophy,
-  FaBookmark,
-  FaBell,
-  FaUser,
-  FaCog,
-  FaLink,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import Sidebar from "./osidebar";
 
 export default function Participants() {
-  const [active, setActive] = useState("Dashboard");
   const [search, setSearch] = useState("");
 
-  /* ---------------- Sidebar Data ---------------- */
-
-  const mainMenuItems = [
-    { name: "Dashboard", icon: <FaHome /> },
-    { name: "Discover", icon: <FaCompass /> },
-    { name: "My Events", icon: <FaTrophy /> },
-    { name: "Bookmarked", icon: <FaBookmark /> },
-    { name: "Notifications", icon: <FaBell /> },
+  const participantsData = [
+    {
+      id: 1,
+      name: "Emily Rodriguez",
+      email: "emily.r@email.com",
+      event: "AI Innovation Challenge 2025",
+      date: "Dec 15, 2024",
+      location: "San Francisco, CA",
+      org: "Stanford University",
+      type: "Team",
+      status: "Registered",
+      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    },
+    {
+      id: 2,
+      name: "Michael Chen",
+      email: "m.chen@university.edu",
+      event: "Web3 Summit Hackathon",
+      date: "Dec 18, 2024",
+      location: "Boston, MA",
+      org: "MIT",
+      type: "Team",
+      status: "Registered",
+      avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    },
+    {
+      id: 3,
+      name: "Sarah Thompson",
+      email: "sarah.t@college.edu",
+      event: "AI Innovation Challenge 2025",
+      date: "Dec 10, 2024",
+      location: "Berkeley, CA",
+      org: "UC Berkeley",
+      type: "Solo",
+      status: "Registered",
+      avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+    },
+    {
+      id: 4,
+      name: "David Park",
+      email: "d.park@university.com",
+      event: "Web3 Summit Hackathon",
+      date: "Dec 20, 2024",
+      location: "Atlanta, GA",
+      org: "Georgia Tech",
+      type: "Team",
+      status: "Registered",
+      avatar: "https://randomuser.me/api/portraits/men/41.jpg",
+    },
+    {
+      id: 5,
+      name: "Jessica Liu",
+      email: "j.liu@school.edu",
+      event: "Startup Weekend 2025",
+      date: "Dec 12, 2024",
+      location: "Pittsburgh, PA",
+      org: "Carnegie Mellon",
+      type: "Team",
+      status: "Registered",
+      avatar: "https://randomuser.me/api/portraits/women/50.jpg",
+    },
+    {
+      id: 6,
+      name: "Alex Johnson",
+      email: "alex.j@college.edu",
+      event: "AI Innovation Challenge 2025",
+      date: "Dec 22, 2024",
+      location: "Ithaca, NY",
+      org: "Cornell University",
+      type: "Solo",
+      status: "Registered",
+      avatar: "https://randomuser.me/api/portraits/men/29.jpg",
+    },
   ];
-
-  const bottomMenuItems = [
-    { name: "Profile", icon: <FaUser /> },
-    { name: "Settings", icon: <FaCog /> },
-    { name: "Logout", icon: <FaSignOutAlt />, isLogout: true },
-  ];
-
-  /* ---------------- Participants Data ---------------- */
-
-  const participantsData = [{
-    id: 1,
-    name: "Emily Rodriguez",
-    email: "emily.r@email.com",
-    event: "AI Innovation Challenge 2025",
-    date: "Dec 15, 2024",
-    location: "San Francisco, CA",
-    org: "Stanford University",
-    type: "Team",
-    status: "Registered",
-    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-  },
-  {
-    id: 2,
-    name: "Michael Chen",
-    email: "m.chen@university.edu",
-    event: "Web3 Summit Hackathon",
-    date: "Dec 18, 2024",
-    location: "Boston, MA",
-    org: "MIT",
-    type: "Team",
-    status: "Registered",
-    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-  },
-  {
-    id: 3,
-    name: "Sarah Thompson",
-    email: "sarah.t@college.edu",
-    event: "AI Innovation Challenge 2025",
-    date: "Dec 10, 2024",
-    location: "Berkeley, CA",
-    org: "UC Berkeley",
-    type: "Solo",
-    status: "Registered",
-    avatar: "https://randomuser.me/api/portraits/women/65.jpg",
-  },
-  {
-    id: 4,
-    name: "David Park",
-    email: "d.park@university.com",
-    event: "Web3 Summit Hackathon",
-    date: "Dec 20, 2024",
-    location: "Atlanta, GA",
-    org: "Georgia Tech",
-    type: "Team",
-    status: "Registered",
-    avatar: "https://randomuser.me/api/portraits/men/41.jpg",
-  },
-  {
-    id: 5,
-    name: "Jessica Liu",
-    email: "j.liu@school.edu",
-    event: "Startup Weekend 2025",
-    date: "Dec 12, 2024",
-    location: "Pittsburgh, PA",
-    org: "Carnegie Mellon",
-    type: "Team",
-    status: "Registered",
-    avatar: "https://randomuser.me/api/portraits/women/50.jpg",
-  },
-  {
-    id: 6,
-    name: "Alex Johnson",
-    email: "alex.j@college.edu",
-    event: "AI Innovation Challenge 2025",
-    date: "Dec 22, 2024",
-    location: "Ithaca, NY",
-    org: "Cornell University",
-    type: "Solo",
-    status: "Registered",
-    avatar: "https://randomuser.me/api/portraits/men/29.jpg",
-  },];
 
   const filteredParticipants = participantsData.filter((p) =>
     `${p.name} ${p.email} ${p.event}`
@@ -112,72 +85,41 @@ export default function Participants() {
       .includes(search.toLowerCase())
   );
 
-  /* ---------------- Sidebar Style ---------------- */
+  const handleDownloadReport = () => {
+    const headers = ["Name", "Email", "Event", "Date", "Location", "Organization", "Type", "Status"];
 
-  const sidebarStyle = {
-    height: "100vh",
-    width: "260px",
-    position: "fixed",
-    left: 0,
-    top: 0,
-    backgroundColor: "#1f1f2e",
-    color: "#fff",
-    display: "flex",
-    flexDirection: "column",
-    padding: "20px",
-    boxSizing: "border-box",
+    const rows = filteredParticipants.map((p) => [
+      p.name,
+      p.email,
+      p.event,
+      p.date,
+      p.location,
+      p.org,
+      p.type,
+      p.status,
+    ]);
+
+    const csvContent = [headers, ...rows]
+      .map((row) => row.map((cell) => `"${cell}"`).join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `participants_report_${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+
+    URL.revokeObjectURL(url);
   };
-
-  const menuItemStyle = (isActive) => ({
-    display: "flex",
-    alignItems: "center",
-    padding: "12px 16px",
-    marginBottom: "10px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    background: isActive
-      ? "linear-gradient(90deg, #7b61ff, #a17cff)"
-      : "transparent",
-  });
 
   return (
     <>
       <style>{css}</style>
 
-      {/* ---------------- Sidebar ---------------- */}
-      <div style={sidebarStyle}>
-        <div style={{ fontSize: "22px", marginBottom: "40px" }}>
-          <FaLink /> Criss-Cross
-        </div>
+      <Sidebar />
 
-        <div style={{ flex: 1 }}>
-          {mainMenuItems.map((item) => (
-            <div
-              key={item.name}
-              onClick={() => setActive(item.name)}
-              style={menuItemStyle(active === item.name)}
-            >
-              <div style={{ marginRight: "10px" }}>{item.icon}</div>
-              {item.name}
-            </div>
-          ))}
-        </div>
-
-        <div>
-          {bottomMenuItems.map((item) => (
-            <div
-              key={item.name}
-              onClick={() => setActive(item.name)}
-              style={menuItemStyle(active === item.name)}
-            >
-              <div style={{ marginRight: "10px" }}>{item.icon}</div>
-              {item.name}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ---------------- Participants Page ---------------- */}
       <div className="participants-page">
         <div className="participants-header">
           <h1>Registered Participants</h1>
@@ -186,7 +128,9 @@ export default function Participants() {
 
         <div className="stats-card">
           <span className="stats-number">{filteredParticipants.length}</span>
-          <span className="stats-text">Registered Participants</span>
+          <span className="stats-text">
+            {search ? "Matching Participants" : "Registered Participants"}
+          </span>
         </div>
 
         <div className="toolbar">
@@ -196,7 +140,7 @@ export default function Participants() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button>Download Report</button>
+          <button onClick={handleDownloadReport}>⬇ Download Report</button>
         </div>
 
         <div className="table-container">
@@ -210,7 +154,6 @@ export default function Participants() {
                 <th>Status</th>
               </tr>
             </thead>
-
             <tbody>
               {filteredParticipants.map((p) => (
                 <tr key={p.id}>
@@ -223,29 +166,24 @@ export default function Participants() {
                       </div>
                     </div>
                   </td>
-
                   <td>
                     <strong>{p.event}</strong>
                     <span className="sub">{p.date}</span>
                   </td>
-
                   <td>
                     <strong>{p.location}</strong>
                     <span className="sub">{p.org}</span>
                   </td>
-
                   <td>
                     <span className={`badge ${p.type.toLowerCase()}`}>
                       {p.type}
                     </span>
                   </td>
-
                   <td>
                     <span className="status">{p.status}</span>
                   </td>
                 </tr>
               ))}
-
               {filteredParticipants.length === 0 && (
                 <tr>
                   <td colSpan="5" className="empty">
@@ -261,76 +199,89 @@ export default function Participants() {
   );
 }
 
-
-/* ---------------- CSS ---------------- */
-
 const css = `
 .participants-page {
-  width: calc(100% - 260px);
-  margin-left: 260px;
+  margin-left: clamp(200px, 18vw, 280px);
+  width: calc(100% - clamp(200px, 18vw, 280px));
+  box-sizing: border-box;
   padding: 3%;
   min-height: 100vh;
   background: #f9fafb;
 }
 
 .participants-header h1 {
-  font-size: 3vh;
+  font-size: 26px;
+  margin-bottom: 4px;
 }
 
 .participants-header p {
-  margin-top: 0.5%;
+  margin-top: 0;
   color: #6b7280;
 }
 
 .stats-card {
-  margin-top: 3%;
-  width: 30%;
+  margin-top: 24px;
+  width: 260px;
   background: white;
-  padding: 3%;
-  border-radius: 2vh;
+  padding: 20px 24px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
-  gap: 2%;
+  gap: 12px;
+  border: 1px solid #e5e7eb;
 }
 
 .stats-number {
-  font-size: 3vh;
-  font-weight: 600;
+  font-size: 28px;
+  font-weight: 700;
+  color: #6366f1;
 }
 
 .stats-text {
   color: #6b7280;
+  font-size: 14px;
 }
 
 .toolbar {
-  margin-top: 3%;
+  margin-top: 24px;
   display: flex;
   justify-content: space-between;
-  gap: 2%;
+  gap: 12px;
 }
 
 .toolbar input {
-  width: 55%;
-  padding: 1.5% 3%;
-  border-radius: 2vh;
-  border: 0.2vh solid #e5e7eb;
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  outline: none;
 }
 
 .toolbar button {
-  padding: 1.5% 3%;
-  border-radius: 2vh;
+  padding: 12px 20px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   color: white;
-  background: linear-gradient(90deg, #3b82f6, #9333ea);
+  font-size: 14px;
+  font-weight: 500;
+  background: linear-gradient(90deg, #6366f1, #9333ea);
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+.toolbar button:hover {
+  opacity: 0.9;
 }
 
 .table-container {
-  margin-top: 3%;
+  margin-top: 24px;
   background: white;
-  border-radius: 2vh;
-  padding: 2%;
+  border-radius: 14px;
+  padding: 16px 24px;
   overflow-x: auto;
+  border: 1px solid #e5e7eb;
 }
 
 table {
@@ -340,43 +291,51 @@ table {
 
 th {
   text-align: left;
-  padding-bottom: 1.5%;
+  padding: 0 0 14px 0;
   color: #6b7280;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 td {
-  padding: 2% 0;
-  border-top: 0.1vh solid #e5e7eb;
+  padding: 14px 0;
+  border-top: 1px solid #f3f4f6;
+  font-size: 14px;
 }
 
 .user {
   display: flex;
-  gap: 1vh;
+  gap: 10px;
   align-items: center;
 }
 
 .user img {
-  width: 4vh;
-  height: 4vh;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .user span {
   display: block;
-  font-size: 1.4vh;
+  font-size: 12px;
   color: #6b7280;
+  margin-top: 2px;
 }
 
 .sub {
   display: block;
-  font-size: 1.4vh;
+  font-size: 12px;
   color: #6b7280;
+  margin-top: 2px;
 }
 
 .badge {
-  padding: 0.5vh 1.5vh;
-  border-radius: 2vh;
-  font-size: 1.4vh;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .badge.team {
@@ -392,29 +351,15 @@ td {
 .status {
   background: #ecfdf5;
   color: #16a34a;
-  padding: 0.5vh 1.5vh;
-  border-radius: 2vh;
-  font-size: 1.4vh;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .empty {
   text-align: center;
-  padding: 3%;
+  padding: 40px;
   color: #6b7280;
-}
-
-@media (max-width: 900px) {
-  .participants-page {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .toolbar {
-    flex-direction: column;
-  }
-
-  .toolbar input {
-    width: 100%;
-  }
 }
 `;
