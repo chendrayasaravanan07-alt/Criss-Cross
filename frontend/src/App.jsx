@@ -1,11 +1,13 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Selection from "./components/selection";
 import StudentDashboard from "./components/Student/studentdash";
 import OrganizerDashboard from "./components/Organizer/organizerdash";
 import AdminDashboard from "./components/Admin/admindash";
 import LandingPage from "./components/LandingPage";
+
+/* Login Pages */
 import StudentLogin from "./components/Student/studentlogin";
 import OrganizerLogin from "./components/Organizer/organizerlogin";
 import AdminLogin from "./components/Admin/adminlogin";
@@ -25,6 +27,11 @@ import Notifications from "./components/Student/notifications";
 import StudentProfile from "./components/Student/studentprofile";
 import StudentSettings from "./components/Student/studentsettings";
 
+//admin pages
+import UserManagement from "./components/Admin/UserManagement";
+import EventApproval from "./components/Admin/eventapprovals";
+import AdminSettingsWithSidebar from "./components/Admin/adminsettings";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -39,15 +46,9 @@ const App = () => {
 
         {/* Organizer routes */}
         <Route path="/organizer" element={<OrganizerDashboard />} />
-        <Route path="/organizer/myevents" element={<OrganizerEvents />} />
-        <Route path="/organizer/participants" element={<OrganizerParticipants />} />
-        <Route path="/organizer/settings" element={<OrganizerSettings />} />
-        <Route path="/organizer/profile" element={<OrganizerProfile />} />
-        <Route path="/organizer/update-event/:id" element={<UpdateEvent />} />
-
-        {/* Admin */}
-        <Route path="/admin" element={<AdminDashboard />} />
-
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        
         {/* Student routes */}
         <Route path="/student/dashboard" element={<StudentDashboard />} />
         <Route path="/student/discover" element={<DiscoverEvents />} />
@@ -56,6 +57,12 @@ const App = () => {
         <Route path="/student/notifications" element={<Notifications />} />
         <Route path="/student/profile" element={<StudentProfile />} />
         <Route path="/student/settings" element={<StudentSettings />} />
+
+        {/* Admin routes */}
+        <Route path="/admin/user-management" element={<UserManagement />} />
+        <Route path="/admin/event-approval" element={<EventApproval />} />
+        <Route path="/admin/settings" element={<AdminSettingsWithSidebar />} />
+
       </Routes>
     </BrowserRouter>
   );

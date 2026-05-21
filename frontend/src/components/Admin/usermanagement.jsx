@@ -6,6 +6,7 @@ import {
   FaBan,
   FaSearch,
 } from "react-icons/fa";
+import Sidebar from "./asidebar";
 
 export default function UserManagement() {
   const usersData = [
@@ -41,15 +42,10 @@ export default function UserManagement() {
 
   return (
     <div style={{ display: "flex", height: "100vh", background: "#f8fafc" }}>
-      
-      {/* 🔵 20% Sidebar Div */}
-      <div style={{ width: "20%", background: "#111827", color: "white" }}>
-        {/* You can import Sidebar component here */}
-        {/* <Sidebar /> */}
-      </div>
+      <Sidebar />
 
       {/* 🔵 80% Main Content */}
-      <div style={{ width: "80%", padding: "30px" }}>
+      <div style={{marginLeft: "18vw", width: "80%", padding: "30px" }}>
         <h2 style={{ marginBottom: "5px" }}>User Management</h2>
         <p style={{ color: "gray", marginBottom: "30px" }}>
           Manage all users across the platform
