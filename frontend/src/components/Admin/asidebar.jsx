@@ -9,7 +9,7 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const mainMenuItems = [
   { name: "Dashboard", icon: <FaThLarge />, path: "/admin/dashboard" },
@@ -20,7 +20,9 @@ const mainMenuItems = [
 
 export default function Sidebar() {
   const navigate = useNavigate();
-  const [active, setActive] = useState("Dashboard");
+const location = useLocation();
+
+const isActive = (path) => location.pathname === path;
   const sidebarStyle = {
     height: "100vh",
     width: "18vw",
@@ -129,28 +131,18 @@ export default function Sidebar() {
           <div style={subtitleStyle}>Admin Portal</div>
         </div>
       </div>
-
-      {/* Menu */}
       <div style={{ flex: 1 }}>
-        {mainMenuItems.map((item) => (
-  <NavLink
-    key={item.name}
-    to={item.path}
-    style={{
-      textDecoration: "none",
-      color: "inherit",
-    }}
-  >
+  {mainMenuItems.map((item) => (
     <div
-      style={menuItemStyle(active === item.name)}
-      onClick={() => setActive(item.name)}
+      key={item.name}
+      onClick={() => navigate(item.path)}
+      style={menuItemStyle(isActive(item.path))}
     >
       {item.icon}
       {item.name}
     </div>
-  </NavLink>
-))}
-      </div>
+  ))}
+</div>
 
       {/* Bottom */}
       <div style={bottomSection}>
