@@ -160,9 +160,20 @@ export default function AdminLogin() {
         </div>
 
         {/* Button */}
-        <Link to="/admin" style={{ textDecoration: "none" }}>
-        <button style={buttonStyle}>Sign In as Admin →</button>
+        <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
+          <button style={buttonStyle}>Sign In as Admin →</button>
         </Link>
+
+        {/* Footer — links to /admin-reg */}
+        <p style={{ marginTop: "20px", textAlign: "center", fontSize: "14px", color: "#6b7280" }}>
+          Need an admin account?{" "}
+          <Link
+            to="/admin-reg"
+            style={{ color: "#2563eb", fontWeight: "600", textDecoration: "none" }}
+          >
+            Register as Admin
+          </Link>
+        </p>
 
         {/* Secure Notice */}
         <div style={secureBoxStyle}>

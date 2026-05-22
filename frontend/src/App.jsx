@@ -7,6 +7,11 @@ import OrganizerDashboard from "./components/Organizer/organizerdash";
 import AdminDashboard from "./components/Admin/admindash";
 import LandingPage from "./components/LandingPage";
 
+/* Registration Pages */
+import StudentRegistration from "./components/Student/studentregistration";
+import OrganizerRegistration from "./components/Organizer/organizerregistration";
+import AdminRegistration from "./components/Admin/adminregistration";
+
 /* Login Pages */
 import StudentLogin from "./components/Student/studentlogin";
 import OrganizerLogin from "./components/Organizer/organizerlogin";
@@ -39,6 +44,10 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/selection" element={<Selection />} />
 
+        {/* Registration Pages */}
+        <Route path="/student-reg" element={<StudentRegistration />} />
+        <Route path="/organizer-reg" element={<OrganizerRegistration />} />
+        <Route path="/admin-reg" element={<AdminRegistration />} />
         {/* Login Pages */}
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/organizer-login" element={<OrganizerLogin />} />
@@ -47,7 +56,10 @@ const App = () => {
         {/* Organizer routes */}
         <Route path="/organizer" element={<OrganizerDashboard />} />
         <Route path="/organizer/myevents" element={<OrganizerEvents />} />
-        <Route path="/organizer/participants" element={<OrganizerParticipants />} />
+        <Route
+          path="/organizer/participants"
+          element={<OrganizerParticipants />}
+        />
         <Route path="/organizer/settings" element={<OrganizerSettings />} />
         <Route path="/organizer/profile" element={<OrganizerProfile />} />
         <Route path="/organizer/update-event/:id" element={<UpdateEvent />} />

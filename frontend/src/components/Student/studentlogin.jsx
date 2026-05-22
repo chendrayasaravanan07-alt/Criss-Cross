@@ -143,14 +143,16 @@ export default function StudentLogin() {
         <Link to="/student/dashboard" style={{ textDecoration: "none" }}>
           <button style={buttonStyle}>Sign In →</button>
         </Link>
-    
 
-        {/* Footer */}
+        {/* Footer — links to /student-reg as defined in App.jsx */}
         <p style={{ marginTop: "20px", textAlign: "center" }}>
           Don't have an account?{" "}
-          <span style={{ color: "#2563eb", cursor: "pointer" }}>
+          <Link
+            to="/student-reg"
+            style={{ color: "#2563eb", cursor: "pointer", fontWeight: "600", textDecoration: "none" }}
+          >
             Create Student Account
-          </span>
+          </Link>
         </p>
       </div>
     </div>
