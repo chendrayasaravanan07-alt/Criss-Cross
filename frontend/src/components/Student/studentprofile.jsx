@@ -59,9 +59,9 @@ function StudentProfile() {
       {/* Main Content */}
       <div
         style={{
-          marginLeft: "18vw",
-          width: "calc(100% - 18vw)",
-          padding: "30px",
+          marginLeft: "18%",
+          width: "82%",
+          padding: "3%",
           boxSizing: "border-box",
         }}
       >
@@ -91,11 +91,11 @@ function StudentProfile() {
                 </>
               ) : (
                 <>
-                  <h2>{profile.name}</h2>
-                  <p>{profile.degree}</p>
-                  <p>{profile.bio}</p>
-                  <p>📧 {profile.email}</p>
-                  <p>📍 {profile.location}</p>
+                  <h2 style={{ fontSize: "2.2vh" }}>{profile.name}</h2>
+                  <p style={{ fontSize: "1.5vh" }}>{profile.degree}</p>
+                  <p style={{ fontSize: "1.4vh" }}>{profile.bio}</p>
+                  <p style={{ fontSize: "1.4vh" }}>📧 {profile.email}</p>
+                  <p style={{ fontSize: "1.4vh" }}>📍 {profile.location}</p>
                 </>
               )}
             </div>
@@ -111,13 +111,13 @@ function StudentProfile() {
 
         {/* Events Count */}
         <div style={styles.card}>
-          <h2>3</h2>
-          <p>Events Participated</p>
+          <h2 style={{ fontSize: "2.5vh" }}>3</h2>
+          <p style={{ fontSize: "1.4vh" }}>Events Participated</p>
         </div>
 
         {/* Skills */}
         <div style={styles.section}>
-          <h3>💡 Skills</h3>
+          <h3 style={{ fontSize: "1.8vh" }}>💡 Skills</h3>
           <div style={styles.tags}>
             {skills.map((s, i) => (
               <span key={i} style={styles.tag}>{s}</span>
@@ -138,7 +138,7 @@ function StudentProfile() {
 
         {/* Interests */}
         <div style={styles.section}>
-          <h3>⭐ Interests</h3>
+          <h3 style={{ fontSize: "1.8vh" }}>⭐ Interests</h3>
           <div style={styles.tags}>
             {interests.map((item, idx) => (
               <span key={idx} style={styles.tag}>{item}</span>
@@ -164,110 +164,115 @@ function StudentProfile() {
 const styles = {
   header: {
     background: "#fff",
-    borderRadius: "16px",
-    marginBottom: "25px",
+    borderRadius: "2vh",
+    marginBottom: "3%",
     position: "relative",
   },
   banner: {
-    height: "120px",
+    height: "15vh",
     background: "linear-gradient(90deg, #6366f1, #ec4899)",
-    borderRadius: "16px 16px 0 0",
+    borderRadius: "2vh 2vh 0 0",
   },
   profileRow: {
     display: "flex",
-    gap: "20px",
-    padding: "20px",
+    gap: "2%",
+    padding: "2%",
     alignItems: "center",
   },
   avatar: {
-    width: "120px",
-    height: "120px",
-    borderRadius: "16px",
+    width: "12vh",
+    height: "12vh",
+    borderRadius: "1.5vh",
     border: "4px solid white",
-    marginTop: "-60px",
+    marginTop: "-8%",
     objectFit: "cover",
   },
   uploadBtn: {
     position: "absolute",
-    bottom: "5px",
-    right: "5px",
+    bottom: "3%",
+    right: "3%",
     background: "#4f46e5",
     color: "#fff",
-    fontSize: "12px",
-    padding: "4px 8px",
-    borderRadius: "6px",
+    fontSize: "1.2vh",
+    padding: "0.5% 1%",
+    borderRadius: "0.8vh",
     cursor: "pointer",
   },
   editBtnLeft: {
-    height: "40px",
-    padding: "8px 16px",
-    borderRadius: "8px",
+    height: "5vh",
+    padding: "1% 2%",
+    borderRadius: "1vh",
     border: "none",
     background: "#4f46e5",
     color: "#fff",
     cursor: "pointer",
     alignSelf: "flex-start",
+    fontSize: "1.4vh",
   },
   input: {
     display: "block",
     width: "100%",
-    padding: "8px",
-    marginBottom: "8px",
-    borderRadius: "6px",
+    padding: "1%",
+    marginBottom: "1%",
+    borderRadius: "0.8vh",
     border: "1px solid #ccc",
+    fontSize: "1.4vh",
   },
   textarea: {
     width: "100%",
-    height: "60px",
-    padding: "8px",
-    marginBottom: "8px",
-    borderRadius: "6px",
+    height: "8vh",
+    padding: "1%",
+    marginBottom: "1%",
+    borderRadius: "0.8vh",
     border: "1px solid #ccc",
+    fontSize: "1.4vh",
   },
   card: {
     background: "#fff",
-    padding: "20px",
-    borderRadius: "16px",
-    width: "260px",
-    marginBottom: "20px",
+    padding: "2%",
+    borderRadius: "2vh",
+    width: "28%",
+    marginBottom: "2%",
   },
   section: {
     background: "#fff",
-    padding: "20px",
-    borderRadius: "16px",
-    marginBottom: "20px",
+    padding: "2%",
+    borderRadius: "2vh",
+    marginBottom: "2%",
   },
   tags: {
     display: "flex",
-    gap: "10px",
+    gap: "1%",
     flexWrap: "wrap",
   },
   tag: {
     background: "#eef2ff",
     color: "#4f46e5",
-    padding: "6px 14px",
+    padding: "0.6% 1.5%",
     borderRadius: "999px",
-    fontSize: "13px",
+    fontSize: "1.3vh",
     fontWeight: "500",
   },
   addBox: {
-    marginTop: "10px",
+    marginTop: "1%",
     display: "flex",
-    gap: "8px",
+    gap: "1%",
   },
   addInput: {
     flex: 1,
-    padding: "8px",
-    borderRadius: "6px",
+    padding: "1%",
+    borderRadius: "0.8vh",
     border: "1px solid #ccc",
+    fontSize: "1.4vh",
   },
   addBtn: {
-    padding: "8px 16px",
-    borderRadius: "6px",
+    padding: "1% 2%",
+    borderRadius: "0.8vh",
     border: "none",
     background: "#4f46e5",
     color: "#fff",
     cursor: "pointer",
+    fontSize: "1.4vh",
   },
 };
 

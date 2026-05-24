@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { User, Lock, Bell, Eye, EyeOff, Save, CheckCircle2 } from "lucide-react";
 import Sidebar from "../Student/sidebar";
 
@@ -20,7 +20,6 @@ export default function Studentsettings() {
     confirmPassword: ""
   });
 
-  // Scroll-spy: update active nav link based on scroll position
   useEffect(() => {
     const handleScroll = () => {
       const sections = ["account", "security", "notifications"];
@@ -70,7 +69,7 @@ export default function Studentsettings() {
 
   const handleSave = () => {
     localStorage.setItem("studentSettings", JSON.stringify(settings));
-    setSaved(true); // ✅ was missing before
+    setSaved(true);
     setTimeout(() => setSaved(false), 2500);
   };
 
@@ -85,39 +84,40 @@ export default function Studentsettings() {
         body { background: #f7f8fc; font-family: Inter, sans-serif; }
 
         .container {
-          margin-left: 18vw;
-          padding: 24px;
-          min-height: 100%;
+          margin-left: 18%;
+          padding: 2.5%;
+          min-height: 100vh;
           background: #f7f8fc;
-          max-width: calc(100% - 18vw);
+          max-width: 82%;
+          box-sizing: border-box;
         }
 
-        h1 { font-size: 26px; margin-bottom: 6px; }
-        .subtitle { color: #6b7280; }
+        h1 { font-size: 3vh; margin-bottom: 0.8%; }
+        .subtitle { color: #6b7280; font-size: 1.5vh; }
 
         .layout {
           display: grid;
-          grid-template-columns: 220px 1fr;
-          gap: 24px;
-          margin-top: 24px;
+          grid-template-columns: 22% 1fr;
+          gap: 2.5%;
+          margin-top: 2.5%;
           align-items: start;
         }
 
         .settings-nav {
           background: #fff;
-          border-radius: 16px;
-          padding: 8px;
+          border-radius: 2vh;
+          padding: 1%;
           border: 1px solid #e5e7eb;
           position: sticky;
-          top: 24px;
+          top: 2.5%;
         }
 
         .nav-link {
           display: flex;
           align-items: center;
-          gap: 12px;
-          padding: 14px 16px;
-          border-radius: 14px;
+          gap: 4%;
+          padding: 1.5% 2%;
+          border-radius: 1.8vh;
           color: #374151;
           text-decoration: none;
           cursor: pointer;
@@ -125,7 +125,7 @@ export default function Studentsettings() {
           border: none;
           background: none;
           width: 100%;
-          font-size: 14px;
+          font-size: 1.5vh;
         }
 
         .nav-link:hover { background: #f3f4f6; }
@@ -137,41 +137,51 @@ export default function Studentsettings() {
 
         .card {
           background: white;
-          border-radius: 18px;
-          padding: 24px;
+          border-radius: 2vh;
+          padding: 3%;
           border: 1px solid #e5e7eb;
         }
 
         .section-title {
           display: flex;
           align-items: center;
-          gap: 10px;
-          margin-bottom: 20px;
-          font-size: 18px;
+          gap: 2%;
+          margin-bottom: 2.5%;
+          font-size: 2vh;
           font-weight: 600;
         }
 
-        label { font-size: 14px; color: #374151; margin-bottom: 6px; display: block; }
+        label {
+          font-size: 1.4vh;
+          color: #374151;
+          margin-bottom: 0.8%;
+          display: block;
+        }
 
         input[type="text"],
         input[type="email"],
         input[type="password"] {
           width: 100%;
-          padding: 12px 14px;
-          border-radius: 12px;
+          padding: 1.2% 1.5%;
+          border-radius: 1.5vh;
           border: 1px solid #e5e7eb;
           background: #f9fafb;
           outline: none;
           box-sizing: border-box;
+          font-size: 1.4vh;
         }
 
-        .input-group { margin-bottom: 16px; }
+        .input-group { margin-bottom: 2%; }
 
-        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .password-wrapper {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
 
         .eye-btn {
           position: absolute;
-          right: 12px;
+          right: 2%;
           background: none;
           border: none;
           cursor: pointer;
@@ -184,22 +194,23 @@ export default function Studentsettings() {
           background: linear-gradient(135deg, #3b82f6, #8b5cf6);
           color: white;
           border: none;
-          padding: 12px 20px;
-          border-radius: 14px;
+          padding: 1.2% 2%;
+          border-radius: 1.8vh;
           cursor: pointer;
-          font-size: 14px;
+          font-size: 1.4vh;
           display: flex;
           align-items: center;
-          gap: 8px;
-          margin-top: 16px;
+          gap: 2%;
+          margin-top: 2%;
         }
 
         .notifications-row {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 10px 0;
+          padding: 1.2% 0;
           border-bottom: 1px solid #f3f4f6;
+          font-size: 1.4vh;
         }
 
         .notifications-row:last-child { border-bottom: none; }
@@ -214,6 +225,7 @@ export default function Studentsettings() {
 
         @media (max-width: 900px) {
           .layout { grid-template-columns: 1fr; }
+          .container { margin-left: 0; max-width: 100%; }
         }
       `}</style>
 
@@ -227,9 +239,9 @@ export default function Studentsettings() {
           {/* Internal Settings Nav */}
           <aside className="settings-nav">
             {[
-              { id: "account",       label: "Account",             Icon: User,  color: "#3b82f6" },
-              { id: "security",      label: "Security",            Icon: Lock,  color: "#8b5cf6" },
-              { id: "notifications", label: "Email Notifications", Icon: Bell,  color: "#f97316" },
+              { id: "account",       label: "Account",             Icon: User, color: "#3b82f6" },
+              { id: "security",      label: "Security",            Icon: Lock, color: "#8b5cf6" },
+              { id: "notifications", label: "Email Notifications", Icon: Bell, color: "#f97316" },
             ].map(({ id, label, Icon, color }) => (
               <button
                 key={id}
@@ -243,7 +255,7 @@ export default function Studentsettings() {
           </aside>
 
           {/* Content */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "2.5%" }}>
 
             {/* Account */}
             <section id="account" className="card">

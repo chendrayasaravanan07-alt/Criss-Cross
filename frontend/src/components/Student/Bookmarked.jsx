@@ -1,14 +1,11 @@
 import React, { useState, useMemo } from "react";
 import Sidebar from "./sidebar";
 
-/* ─── Image Optimizer ────────────────────────────────────── */
 const optimize = (url) => {
-  // strip any existing query string then add our params
   const base = url.split("?")[0];
   return `${base}?w=400&h=210&fit=crop&q=70&auto=format`;
 };
 
-/* ─── Static Data (outside component) ───────────────────── */
 const bookmarks = [
   {
     id: 1,
@@ -19,7 +16,9 @@ const bookmarks = [
     tag: "Finance",
     prize: "$60,000",
     daysLeft: "18 days left",
-    image: optimize("https://images.unsplash.com/photo-1520607162513-77705c0f0d4a"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a",
+    ),
   },
   {
     id: 2,
@@ -30,7 +29,9 @@ const bookmarks = [
     tag: "AR/VR",
     prize: "$28,000",
     daysLeft: "41 days left",
-    image: optimize("https://images.unsplash.com/photo-1593508512255-86ab42a8e620"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1593508512255-86ab42a8e620",
+    ),
   },
   {
     id: 3,
@@ -41,7 +42,9 @@ const bookmarks = [
     tag: "Data Science",
     prize: "$38,000",
     daysLeft: "64 days left",
-    image: optimize("https://images.unsplash.com/photo-1551288049-bebda4e38f71"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71",
+    ),
   },
   {
     id: 4,
@@ -52,7 +55,9 @@ const bookmarks = [
     tag: "Social Impact",
     prize: "$25,000",
     daysLeft: "15 days left",
-    image: optimize("https://images.unsplash.com/photo-1509099836639-18ba1795216d"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1509099836639-18ba1795216d",
+    ),
   },
   {
     id: 5,
@@ -63,7 +68,9 @@ const bookmarks = [
     tag: "Music & Audio",
     prize: "$18,000",
     daysLeft: "85 days left",
-    image: optimize("https://images.unsplash.com/photo-1511379938547-c1f69419868d"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1511379938547-c1f69419868d",
+    ),
   },
   {
     id: 6,
@@ -74,7 +81,9 @@ const bookmarks = [
     tag: "Robotics",
     prize: "$65,000",
     daysLeft: "104 days left",
-    image: optimize("https://images.unsplash.com/photo-1581091012184-5c7c9b2b7b2d"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1581091012184-5c7c9b2b7b2d",
+    ),
   },
   {
     id: 7,
@@ -85,7 +94,9 @@ const bookmarks = [
     tag: "Food Tech",
     prize: "$22,000",
     daysLeft: "21 days left",
-    image: optimize("https://images.unsplash.com/photo-1504754524776-8f4f37790ca0"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1504754524776-8f4f37790ca0",
+    ),
   },
   {
     id: 8,
@@ -96,7 +107,9 @@ const bookmarks = [
     tag: "Space & Aerospace",
     prize: "$80,000",
     daysLeft: "93 days left",
-    image: optimize("https://images.unsplash.com/photo-1451187580459-43490279c0fa"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa",
+    ),
   },
   {
     id: 9,
@@ -107,219 +120,82 @@ const bookmarks = [
     tag: "Renewable Energy",
     prize: "$48,000",
     daysLeft: "70 days left",
-    image: optimize("https://images.unsplash.com/photo-1509395176047-4a66953fd231"),
+    image: optimize(
+      "https://images.unsplash.com/photo-1509395176047-4a66953fd231",
+    ),
   },
 ];
 
-/* ─── Styles (defined once, never re-created) ────────────── */
-const styles = {
-  layout: {
-    display: "flex",
-    minHeight: "100vh",
-    background: "#f9fafb",
-    fontFamily: "Inter, system-ui, sans-serif",
-  },
-  page: {
-    marginLeft: "18vw",
-    padding: "2rem",
-    width: "calc(100% - 18vw)",
-    boxSizing: "border-box",
-    minHeight: "100vh",
-  },
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "1rem",
-  },
-  h1: {
-    fontSize: "2rem",
-    fontWeight: 700,
-    margin: 0,
-  },
-  subtitle: {
-    color: "#6b7280",
-    marginTop: "0.4rem",
-    marginBottom: 0,
-  },
-  searchInput: {
-    padding: "0.6rem 1rem",
-    borderRadius: "0.6rem",
-    border: "1px solid #e5e7eb",
-    fontSize: "0.9rem",
-    width: 260,
-    outline: "none",
-  },
-  grid: {
-    marginTop: "2rem",
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(18rem, 1fr))",
-    gap: "2rem",
-  },
-  card: {
-    background: "#fff",
-    borderRadius: "1rem",
-    overflow: "hidden",
-    display: "flex",
-    flexDirection: "column",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    cursor: "pointer",
-  },
-  cardImageWrap: {
-    position: "relative",
-    height: "12rem",
-  },
-  img: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    display: "block",
-  },
-  prize: {
-    position: "absolute",
-    top: "0.8rem",
-    left: "0.8rem",
-    background: "#fff",
-    padding: "0.3rem 0.7rem",
-    borderRadius: "1rem",
-    fontWeight: 600,
-    fontSize: "0.85rem",
-  },
-  cardBody: {
-    padding: "1.2rem",
-    display: "flex",
-    flexDirection: "column",
-    gap: "0.6rem",
-    flex: 1,
-  },
-  cardTitle: {
-    fontSize: "1.1rem",
-    fontWeight: 700,
-    margin: 0,
-  },
-  org: {
-    color: "#6b7280",
-    fontSize: "0.9rem",
-    margin: 0,
-  },
-  meta: {
-    fontSize: "0.85rem",
-    color: "#6b7280",
-    display: "flex",
-    flexDirection: "column",
-    gap: "0.2rem",
-  },
-  tag: {
-    alignSelf: "flex-start",
-    background: "#eef2ff",
-    color: "#4f46e5",
-    fontSize: "0.75rem",
-    padding: "0.3rem 0.7rem",
-    borderRadius: "1rem",
-  },
-  cardFooter: {
-    marginTop: "auto",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  daysLeft: {
-    color: "#f97316",
-    fontSize: "0.85rem",
-  },
-  viewBtn: {
-    background: "linear-gradient(135deg, #3b82f6, #9333ea)",
-    color: "#fff",
-    border: "none",
-    borderRadius: "0.7rem",
-    padding: "0.6rem 1.2rem",
-    fontSize: "0.85rem",
-    cursor: "pointer",
-  },
-  empty: {
-    color: "#9ca3af",
-    marginTop: "3rem",
-    textAlign: "center",
-    fontSize: "1rem",
-  },
-};
-
-/* ─── BookmarkCard (memoized) ────────────────────────────── */
 const BookmarkCard = React.memo(({ item }) => (
   <div
-    style={styles.card}
+    style={s.card}
     onMouseEnter={(e) => {
-      e.currentTarget.style.transform = "translateY(-4px)";
-      e.currentTarget.style.boxShadow = "0 1.5rem 3rem rgba(0,0,0,0.08)";
+      e.currentTarget.style.transform = "translateY(-0.4vh)";
+      e.currentTarget.style.boxShadow = "0 1.5vh 3vh rgba(0,0,0,0.10)";
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.transform = "translateY(0)";
-      e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.06)";
+      e.currentTarget.style.boxShadow = "0 0.2vh 0.8vh rgba(0,0,0,0.06)";
     }}
   >
     {/* Image */}
-    <div style={styles.cardImageWrap}>
+    <div style={s.imgWrap}>
       <img
         src={item.image}
         alt={item.title}
         loading="lazy"
         decoding="async"
-        width="400"
-        height="192"
-        style={styles.img}
+        style={s.img}
       />
-      <span style={styles.prize}>{item.prize}</span>
+      <span style={s.prize}>{item.prize}</span>
     </div>
 
     {/* Body */}
-    <div style={styles.cardBody}>
-      <h3 style={styles.cardTitle}>{item.title}</h3>
-      <p style={styles.org}>{item.org}</p>
+    <div style={s.cardBody}>
+      <h3 style={s.cardTitle}>{item.title}</h3>
+      <p style={s.org}>{item.org}</p>
 
-      <div style={styles.meta}>
+      <div style={s.meta}>
         <span>{item.date}</span>
         <span>{item.location}</span>
       </div>
 
-      <span style={styles.tag}>{item.tag}</span>
+      <span style={s.tag}>{item.tag}</span>
 
-      <div style={styles.cardFooter}>
-        <span style={styles.daysLeft}>{item.daysLeft}</span>
-        <button style={styles.viewBtn}>View Details</button>
+      <div style={s.cardFooter}>
+        <span style={s.daysLeft}>{item.daysLeft}</span>
+        <button style={s.viewBtn}>View Details</button>
       </div>
     </div>
   </div>
 ));
 
-/* ─── Main Page ──────────────────────────────────────────── */
 export default function Bookmarked() {
   const [search, setSearch] = useState("");
 
-  /* useMemo — only recomputes when search changes */
   const filtered = useMemo(
     () =>
       bookmarks.filter((item) =>
-        item.title.toLowerCase().includes(search.toLowerCase())
+        item.title.toLowerCase().includes(search.toLowerCase()),
       ),
-    [search]
+    [search],
   );
 
   return (
-    <div style={styles.layout}>
+    <div style={s.layout}>
       <Sidebar />
 
-      <div style={styles.page}>
+      <div style={s.page}>
         {/* Header */}
-        <div style={styles.header}>
+        <div style={s.header}>
           <div>
-            <h1 style={styles.h1}>Bookmarked Events</h1>
-            <p style={styles.subtitle}>Your saved hackathons for quick access</p>
+            <h1 style={s.h1}>Bookmarked Events</h1>
+            <p style={s.subtitle}>Your saved hackathons for quick access</p>
           </div>
           <input
             type="text"
             placeholder="Search bookmarked events..."
-            style={styles.searchInput}
+            style={s.searchInput}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -327,9 +203,9 @@ export default function Bookmarked() {
 
         {/* Grid */}
         {filtered.length === 0 ? (
-          <p style={styles.empty}>No bookmarks match your search.</p>
+          <p style={s.empty}>No bookmarks match your search.</p>
         ) : (
-          <div style={styles.grid}>
+          <div style={s.grid}>
             {filtered.map((item) => (
               <BookmarkCard key={item.id} item={item} />
             ))}
@@ -339,3 +215,141 @@ export default function Bookmarked() {
     </div>
   );
 }
+
+const s = {
+  layout: {
+    display: "flex",
+    minHeight: "100vh", // ✅ vh
+    background: "#f9fafb",
+    fontFamily: "Inter, system-ui, sans-serif",
+  },
+  page: {
+    marginLeft: "18vw", // ✅ vw
+    width: "calc(100% - 18vw)", // ✅ %
+    padding: "3%", // ✅ %
+    boxSizing: "border-box",
+    minHeight: "100vh", // ✅ vh
+  },
+  header: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "2%", // ✅ %
+  },
+  h1: {
+    fontSize: "2.8vh", // ✅ vh
+    fontWeight: 700,
+    margin: 0,
+  },
+  subtitle: {
+    color: "#6b7280",
+    fontSize: "1.5vh", // ✅ vh
+    marginTop: "0.5%", // ✅ %
+    marginBottom: 0,
+  },
+  searchInput: {
+    padding: "1.2vh 1.5vh", // ✅ vh
+    borderRadius: "1.2vh", // ✅ vh
+    border: "1px solid #e5e7eb",
+    fontSize: "1.4vh", // ✅ vh
+    width: "22%", // ✅ %
+    outline: "none",
+    background: "#fff",
+  },
+  grid: {
+    marginTop: "2%", // ✅ %
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(28%, 1fr))", // ✅ %
+    gap: "2%", // ✅ %
+  },
+  card: {
+    background: "#fff",
+    borderRadius: "1.6vh", // ✅ vh
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    boxShadow: "0 0.2vh 0.8vh rgba(0,0,0,0.06)",
+    transition: "transform 0.3s ease, box-shadow 0.3s ease",
+    cursor: "pointer",
+  },
+  imgWrap: {
+    position: "relative",
+    height: "20vh", // ✅ vh
+  },
+  img: {
+    width: "100%", // ✅ %
+    height: "100%", // ✅ %
+    objectFit: "cover",
+    display: "block",
+  },
+  prize: {
+    position: "absolute",
+    top: "4%", // ✅ %
+    left: "4%", // ✅ %
+    background: "#fff",
+    padding: "0.5vh 1vh", // ✅ vh
+    borderRadius: "99vh", // ✅ vh
+    fontWeight: 600,
+    fontSize: "1.2vh", // ✅ vh
+  },
+  cardBody: {
+    padding: "4% 5%", // ✅ %
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.5%", // ✅ %
+    flex: 1,
+  },
+  cardTitle: {
+    fontSize: "1.6vh", // ✅ vh
+    fontWeight: 700,
+    margin: 0,
+  },
+  org: {
+    color: "#6b7280",
+    fontSize: "1.3vh", // ✅ vh
+    margin: 0,
+  },
+  meta: {
+    fontSize: "1.3vh", // ✅ vh
+    color: "#6b7280",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.5%", // ✅ %
+  },
+  tag: {
+    alignSelf: "flex-start",
+    background: "#eef2ff",
+    color: "#4f46e5",
+    fontSize: "1.2vh", // ✅ vh
+    padding: "0.4vh 1vh", // ✅ vh
+    borderRadius: "99vh", // ✅ vh
+  },
+  cardFooter: {
+    marginTop: "auto",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingTop: "3%", // ✅ %
+  },
+  daysLeft: {
+    color: "#f97316",
+    fontSize: "1.3vh", // ✅ vh
+  },
+  viewBtn: {
+    background: "linear-gradient(135deg, #3b82f6, #9333ea)",
+    color: "#fff",
+    border: "none",
+    borderRadius: "1vh",
+    padding: "0.8vh 1.5vh",
+    fontSize: "1.3vh",
+    cursor: "pointer",
+    marginBottom: "3%", // ✅ moves button up
+    alignSelf: "flex-end", // ✅ keeps it to the right
+  },
+  empty: {
+    color: "#9ca3af",
+    marginTop: "5%", // ✅ %
+    textAlign: "center",
+    fontSize: "1.6vh", // ✅ vh
+  },
+};

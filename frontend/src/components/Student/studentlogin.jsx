@@ -14,9 +14,9 @@ export default function StudentLogin() {
   };
 
   const cardStyle = {
-    width: "420px",
-    padding: "40px",
-    borderRadius: "25px",
+    width: "35%",
+    padding: "4%",
+    borderRadius: "3vh",
     backgroundColor: "#ffffff",
     boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
   };
@@ -24,25 +24,25 @@ export default function StudentLogin() {
   const logoBox = {
     display: "flex",
     alignItems: "center",
-    gap: "15px",
-    marginBottom: "30px",
+    gap: "3%",
+    marginBottom: "4%",
   };
 
   const iconStyle = {
     background: "linear-gradient(to right, #3b82f6, #9333ea)",
-    padding: "18px",
-    borderRadius: "20px",
+    padding: "2%",
+    borderRadius: "2.5vh",
     color: "white",
-    fontSize: "20px",
+    fontSize: "2.2vh",
   };
 
   const inputContainer = {
     display: "flex",
     alignItems: "center",
     border: "1px solid #e5e7eb",
-    borderRadius: "15px",
-    padding: "14px",
-    marginBottom: "20px",
+    borderRadius: "2vh",
+    padding: "1.5%",
+    marginBottom: "2.5%",
     backgroundColor: "#f9fafb",
   };
 
@@ -51,21 +51,21 @@ export default function StudentLogin() {
     outline: "none",
     flex: 1,
     backgroundColor: "transparent",
-    fontSize: "15px",
-    marginLeft: "10px",
+    fontSize: "1.6vh",
+    marginLeft: "2%",
   };
 
   const buttonStyle = {
     width: "100%",
-    padding: "15px",
-    borderRadius: "15px",
+    padding: "1.8%",
+    borderRadius: "2vh",
     border: "none",
     background: "linear-gradient(to right, #3b82f6, #9333ea)",
     color: "white",
-    fontSize: "18px",
+    fontSize: "2vh",
     fontWeight: "600",
     cursor: "pointer",
-    marginTop: "10px",
+    marginTop: "1.5%",
   };
 
   return (
@@ -77,19 +77,19 @@ export default function StudentLogin() {
             <FaLink />
           </div>
           <div>
-            <h2 style={{ margin: 0 }}>Criss-Cross</h2>
-            <p style={{ margin: 0, color: "#6b7280" }}>Student Portal</p>
+            <h2 style={{ margin: 0, fontSize: "2.4vh" }}>Criss-Cross</h2>
+            <p style={{ margin: 0, color: "#6b7280", fontSize: "1.5vh" }}>Student Portal</p>
           </div>
         </div>
 
         {/* Welcome */}
-        <h2>Welcome Back!</h2>
-        <p style={{ color: "#6b7280", marginBottom: "25px" }}>
+        <h2 style={{ fontSize: "2.6vh", marginBottom: "1%" }}>Welcome Back!</h2>
+        <p style={{ color: "#6b7280", marginBottom: "3%", fontSize: "1.5vh" }}>
           Sign in to discover amazing hackathons
         </p>
 
         {/* Email */}
-        <label>Email Address</label>
+        <label style={{ fontSize: "1.4vh" }}>Email Address</label>
         <div style={inputContainer}>
           <FaEnvelope color="#9ca3af" />
           <input
@@ -100,7 +100,7 @@ export default function StudentLogin() {
         </div>
 
         {/* Password */}
-        <label>Password</label>
+        <label style={{ fontSize: "1.4vh" }}>Password</label>
         <div style={inputContainer}>
           <FaLock color="#9ca3af" />
           <input
@@ -122,19 +122,17 @@ export default function StudentLogin() {
         </div>
 
         {/* Remember + Forgot */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "20px",
-          }}
-        >
-          <label style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "2.5%",
+        }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "2%", fontSize: "1.4vh" }}>
             <input type="checkbox" />
             Remember me
           </label>
-          <span style={{ color: "#2563eb", cursor: "pointer" }}>
+          <span style={{ color: "#2563eb", cursor: "pointer", fontSize: "1.4vh" }}>
             Forgot password?
           </span>
         </div>
@@ -144,8 +142,8 @@ export default function StudentLogin() {
           <button style={buttonStyle}>Sign In →</button>
         </Link>
 
-        {/* Footer — links to /student-reg as defined in App.jsx */}
-        <p style={{ marginTop: "20px", textAlign: "center" }}>
+        {/* Footer */}
+        <p style={{ marginTop: "3%", textAlign: "center", fontSize: "1.4vh" }}>
           Don't have an account?{" "}
           <Link
             to="/student-reg"
