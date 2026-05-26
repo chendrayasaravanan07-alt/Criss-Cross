@@ -23,48 +23,49 @@ export default function OrganizerProfile() {
       <Sidebar />
 
       <div style={{
-        marginLeft: "clamp(200px, 18vw, 280px)",
-        width: "calc(100% - clamp(200px, 18vw, 280px))",
+        marginLeft: "18%",
+        width: "82%",
         boxSizing: "border-box",
         minHeight: "100vh",
         backgroundColor: "#f5f6fa",
-        padding: "40px",
+        padding: "3%",
         fontFamily: "sans-serif",
       }}>
 
-        <h2 style={{ marginBottom: "8px", fontSize: "26px" }}>My Profile</h2>
-        <p style={{ color: "#6b7280", marginBottom: "32px" }}>
+        <h2 style={{ marginBottom: "0.8%", fontSize: "3vh" }}>My Profile</h2>
+        <p style={{ color: "#6b7280", marginBottom: "3%", fontSize: "1.6vh" }}>
           Manage your personal information
         </p>
 
         <div style={{
           backgroundColor: "#fff",
-          borderRadius: "16px",
-          padding: "32px",
-          maxWidth: "600px",
+          borderRadius: "2vh",
+          padding: "3%",
+          maxWidth: "50%",
           border: "1px solid #e5e7eb",
         }}>
 
           {!editing ? (
             <>
               {Object.entries(profile).map(([key, val]) => (
-                <div key={key} style={{ marginBottom: "20px" }}>
-                  <p style={{ color: "#6b7280", fontSize: "13px", marginBottom: "4px" }}>
+                <div key={key} style={{ marginBottom: "2.5%" }}>
+                  <p style={{ color: "#6b7280", fontSize: "1.4vh", marginBottom: "0.5%" }}>
                     {key.charAt(0).toUpperCase() + key.slice(1)}
                   </p>
-                  <p style={{ fontSize: "16px", fontWeight: "500", margin: 0 }}>{val}</p>
+                  <p style={{ fontSize: "1.8vh", fontWeight: "500", margin: 0 }}>{val}</p>
                 </div>
               ))}
 
               <button
                 onClick={() => setEditing(true)}
                 style={{
-                  marginTop: "8px",
-                  padding: "10px 24px",
-                  borderRadius: "10px",
+                  marginTop: "1%",
+                  padding: "1.2% 3%",
+                  borderRadius: "1.2vh",
                   border: "none",
                   cursor: "pointer",
                   fontWeight: "bold",
+                  fontSize: "1.5vh",
                   background: "linear-gradient(90deg, #6366f1, #9333ea)",
                   color: "#fff",
                 }}
@@ -75,8 +76,13 @@ export default function OrganizerProfile() {
           ) : (
             <>
               {Object.keys(form).map((key) => (
-                <div key={key} style={{ marginBottom: "16px" }}>
-                  <label style={{ display: "block", color: "#6b7280", fontSize: "13px", marginBottom: "6px" }}>
+                <div key={key} style={{ marginBottom: "2%" }}>
+                  <label style={{
+                    display: "block",
+                    color: "#6b7280",
+                    fontSize: "1.4vh",
+                    marginBottom: "0.8%",
+                  }}>
                     {key.charAt(0).toUpperCase() + key.slice(1)}
                   </label>
                   <input
@@ -84,10 +90,10 @@ export default function OrganizerProfile() {
                     onChange={(e) => setForm({ ...form, [key]: e.target.value })}
                     style={{
                       width: "100%",
-                      padding: "10px 14px",
-                      borderRadius: "8px",
+                      padding: "1.2% 1.5%",
+                      borderRadius: "1vh",
                       border: "1px solid #e5e7eb",
-                      fontSize: "15px",
+                      fontSize: "1.6vh",
                       boxSizing: "border-box",
                       outline: "none",
                     }}
@@ -95,15 +101,16 @@ export default function OrganizerProfile() {
                 </div>
               ))}
 
-              <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
+              <div style={{ display: "flex", gap: "2%", marginTop: "1%" }}>
                 <button
                   onClick={handleSave}
                   style={{
-                    padding: "10px 24px",
-                    borderRadius: "10px",
+                    padding: "1.2% 3%",
+                    borderRadius: "1.2vh",
                     border: "none",
                     cursor: "pointer",
                     fontWeight: "bold",
+                    fontSize: "1.5vh",
                     background: "linear-gradient(90deg, #6366f1, #9333ea)",
                     color: "#fff",
                   }}
@@ -114,11 +121,12 @@ export default function OrganizerProfile() {
                 <button
                   onClick={() => { setForm({ ...profile }); setEditing(false); }}
                   style={{
-                    padding: "10px 24px",
-                    borderRadius: "10px",
+                    padding: "1.2% 3%",
+                    borderRadius: "1.2vh",
                     border: "1px solid #e5e7eb",
                     cursor: "pointer",
                     fontWeight: "bold",
+                    fontSize: "1.5vh",
                     background: "#fff",
                     color: "#374151",
                   }}
