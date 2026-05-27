@@ -1,25 +1,16 @@
 import express from "express";
-import protect from "../middleware/authMiddleware.js";
-import authorizeRoles from "../middleware/roleMiddleware.js";
-
-import {
-  getAllUsers,
-  deleteUser,
-  approveOrganizer,
-  getAllEventsAdmin,
-  deleteEvent
-} from "../controllers/adminController.js";
+import { registerAdmin, loginAdmin }        from "../controllers/adminAuthController.js";
+import { getAllUsers, getPlatformStats,
+         deleteStudent, deleteOrganizer }   from "../controllers/adminController.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// All routes below require Admin access
-router.use(protect, authorizeRoles("admin"));
-
-router.get("/users", getAllUsers);
-router.delete("/users/:id", deleteUser);
-router.put("/users/:id/approve", approveOrganizer);
-
-router.get("/events", getAllEventsAdmin);
-router.delete("/events/:id", deleteEvent);
+router.post("/register",              registerAdmin);
+router.post("/login",                 loginAdmin);
+router.get ("/users",                 protect("admin"), getAllUsers);
+router.get ("/stats",                 protect("admin"), getPlatformStats);
+router.delete("/users/student/:id",   protect("admin"), deleteStudent);
+router.delete("/users/organizer/:id", protect("admin"), deleteOrganizer);
 
 export default router;
