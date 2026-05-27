@@ -8,17 +8,21 @@ import {
   FaSignOutAlt,
   FaShieldAlt,
 } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const mainMenuItems = [
-  { name: "Dashboard", icon: <FaThLarge /> },
-  { name: "User Management", icon: <FaUsers /> },
-  { name: "Event Approvals", icon: <FaCheckCircle /> },
-  { name: "Settings", icon: <FaCog /> },
+  { name: "Dashboard", icon: <FaThLarge />, path: "/admin/dashboard" },
+  { name: "User Management", icon: <FaUsers />, path: "/admin/user-management" },
+  { name: "Event Approvals", icon: <FaCheckCircle />, path: "/admin/event-approval" },
+  { name: "Settings", icon: <FaCog />, path: "/admin/settings" },
 ];
 
 export default function Sidebar() {
-  const [active, setActive] = useState("Dashboard");
+  const navigate = useNavigate();
+const location = useLocation();
 
+const isActive = (path) => location.pathname === path;
   const sidebarStyle = {
     height: "100vh",
     width: "18vw",
@@ -28,6 +32,7 @@ export default function Sidebar() {
     display: "flex",
     flexDirection: "column",
     padding: "20px",
+    position: "fixed",
     boxSizing: "border-box",
   };
 
@@ -126,20 +131,18 @@ export default function Sidebar() {
           <div style={subtitleStyle}>Admin Portal</div>
         </div>
       </div>
-
-      {/* Menu */}
       <div style={{ flex: 1 }}>
-        {mainMenuItems.map((item) => (
-          <div
-            key={item.name}
-            style={menuItemStyle(active === item.name)}
-            onClick={() => setActive(item.name)}
-          >
-            {item.icon}
-            {item.name}
-          </div>
-        ))}
-      </div>
+  {mainMenuItems.map((item) => (
+    <div
+      key={item.name}
+      onClick={() => navigate(item.path)}
+      style={menuItemStyle(isActive(item.path))}
+    >
+      {item.icon}
+      {item.name}
+    </div>
+  ))}
+</div>
 
       {/* Bottom */}
       <div style={bottomSection}>
@@ -155,7 +158,7 @@ export default function Sidebar() {
           </div>
         </div>
 
-        <button style={logoutBtn}>
+        <button style={logoutBtn} onClick={()=>navigate("/selection") }>
           <FaSignOutAlt /> Logout
         </button>
       </div>

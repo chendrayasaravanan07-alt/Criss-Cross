@@ -1,209 +1,158 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaLink } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-const StudentLogin = () => {
+export default function StudentLogin() {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const containerStyle = {
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#f3f4f6",
+  };
+
+  const cardStyle = {
+    width: "35%",
+    padding: "4%",
+    borderRadius: "3vh",
+    backgroundColor: "#ffffff",
+    boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
+  };
+
+  const logoBox = {
+    display: "flex",
+    alignItems: "center",
+    gap: "3%",
+    marginBottom: "4%",
+  };
+
+  const iconStyle = {
+    background: "linear-gradient(to right, #3b82f6, #9333ea)",
+    padding: "2%",
+    borderRadius: "2.5vh",
+    color: "white",
+    fontSize: "2.2vh",
+  };
+
+  const inputContainer = {
+    display: "flex",
+    alignItems: "center",
+    border: "1px solid #e5e7eb",
+    borderRadius: "2vh",
+    padding: "1.5%",
+    marginBottom: "2.5%",
+    backgroundColor: "#f9fafb",
+  };
+
+  const inputStyle = {
+    border: "none",
+    outline: "none",
+    flex: 1,
+    backgroundColor: "transparent",
+    fontSize: "1.6vh",
+    marginLeft: "2%",
+  };
+
+  const buttonStyle = {
+    width: "100%",
+    padding: "1.8%",
+    borderRadius: "2vh",
+    border: "none",
+    background: "linear-gradient(to right, #3b82f6, #9333ea)",
+    color: "white",
+    fontSize: "2vh",
+    fontWeight: "600",
+    cursor: "pointer",
+    marginTop: "1.5%",
+  };
+
   return (
-    <div style={styles.outer}>
-      <div style={styles.card}>
-        {/* Header */}
-        <div style={styles.header}>
-          <div style={styles.logo}>
-            <svg
-              width="60%"
-              height="60%"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M10 13a5 5 0 0 1 0-7l2-2a5 5 0 0 1 7 7l-1 1" />
-              <path d="M14 11a5 5 0 0 1 0 7l-2 2a5 5 0 0 1-7-7l1-1" />
-            </svg>
+    <div style={containerStyle}>
+      <div style={cardStyle}>
+        {/* Logo */}
+        <div style={logoBox}>
+          <div style={iconStyle}>
+            <FaLink />
           </div>
           <div>
-            <h1 style={styles.brand}>Criss-Cross</h1>
-            <p style={styles.portal}>Student Portal</p>
+            <h2 style={{ margin: 0, fontSize: "2.4vh" }}>Criss-Cross</h2>
+            <p style={{ margin: 0, color: "#6b7280", fontSize: "1.5vh" }}>Student Portal</p>
           </div>
         </div>
 
-        <h2 style={styles.welcome}>Welcome Back!</h2>
-        <p style={styles.subtitle}>Sign in to discover amazing hackathons</p>
+        {/* Welcome */}
+        <h2 style={{ fontSize: "2.6vh", marginBottom: "1%" }}>Welcome Back!</h2>
+        <p style={{ color: "#6b7280", marginBottom: "3%", fontSize: "1.5vh" }}>
+          Sign in to discover amazing hackathons
+        </p>
 
         {/* Email */}
-        <div style={styles.group}>
-          <label style={styles.label}>Email Address</label>
+        <label style={{ fontSize: "1.4vh" }}>Email Address</label>
+        <div style={inputContainer}>
+          <FaEnvelope color="#9ca3af" />
           <input
             type="email"
             placeholder="you@university.edu"
-            style={styles.input}
+            style={inputStyle}
           />
         </div>
 
         {/* Password */}
-        <div style={styles.group}>
-          <label style={styles.label}>Password</label>
+        <label style={{ fontSize: "1.4vh" }}>Password</label>
+        <div style={inputContainer}>
+          <FaLock color="#9ca3af" />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
-            style={styles.input}
+            style={inputStyle}
           />
+          {showPassword ? (
+            <FaEyeSlash
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowPassword(false)}
+            />
+          ) : (
+            <FaEye
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowPassword(true)}
+            />
+          )}
         </div>
 
-        {/* Options */}
-        <div style={styles.options}>
-          <label style={{ display: "flex", alignItems: "center", gap: "1vh" }}>
+        {/* Remember + Forgot */}
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "2.5%",
+        }}>
+          <label style={{ display: "flex", alignItems: "center", gap: "2%", fontSize: "1.4vh" }}>
             <input type="checkbox" />
             Remember me
           </label>
-
-          <span style={styles.forgot}>Forgot password?</span>
+          <span style={{ color: "#2563eb", cursor: "pointer", fontSize: "1.4vh" }}>
+            Forgot password?
+          </span>
         </div>
 
         {/* Button */}
-        <button style={styles.button}>Sign In →</button>
+        <Link to="/student/dashboard" style={{ textDecoration: "none" }}>
+          <button style={buttonStyle}>Sign In →</button>
+        </Link>
 
-        <p style={styles.signup}>
-          Don't have an account?
-          <span style={styles.signupLink}> Create Student Account</span>
+        {/* Footer */}
+        <p style={{ marginTop: "3%", textAlign: "center", fontSize: "1.4vh" }}>
+          Don't have an account?{" "}
+          <Link
+            to="/student-reg"
+            style={{ color: "#2563eb", cursor: "pointer", fontWeight: "600", textDecoration: "none" }}
+          >
+            Create Student Account
+          </Link>
         </p>
       </div>
     </div>
   );
-};
-
-const styles = {
-  /* OUTER */
-  outer: {
-    height: "100vh",
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "linear-gradient(135deg, #f6f7ff, #f2f3ff)",
-  },
-
-  /* CARD */
-  card: {
-    width: "36%",
-    padding: "4.5%",
-    background: "#ffffff",
-    borderRadius: "2.2vh",
-    boxShadow: "0 2vh 5vh rgba(0,0,0,0.12)",
-  },
-
-  /* HEADER */
-  header: {
-    display: "flex",
-    alignItems: "center",
-    gap: "4%",
-    marginBottom: "6%",
-  },
-
-  logo: {
-    width: "10%",
-    height: "10%",
-    minWidth: "10%",
-    background: "linear-gradient(135deg, #4f46e5, #9333ea)",
-    borderRadius: "2vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-  brand: {
-    fontSize: "2.8vh",
-    margin: "0",
-    fontWeight: "600",
-  },
-
-  portal: {
-    fontSize: "1.6vh",
-    margin: "0",
-    color: "#6b7280",
-  },
-
-  /* TEXT */
-  welcome: {
-    fontSize: "3.2vh",
-    marginBottom: "2%",
-    fontWeight: "600",
-  },
-
-  subtitle: {
-    fontSize: "1.8vh",
-    marginBottom: "7%",
-    color: "#6b7280",
-  },
-
-  /* FORM */
-  group: {
-    marginBottom: "5.5%",
-  },
-
-  label: {
-    fontSize: "1.6vh",
-    display: "block",
-    marginBottom: "2%",
-    color: "#111827",
-  },
-
-  input: {
-    width: "100%",
-    padding: "4.2%",
-    fontSize: "1.8vh",
-    borderRadius: "1.6vh",
-    border: "0.12vh solid #e5e7eb",
-    outline: "none",
-  },
-
-  /* OPTIONS */
-  options: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "7%",
-    fontSize: "1.6vh",
-  },
-
-  remember: {
-    display: "flex",
-    gap: "6%",
-    alignItems: "center",
-  },
-
-  forgot: {
-    color: "#4f46e5",
-    cursor: "pointer",
-    fontWeight: "500",
-  },
-
-  /* BUTTON */
-  button: {
-    width: "100%",
-    padding: "4.5%",
-    fontSize: "2.1vh",
-    borderRadius: "2.2vh",
-    border: "none",
-    background: "linear-gradient(135deg, #4f46e5, #9333ea)",
-    color: "#fff",
-    cursor: "pointer",
-    fontWeight: "600",
-  },
-
-  /* SIGNUP */
-  signup: {
-    textAlign: "center",
-    marginTop: "7%",
-    fontSize: "1.6vh",
-    color: "#374151",
-  },
-
-  signupLink: {
-    color: "#4f46e5",
-    cursor: "pointer",
-    fontWeight: "500",
-  },
-};
-
-export default StudentLogin;
+}

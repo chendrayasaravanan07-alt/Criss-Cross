@@ -1,460 +1,294 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Sidebar from "./sidebar";
 
-export default function DiscoverEvents() {
-  const [showFilters, setShowFilters] = useState(true);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+function DiscoverEvents() {
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const hackathons = [
+  const events = [
     {
       id: 1,
-      title: "AI Innovation Challenge 2025",
-      org: "TechCorp Global",
-      prize: "$50,000",
-      date: "Jan 15–17, 2025",
-      location: "San Francisco, CA",
-      featured: true,
+      title: "AI & ML Workshop",
+      category: "Technical",
+      date: "March 25, 2026",
+      location: "Chennai",
+      image:
+        "https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&h=210&fit=crop",
     },
     {
       id: 2,
-      title: "Web3 Summit Hackathon",
-      org: "Blockchain Foundation",
-      prize: "$30,000",
-      date: "Jan 22–24, 2025",
-      location: "Virtual",
-      featured: true,
+      title: "Hackathon 2026",
+      category: "Hackathon",
+      date: "April 10, 2026",
+      location: "Bangalore",
+      image:
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&h=210&fit=crop",
     },
     {
       id: 3,
-      title: "Startup Weekend 2025",
-      org: "Innovation Hub",
-      date: "Feb 5–7, 2025",
-      location: "New York, NY",
-      featured: false,
+      title: "Startup Networking",
+      category: "Business",
+      date: "March 30, 2026",
+      location: "Mumbai",
+      image:
+        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=400&h=210&fit=crop",
     },
     {
       id: 4,
-      title: "Healthcare Innovation Sprint",
-      org: "MedTech Alliance",
-      date: "Feb 12–14, 2025",
-      location: "Boston, MA",
-      featured: false,
+      title: "Cultural Fest",
+      category: "Cultural",
+      date: "May 5, 2026",
+      location: "Coimbatore",
+      image:
+        "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=400&h=210&fit=crop",
+    },
+    {
+      id: 5,
+      title: "Web3 BuildFest",
+      category: "Hackathon",
+      date: "June 1, 2026",
+      location: "Delhi",
+      image:
+        "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=400&h=210&fit=crop",
+    },
+    {
+      id: 6,
+      title: "Data Science Sprint",
+      category: "Technical",
+      date: "May 20, 2026",
+      location: "Hyderabad",
+      image:
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=210&fit=crop",
     },
   ];
 
+  const filteredEvents = events.filter((event) => {
+    const matchesSearch = event.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "All" || event.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const categoryColors = {
+    Technical: { bg: "#eff6ff", color: "#2563eb" },
+    Hackathon: { bg: "#f5f3ff", color: "#7c3aed" },
+    Business: { bg: "#f0fdf4", color: "#16a34a" },
+    Cultural: { bg: "#fff7ed", color: "#ea580c" },
+  };
+
   return (
-    <div style={styles.outer}>
-      {/* Sidebar */}
-      <div>
-        <Sidebar />
-      </div>
+    <div style={s.layout}>
+      <Sidebar />
 
-      {/* Main */}
-      <div style={styles.main}>
-        <h1 style={styles.heading}>Discover Hackathons</h1>
-        <p style={styles.subText}>
-          Find and join amazing hackathons from around the world
-        </p>
+      <div style={s.page}>
+        {/* Header */}
+        <h2 style={s.pageTitle}>Discover Events</h2>
+        <p style={s.pageSubtitle}>Find events based on your interests</p>
 
-        {/* Search */}
-        <div style={styles.searchWrapper}>
-          <svg
-            style={styles.searchIcon}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-
+        {/* Search & Filter */}
+        <div style={s.filterRow}>
           <input
-            style={styles.search}
-            placeholder="Search hackathons by name, organizer, or category..."
+            type="text"
+            placeholder="🔍  Search events..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={s.searchInput}
           />
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            style={s.select}
+          >
+            <option value="All">All Interests</option>
+            <option value="Technical">Technical</option>
+            <option value="Hackathon">Hackathon</option>
+            <option value="Business">Business</option>
+            <option value="Cultural">Cultural</option>
+          </select>
         </div>
 
-        <div style={styles.layoutRow}>
-          {/* Filters */}
-          <div style={styles.filtersColumn}>
-            <button
-              style={styles.toggleBtnTop}
-              onClick={() => setShowFilters(!showFilters)}
-            >
-              {showFilters ? "Hide Filters" : "Show Filters"}
-            </button>
-
-            {showFilters && (
-              <div style={styles.filtersCard}>
-                <h3 style={styles.filtersTitle}>Filters</h3>
-
-                <FilterBlock
-                  title="Participation Type"
-                  items={["All", "Solo", "Team"]}
-                  name="participation"
-                />
-                <FilterInput title="Location" placeholder="City" />
-                <FilterSelect
-                  title="Event Category"
-                  options={["All", "AI", "Web3", "Healthcare"]}
-                />
-                <FilterBlock
-                  title="Event Mode"
-                  items={["All", "Online", "Offline", "Hybrid"]}
-                  name="mode"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Hackathons */}
-          <div style={styles.cardsSection}>
-            <h2 style={styles.cardsTitle}>Popular Hackathons</h2>
-            <p style={styles.subText}>
-              Amazing Hackathons You Can Able to Explore
-            </p>
-
-            <div style={styles.cards}>
-              {hackathons.map((h) => (
-                <div key={h.id} style={styles.card}>
-                  {h.featured && (
-                    <div style={styles.badge}>{h.prize} • Featured</div>
-                  )}
-
-                  <div style={styles.cardImage} />
-
-                  <h3 style={styles.cardTitle}>{h.title}</h3>
-                  <p style={styles.cardOrg}>{h.org}</p>
-
-                  <div style={styles.cardMeta}>
-                    <span>{h.date}</span>
-                    <span>{h.location}</span>
+        {/* Grid */}
+        {filteredEvents.length > 0 ? (
+          <div style={s.grid}>
+            {filteredEvents.map((event) => {
+              const colors = categoryColors[event.category] || {
+                bg: "#f3f4f6",
+                color: "#374151",
+              };
+              return (
+                <div
+                  key={event.id}
+                  style={s.card}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-0.4vh)";
+                    e.currentTarget.style.boxShadow =
+                      "0 1.5vh 3vh rgba(0,0,0,0.10)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow =
+                      "0 0.4vh 1vh rgba(0,0,0,0.05)";
+                  }}
+                >
+                  {/* Image */}
+                  <div style={s.imgWrap}>
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      style={s.img}
+                      loading="lazy"
+                    />
+                    <span
+                      style={{
+                        ...s.categoryBadge,
+                        background: colors.bg,
+                        color: colors.color,
+                      }}
+                    >
+                      {event.category}
+                    </span>
                   </div>
 
-                  <button
-                    style={styles.viewBtn}
-                    onClick={() => setSelectedEvent(h)}
-                  >
-                    View Details
-                  </button>
+                  {/* Body */}
+                  <div style={s.cardBody}>
+                    <h3 style={s.cardTitle}>{event.title}</h3>
+                    <p style={s.metaText}>📅 {event.date}</p>
+                    <p style={s.metaText}>📍 {event.location}</p>
+
+                    <button style={s.btn}>View Details</button>
+                  </div>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        </div>
+        ) : (
+          <p style={s.empty}>No events found.</p>
+        )}
       </div>
-      {selectedEvent && (
-        <div style={styles.modalOverlay}>
-          <div style={styles.modal}>
-            <h2 style={styles.modalTitle}>{selectedEvent.title}</h2>
-
-            <p>
-              <strong>Organizer:</strong> {selectedEvent.org}
-            </p>
-            <p>
-              <strong>Date:</strong> {selectedEvent.date}
-            </p>
-            <p>
-              <strong>Location:</strong> {selectedEvent.location}
-            </p>
-
-            {selectedEvent.prize && (
-              <p>
-                <strong>Prize:</strong> {selectedEvent.prize}
-              </p>
-            )}
-
-            <button
-              style={styles.closeBtn}
-              onClick={() => setSelectedEvent(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
-/* ---------- Filters ---------- */
-
-const FilterBlock = ({ title, items, name }) => (
-  <div style={styles.filterSection}>
-    <p style={styles.sectionTitle}>{title}</p>
-    {items.map((i, idx) => (
-      <label key={i} style={styles.radioRow}>
-        <input type="radio" name={name} defaultChecked={idx === 0} />
-        <span>{i}</span>
-      </label>
-    ))}
-  </div>
-);
-
-const FilterInput = ({ title, placeholder }) => (
-  <div style={styles.filterSection}>
-    <p style={styles.sectionTitle}>{title}</p>
-    <input style={styles.input} placeholder={placeholder} />
-  </div>
-);
-
-const FilterSelect = ({ title, options }) => (
-  <div style={styles.filterSection}>
-    <p style={styles.sectionTitle}>{title}</p>
-    <select style={styles.select}>
-      {options.map((o) => (
-        <option key={o}>{o}</option>
-      ))}
-    </select>
-  </div>
-);
-
-/* ---------- STYLES ---------- */
-
-const styles = {
-  outer: {
+const s = {
+  layout: {
     display: "flex",
-    height: "100vh",
-    backgroundColor: "#fafafa",
+    minHeight: "100vh", // ✅ vh
+    background: "#f8fafc",
     fontFamily: "Inter, system-ui, sans-serif",
   },
-
-  sidebar: {
-    width: "18vw",
-    backgroundColor: "#f1f5f9",
+  page: {
+    marginLeft: "18vw", // ✅ vw
+    width: "calc(100% - 18vw)", // ✅ %
+    padding: "3%", // ✅ %
+    boxSizing: "border-box",
   },
-
-  main: {
-    width: "82vw",
-    padding: "2%",
-  },
-
-  heading: {
-    fontSize: "3vh",
+  pageTitle: {
+    fontSize: "2.8vh", // ✅ vh
     fontWeight: 700,
+    margin: "0 0 0.5% 0", // ✅ %
+    color: "#111827",
   },
-
-  subText: {
-    fontSize: "1.7vh",
+  pageSubtitle: {
     color: "#6b7280",
-    marginBottom: "1.2%",
+    fontSize: "1.5vh", // ✅ vh
+    margin: "0 0 2.5% 0", // ✅ %
   },
-
-  searchWrapper: {
-    position: "relative",
-    width: "100%",
-    marginBottom: "1.5%",
-  },
-
-  searchIcon: {
-    position: "absolute",
-    left: "1.5%",
-    top: "50%",
-    transform: "translateY(-50%)",
-    width: "2vh",
-    height: "2vh",
-    color: "#9ca3af",
-  },
-
-  search: {
-    width: "100%",
-    padding: "1.2% 1.2% 1.2% 4.5%",
-    fontSize: "1.7vh",
-    borderRadius: "1.6vh",
-    border: "1px solid #d1d5db",
-  },
-
-  layoutRow: {
+  filterRow: {
     display: "flex",
-    gap: "2%",
-    height: "70vh",
+    gap: "2%", // ✅ %
+    marginBottom: "3%", // ✅ %
   },
-
-  filtersColumn: {
-    width: "22%",
-  },
-
-  toggleBtnTop: {
-    width: "100%",
-    padding: "4%",
-    fontSize: "1.6vh",
-    borderRadius: "1.6vh",
-    border: "1px solid #d1d5db",
-    backgroundColor: "#fff",
-    cursor: "pointer",
-    marginBottom: "4%",
-  },
-
-  filtersCard: {
-    height: "100%",
-    overflowY: "auto",
-    padding: "6%",
-    backgroundColor: "#fff",
-    borderRadius: "1.8vh",
+  searchInput: {
+    flex: 1,
+    padding: "1.2vh 1.5vh", // ✅ vh
+    borderRadius: "1.2vh", // ✅ vh
     border: "1px solid #e5e7eb",
+    fontSize: "1.4vh", // ✅ vh
+    outline: "none",
+    background: "#fff",
   },
-
-  filtersTitle: {
-    fontSize: "2vh",
-    fontWeight: 600,
-    marginBottom: "6%",
-  },
-
-  filterSection: {
-    marginBottom: "6%",
-  },
-
-  sectionTitle: {
-    fontSize: "1.6vh",
-    fontWeight: 600,
-    marginBottom: "4%",
-  },
-
-  radioRow: {
-    display: "flex",
-    gap: "6%",
-    marginBottom: "3%",
-    fontSize: "1.5vh",
-  },
-
-  input: {
-    width: "100%",
-    padding: "6%",
-    fontSize: "1.5vh",
-    borderRadius: "1.4vh",
-    border: "1px solid #d1d5db",
-  },
-
   select: {
-    width: "100%",
-    padding: "6%",
-    fontSize: "1.5vh",
-    borderRadius: "1.4vh",
-    border: "1px solid #d1d5db",
-  },
-
-  cardsSection: {
-    width: "78%",
-    height: "100%",
-    overflowY: "auto",
-    paddingRight: "1%",
-  },
-
-  cardsTitle: {
-    fontSize: "2.3vh",
-    fontWeight: 600,
-  },
-
-  count: {
-    fontSize: "1.5vh",
-    color: "#6b7280",
-    marginBottom: "2%",
-  },
-
-  cards: {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "3%",
-  },
-
-  card: {
-    width: "30%",
-    backgroundColor: "#fff",
-    borderRadius: "1.8vh",
+    padding: "1.2vh 1.5vh", // ✅ vh
+    borderRadius: "1.2vh", // ✅ vh
     border: "1px solid #e5e7eb",
-    padding: "2%",
-    marginBottom: "3%",
-    position: "relative",
+    fontSize: "1.4vh", // ✅ vh
+    background: "#fff",
+    cursor: "pointer",
+    outline: "none",
   },
-
-  badge: {
-    position: "absolute",
-    top: "5%",
-    left: "5%",
-    backgroundColor: "#fde68a",
-    padding: "2% 3%",
-    fontSize: "1.3vh",
-    borderRadius: "1.4vh",
-    fontWeight: 600,
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(28%, 1fr))", // ✅ %
+    gap: "2%", // ✅ %
   },
-
-  cardImage: {
-    height: "14vh",
-    backgroundColor: "#e5e7eb",
-    borderRadius: "1.4vh",
-    marginBottom: "6%",
-  },
-
-  cardTitle: {
-    fontSize: "1.9vh",
-    fontWeight: 600,
-  },
-
-  cardOrg: {
-    fontSize: "1.5vh",
-    color: "#6b7280",
-    marginBottom: "5%",
-  },
-
-  cardMeta: {
-    fontSize: "1.4vh",
+  card: {
+    background: "#fff",
+    borderRadius: "1.6vh", // ✅ vh
+    overflow: "hidden",
+    boxShadow: "0 0.4vh 1vh rgba(0,0,0,0.05)",
+    transition: "transform 0.25s ease, box-shadow 0.25s ease",
+    cursor: "pointer",
     display: "flex",
     flexDirection: "column",
-    gap: "4%",
-    marginBottom: "6%",
   },
-
-  viewBtn: {
-    width: "100%",
-    padding: "4%",
-    fontSize: "1.5vh",
-    borderRadius: "1.6vh",
-    border: "none",
-    background: "linear-gradient(90deg,#6366f1,#8b5cf6)",
-    color: "#fff",
-    cursor: "pointer",
+  imgWrap: {
+    position: "relative",
+    height: "20vh", // ✅ vh
+    overflow: "hidden",
+  },
+  img: {
+    width: "100%", // ✅ %
+    height: "100%", // ✅ %
+    objectFit: "cover",
+    display: "block",
+  },
+  categoryBadge: {
+    position: "absolute",
+    top: "4%", // ✅ %
+    left: "4%", // ✅ %
+    padding: "0.5vh 1.2vh", // ✅ vh
+    borderRadius: "99vh", // ✅ vh
+    fontSize: "1.2vh", // ✅ vh
     fontWeight: 600,
   },
-
-  modalOverlay: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    backgroundColor: "rgba(0,0,0,0.5)",
+  cardBody: {
+    padding: "4% 5%", // ✅ %
     display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 1000,
+    flexDirection: "column",
+    gap: "1.5%", // ✅ %
+    flex: 1,
   },
-
-  modal: {
-    width: "30%",
-    backgroundColor: "#fff",
-    padding: "2%",
-    borderRadius: "1.8vh",
-  },
-
-  modalTitle: {
-    fontSize: "2.2vh",
+  cardTitle: {
+    fontSize: "1.6vh", // ✅ vh
     fontWeight: 700,
-    marginBottom: "5%",
+    margin: "0 0 1% 0", // ✅ %
+    color: "#111827",
   },
-
-  closeBtn: {
-    marginTop: "6%",
-    width: "100%",
-    padding: "4%",
-    fontSize: "1.6vh",
-    borderRadius: "1.6vh",
+  metaText: {
+    fontSize: "1.3vh", // ✅ vh
+    color: "#6b7280",
+    margin: "0.5% 0", // ✅ %
+  },
+  btn: {
+    marginTop: "4%", // ✅ %
+    padding: "1.2vh 0", // ✅ vh
+    width: "100%", // ✅ %
+    borderRadius: "1vh", // ✅ vh
     border: "none",
-    backgroundColor: "#ef4444",
+    background: "linear-gradient(135deg, #3b82f6, #9333ea)",
     color: "#fff",
-    cursor: "pointer",
+    fontSize: "1.4vh", // ✅ vh
     fontWeight: 600,
+    cursor: "pointer",
+  },
+  empty: {
+    color: "#9ca3af",
+    marginTop: "5%", // ✅ %
+    textAlign: "center",
+    fontSize: "1.6vh", // ✅ vh
   },
 };
+
+export default DiscoverEvents;

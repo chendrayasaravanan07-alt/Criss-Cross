@@ -1,9 +1,279 @@
-import React from 'react'
+import React, { useState } from "react";
+import Sidebar from "./sidebar";
 
-function studentprofile() {
+function StudentProfile() {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [profile, setProfile] = useState({
+    name: "Alex Morgan",
+    degree: "Computer Science",
+    bio: "Passionate about AI and building innovative solutions.",
+    email: "alex.morgan@university.edu",
+    location: "San Francisco, CA",
+    image: "https://i.pravatar.cc/150?img=12",
+  });
+
+  const [skills, setSkills] = useState([
+    "React", "Node.js", "Python", "Machine Learning",
+    "UI/UX Design", "Docker", "AWS"
+  ]);
+
+  const [interests, setInterests] = useState([
+    "AI & ML", "Web Dev", "Healthcare", "Sustainability"
+  ]);
+
+  const [newSkill, setNewSkill] = useState("");
+  const [newInterest, setNewInterest] = useState("");
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfile({ ...profile, image: URL.createObjectURL(file) });
+    }
+  };
+
+  const handleChange = (e) => {
+    setProfile({ ...profile, [e.target.name]: e.target.value });
+  };
+
+  const addSkill = () => {
+    if (newSkill.trim()) {
+      setSkills([...skills, newSkill]);
+      setNewSkill("");
+    }
+  };
+
+  const addInterest = () => {
+    if (newInterest.trim()) {
+      setInterests([...interests, newInterest]);
+      setNewInterest("");
+    }
+  };
+
   return (
-    <div>studentprofile</div>
-  )
+    <div style={{ display: "flex", minHeight: "100vh", background: "#f5f6fa" }}>
+
+      {/* Sidebar */}
+      <Sidebar />
+
+      {/* Main Content */}
+      <div
+        style={{
+          marginLeft: "18%",
+          width: "82%",
+          padding: "3%",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Profile Header */}
+        <div style={styles.header}>
+          <div style={styles.banner}></div>
+
+          <div style={styles.profileRow}>
+            <div style={{ position: "relative" }}>
+              <img src={profile.image} alt="avatar" style={styles.avatar} />
+              {isEditing && (
+                <label style={styles.uploadBtn}>
+                  Change
+                  <input type="file" hidden onChange={handleImageChange} />
+                </label>
+              )}
+            </div>
+
+            <div style={{ flex: 1 }}>
+              {isEditing ? (
+                <>
+                  <input style={styles.input} name="name" value={profile.name} onChange={handleChange} />
+                  <input style={styles.input} name="degree" value={profile.degree} onChange={handleChange} />
+                  <textarea style={styles.textarea} name="bio" value={profile.bio} onChange={handleChange} />
+                  <input style={styles.input} name="email" value={profile.email} onChange={handleChange} />
+                  <input style={styles.input} name="location" value={profile.location} onChange={handleChange} />
+                </>
+              ) : (
+                <>
+                  <h2 style={{ fontSize: "2.2vh" }}>{profile.name}</h2>
+                  <p style={{ fontSize: "1.5vh" }}>{profile.degree}</p>
+                  <p style={{ fontSize: "1.4vh" }}>{profile.bio}</p>
+                  <p style={{ fontSize: "1.4vh" }}>📧 {profile.email}</p>
+                  <p style={{ fontSize: "1.4vh" }}>📍 {profile.location}</p>
+                </>
+              )}
+            </div>
+
+            <button
+              style={styles.editBtnLeft}
+              onClick={() => setIsEditing(!isEditing)}
+            >
+              {isEditing ? "Save" : "Edit"}
+            </button>
+          </div>
+        </div>
+
+        {/* Events Count */}
+        <div style={styles.card}>
+          <h2 style={{ fontSize: "2.5vh" }}>3</h2>
+          <p style={{ fontSize: "1.4vh" }}>Events Participated</p>
+        </div>
+
+        {/* Skills */}
+        <div style={styles.section}>
+          <h3 style={{ fontSize: "1.8vh" }}>💡 Skills</h3>
+          <div style={styles.tags}>
+            {skills.map((s, i) => (
+              <span key={i} style={styles.tag}>{s}</span>
+            ))}
+          </div>
+          {isEditing && (
+            <div style={styles.addBox}>
+              <input
+                placeholder="Add new skill"
+                value={newSkill}
+                onChange={(e) => setNewSkill(e.target.value)}
+                style={styles.addInput}
+              />
+              <button onClick={addSkill} style={styles.addBtn}>Add</button>
+            </div>
+          )}
+        </div>
+
+        {/* Interests */}
+        <div style={styles.section}>
+          <h3 style={{ fontSize: "1.8vh" }}>⭐ Interests</h3>
+          <div style={styles.tags}>
+            {interests.map((item, idx) => (
+              <span key={idx} style={styles.tag}>{item}</span>
+            ))}
+          </div>
+          {isEditing && (
+            <div style={styles.addBox}>
+              <input
+                placeholder="Add interest"
+                value={newInterest}
+                onChange={(e) => setNewInterest(e.target.value)}
+                style={styles.addInput}
+              />
+              <button onClick={addInterest} style={styles.addBtn}>Add</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default studentprofile
+const styles = {
+  header: {
+    background: "#fff",
+    borderRadius: "2vh",
+    marginBottom: "3%",
+    position: "relative",
+  },
+  banner: {
+    height: "15vh",
+    background: "linear-gradient(90deg, #6366f1, #ec4899)",
+    borderRadius: "2vh 2vh 0 0",
+  },
+  profileRow: {
+    display: "flex",
+    gap: "2%",
+    padding: "2%",
+    alignItems: "center",
+  },
+  avatar: {
+    width: "12vh",
+    height: "12vh",
+    borderRadius: "1.5vh",
+    border: "4px solid white",
+    marginTop: "-8%",
+    objectFit: "cover",
+  },
+  uploadBtn: {
+    position: "absolute",
+    bottom: "3%",
+    right: "3%",
+    background: "#4f46e5",
+    color: "#fff",
+    fontSize: "1.2vh",
+    padding: "0.5% 1%",
+    borderRadius: "0.8vh",
+    cursor: "pointer",
+  },
+  editBtnLeft: {
+    height: "5vh",
+    padding: "1% 2%",
+    borderRadius: "1vh",
+    border: "none",
+    background: "#4f46e5",
+    color: "#fff",
+    cursor: "pointer",
+    alignSelf: "flex-start",
+    fontSize: "1.4vh",
+  },
+  input: {
+    display: "block",
+    width: "100%",
+    padding: "1%",
+    marginBottom: "1%",
+    borderRadius: "0.8vh",
+    border: "1px solid #ccc",
+    fontSize: "1.4vh",
+  },
+  textarea: {
+    width: "100%",
+    height: "8vh",
+    padding: "1%",
+    marginBottom: "1%",
+    borderRadius: "0.8vh",
+    border: "1px solid #ccc",
+    fontSize: "1.4vh",
+  },
+  card: {
+    background: "#fff",
+    padding: "2%",
+    borderRadius: "2vh",
+    width: "28%",
+    marginBottom: "2%",
+  },
+  section: {
+    background: "#fff",
+    padding: "2%",
+    borderRadius: "2vh",
+    marginBottom: "2%",
+  },
+  tags: {
+    display: "flex",
+    gap: "1%",
+    flexWrap: "wrap",
+  },
+  tag: {
+    background: "#eef2ff",
+    color: "#4f46e5",
+    padding: "0.6% 1.5%",
+    borderRadius: "999px",
+    fontSize: "1.3vh",
+    fontWeight: "500",
+  },
+  addBox: {
+    marginTop: "1%",
+    display: "flex",
+    gap: "1%",
+  },
+  addInput: {
+    flex: 1,
+    padding: "1%",
+    borderRadius: "0.8vh",
+    border: "1px solid #ccc",
+    fontSize: "1.4vh",
+  },
+  addBtn: {
+    padding: "1% 2%",
+    borderRadius: "0.8vh",
+    border: "none",
+    background: "#4f46e5",
+    color: "#fff",
+    cursor: "pointer",
+    fontSize: "1.4vh",
+  },
+};
+
+export default StudentProfile;
