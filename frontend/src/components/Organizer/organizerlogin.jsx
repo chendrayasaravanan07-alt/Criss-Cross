@@ -160,6 +160,17 @@ export default function OrganizerLogin() {
         <Link to="/organizer" style={{ textDecoration: "none" }}>
           <button style={buttonStyle}>Sign In →</button>
         </Link>
+
+        {/* Footer — links to /organizer-reg */}
+        <p style={{ marginTop: "20px", textAlign: "center" }}>
+          Don't have an account?{" "}
+          <Link
+            to="/organizer-reg"
+            style={{ color: "#2563eb", fontWeight: "600", textDecoration: "none" }}
+          >
+            Create Organizer Account
+          </Link>
+        </p>
       </div>
     </div>
   );

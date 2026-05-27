@@ -1,20 +1,11 @@
 import { useState, useEffect } from "react";
-import {
-  Building2,
-  Lock,
-  Bell,
-  Globe,
-  Phone,
-  Save,
-  Eye,
-  EyeOff,
-  CheckCircle2
-} from "lucide-react";
+import { Building2, Lock, Bell, Save, Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import Sidebar from "./osidebar";
 
-export default function Organizersettings() {
+export default function OrganizerSettings() {
   const [showPassword, setShowPassword] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [activeSection, setActiveSection] = useState("profile");
 
   const [settings, setSettings] = useState({
     organizationName: "",
@@ -22,53 +13,30 @@ export default function Organizersettings() {
     contactNumber: "",
     website: "",
     bio: "",
-    emailNotifications: {
-      newRegistrations: true,
-      eventReminders: true
-    }
+    emailNotifications: { newRegistrations: true, eventReminders: true },
   });
 
   const [passwordForm, setPasswordForm] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: ""
+    currentPassword: "", newPassword: "", confirmPassword: "",
   });
 
   useEffect(() => {
-    const savedSettings = localStorage.getItem("organizerSettings");
-    if (savedSettings) {
-      setSettings(JSON.parse(savedSettings));
-    }
+    const saved = localStorage.getItem("organizerSettings");
+    if (saved) setSettings(JSON.parse(saved));
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setSettings((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const handleChange = (e) =>
+    setSettings((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handlePasswordChange = (e) => {
-    const { name, value } = e.target;
-    setPasswordForm((prev) => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const handlePasswordChange = (e) =>
+    setPasswordForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleUpdatePassword = () => {
     if (passwordForm.newPassword !== passwordForm.confirmPassword) {
-      alert("Passwords do not match");
-      return;
+      alert("Passwords do not match"); return;
     }
-
     alert("Password updated successfully!");
-    setPasswordForm({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: ""
-    });
+    setPasswordForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
   };
 
   const handleSave = () => {
@@ -77,129 +45,352 @@ export default function Organizersettings() {
     setTimeout(() => setSaved(false), 2000);
   };
 
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setActiveSection(id);
+  };
+
+  const navItems = [
+    { id: "profile",       label: "Profile",       icon: <Building2 size={16} />, color: "#3b82f6" },
+    { id: "security",      label: "Security",      icon: <Lock      size={16} />, color: "#8b5cf6" },
+    { id: "notifications", label: "Notifications", icon: <Bell      size={16} />, color: "#f97316" },
+  ];
+
   return (
     <>
+      <style>{`
+        * { box-sizing: border-box; font-family: 'Inter', Arial, sans-serif; }
+        body { margin: 0; }
+
+        .os-page {
+          margin-left: 18%;
+          width: 82%;
+          min-height: 100vh;
+          background: #f4f5fb;
+          padding: 3%;
+        }
+
+        .os-page-title  { font-size: 2.8vh; font-weight: 800; color: #1e1b4b; margin: 0 0 0.5% 0; }
+        .os-page-sub    { font-size: 1.5vh; color: #6b7280; margin: 0 0 3% 0; }
+
+        .os-layout {
+          display: grid;
+          grid-template-columns: 22% 1fr;
+          gap: 2%;
+          align-items: start;
+        }
+
+        /* ── Left Nav ── */
+        .os-nav {
+          background: #fff;
+          border-radius: 2vh;
+          padding: 4%;
+          border: 1px solid #e5e7eb;
+          position: sticky;
+          top: 3%;
+          display: flex;
+          flex-direction: column;
+          gap: 1.5%;
+        }
+        .os-nav-label {
+          font-size: 1.2vh;
+          font-weight: 700;
+          color: #9ca3af;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-bottom: 2%;
+          padding: 0 2%;
+        }
+        .os-nav-btn {
+          display: flex;
+          align-items: center;
+          gap: 8%;
+          padding: 3% 4%;
+          border-radius: 1.4vh;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          font-size: 1.5vh;
+          font-weight: 500;
+          color: #374151;
+          transition: all 0.2s;
+          text-align: left;
+          width: 100%;
+        }
+        .os-nav-btn:hover  { background: #f3f4f6; }
+        .os-nav-btn.active {
+          background: linear-gradient(135deg, #6366f1, #9333ea);
+          color: #fff;
+          box-shadow: 0 0.5vh 1.5vh rgba(99,102,241,0.3);
+        }
+        .os-nav-btn.active svg { color: #fff !important; }
+
+        /* ── Cards ── */
+        .os-content { display: flex; flex-direction: column; gap: 2%; }
+
+        .os-card {
+          background: #fff;
+          border-radius: 2vh;
+          padding: 5%;
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 0.2vh 0.8vh rgba(0,0,0,0.04);
+        }
+
+        .os-card-title {
+          display: flex;
+          align-items: center;
+          gap: 3%;
+          font-size: 1.8vh;
+          font-weight: 700;
+          color: #1e1b4b;
+          margin-bottom: 4%;
+          padding-bottom: 3%;
+          border-bottom: 1px solid #f3f4f6;
+        }
+        .os-card-title-icon {
+          width: 4.5vh;
+          height: 4.5vh;
+          border-radius: 1.2vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        /* ── Field ── */
+        .os-field { margin-bottom: 3%; }
+        .os-field label {
+          display: block;
+          font-size: 1.3vh;
+          font-weight: 600;
+          color: #374151;
+          margin-bottom: 1.5%;
+        }
+        .os-field input,
+        .os-field textarea {
+          width: 100%;
+          padding: 1.4% 2%;
+          border-radius: 1.2vh;
+          border: 1.5px solid #e5e7eb;
+          font-size: 1.5vh;
+          outline: none;
+          background: #f9fafb;
+          transition: border-color 0.2s, box-shadow 0.2s;
+          font-family: inherit;
+        }
+        .os-field input:focus,
+        .os-field textarea:focus {
+          border-color: #818cf8;
+          background: #fff;
+          box-shadow: 0 0 0 0.3vh rgba(129,140,248,0.15);
+        }
+        .os-field .os-pw-wrap { position: relative; }
+        .os-field .os-eye-btn {
+          position: absolute;
+          right: 3%;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #9ca3af;
+          display: flex;
+          align-items: center;
+        }
+
+        /* ── Two-col grid inside card ── */
+        .os-two-col {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 3%;
+        }
+
+        /* ── Button ── */
+        .os-btn {
+          display: flex;
+          align-items: center;
+          gap: 2%;
+          padding: 1.3% 3%;
+          background: linear-gradient(135deg, #6366f1, #9333ea);
+          color: #fff;
+          border: none;
+          border-radius: 1.2vh;
+          font-size: 1.5vh;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 0.5vh 1.5vh rgba(99,102,241,0.3);
+          transition: opacity 0.2s;
+          width: fit-content;
+          margin-top: 1%;
+        }
+        .os-btn:hover { opacity: 0.9; }
+
+        /* ── Notification row ── */
+        .os-notif-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 2.5% 0;
+          border-bottom: 1px solid #f3f4f6;
+        }
+        .os-notif-row:last-child { border-bottom: none; }
+        .os-notif-label { font-size: 1.5vh; font-weight: 500; color: #374151; }
+        .os-notif-sub   { font-size: 1.3vh; color: #9ca3af; margin-top: 0.5%; }
+
+        /* custom toggle */
+        .os-toggle {
+          position: relative;
+          width: 4.5vh;
+          height: 2.4vh;
+          flex-shrink: 0;
+        }
+        .os-toggle input { opacity: 0; width: 0; height: 0; }
+        .os-toggle-slider {
+          position: absolute;
+          inset: 0;
+          border-radius: 99vh;
+          background: #e5e7eb;
+          cursor: pointer;
+          transition: background 0.3s;
+        }
+        .os-toggle input:checked + .os-toggle-slider { background: linear-gradient(135deg, #6366f1, #9333ea); }
+        .os-toggle-slider::before {
+          content: "";
+          position: absolute;
+          width: 1.8vh;
+          height: 1.8vh;
+          border-radius: 50%;
+          background: #fff;
+          top: 50%;
+          left: 4%;
+          transform: translateY(-50%);
+          transition: left 0.3s;
+          box-shadow: 0 0.2vh 0.5vh rgba(0,0,0,0.15);
+        }
+        .os-toggle input:checked + .os-toggle-slider::before { left: calc(100% - 1.8vh - 4%); }
+
+        /* ── Save bar ── */
+        .os-save-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .os-save-bar span { font-size: 1.5vh; color: #6b7280; }
+      `}</style>
+
       <Sidebar />
 
-      <div style={{ marginLeft: "18vw", padding: 24, background: "#f7f8fc", minHeight: "100vh" }}>
-        <h1 style={{ fontSize: 26 }}>Organizer Settings</h1>
-        <p style={{ color: "#6b7280" }}>
-          Manage your organization profile and event preferences
-        </p>
+      <div className="os-page">
+        <h1 className="os-page-title">Organizer Settings</h1>
+        <p className="os-page-sub">Manage your organization profile and preferences</p>
 
-        <div style={{ display: "grid", gridTemplateColumns: "300px 1fr", gap: 24, marginTop: 24 }}>
-          
-          {/* Left Navigation */}
-          <aside style={{ background: "#fff", borderRadius: 16, padding: 16 }}>
-            <a href="#profile" style={navStyle}> <Building2 size={18}/> Profile</a>
-            <a href="#security" style={navStyle}> <Lock size={18}/> Security</a>
-            <a href="#notifications" style={navStyle}> <Bell size={18}/> Notifications</a>
+        <div className="os-layout">
+
+          {/* ── Left Nav ── */}
+          <aside className="os-nav">
+            <p className="os-nav-label">Settings</p>
+            {navItems.map(({ id, label, icon, color }) => (
+              <button
+                key={id}
+                className={`os-nav-btn ${activeSection === id ? "active" : ""}`}
+                onClick={() => scrollTo(id)}
+              >
+                <span style={{ color: activeSection === id ? "#fff" : color }}>{icon}</span>
+                {label}
+              </button>
+            ))}
           </aside>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+          {/* ── Right Content ── */}
+          <div className="os-content">
 
             {/* PROFILE */}
-            <section id="profile" style={cardStyle}>
-              <div style={titleStyle}>
-                <Building2 color="#3b82f6" /> Organization Profile
+            <section id="profile" className="os-card">
+              <div className="os-card-title">
+                <div className="os-card-title-icon" style={{ background: "#eff6ff" }}>
+                  <Building2 size={18} color="#3b82f6" />
+                </div>
+                Organization Profile
               </div>
 
-              <Input label="Organization Name" name="organizationName" value={settings.organizationName} onChange={handleChange}/>
-              <Input label="Email" name="email" value={settings.email} onChange={handleChange}/>
-              <Input label="Contact Number" name="contactNumber" value={settings.contactNumber} onChange={handleChange}/>
-              <Input label="Website" name="website" value={settings.website} onChange={handleChange}/>
+              <div className="os-two-col">
+                <Field label="Organization Name" name="organizationName" value={settings.organizationName} onChange={handleChange} />
+                <Field label="Email Address"      name="email"            value={settings.email}            onChange={handleChange} />
+                <Field label="Contact Number"     name="contactNumber"    value={settings.contactNumber}    onChange={handleChange} />
+                <Field label="Website"            name="website"          value={settings.website}          onChange={handleChange} />
+              </div>
 
-              <div style={{ marginBottom: 16 }}>
+              <div className="os-field">
                 <label>Description / Bio</label>
-                <textarea
-                  name="bio"
-                  value={settings.bio}
-                  onChange={handleChange}
-                  style={{ width: "100%", padding: 12, borderRadius: 12, border: "1px solid #e5e7eb" }}
-                  rows={4}
-                />
+                <textarea name="bio" value={settings.bio} onChange={handleChange} rows={4}
+                  placeholder="Tell participants about your organization..." />
               </div>
             </section>
 
             {/* SECURITY */}
-            <section id="security" style={cardStyle}>
-              <div style={titleStyle}>
-                <Lock color="#8b5cf6" /> Security
+            <section id="security" className="os-card">
+              <div className="os-card-title">
+                <div className="os-card-title-icon" style={{ background: "#f5f3ff" }}>
+                  <Lock size={18} color="#8b5cf6" />
+                </div>
+                Security
               </div>
 
-              <Input
+              <Field
                 label="Current Password"
                 name="currentPassword"
                 type={showPassword ? "text" : "password"}
                 value={passwordForm.currentPassword}
                 onChange={handlePasswordChange}
-                showEye
-                toggleEye={() => setShowPassword(!showPassword)}
+                showEye toggleEye={() => setShowPassword(!showPassword)}
+                eyeOpen={showPassword}
               />
+              <div className="os-two-col">
+                <Field label="New Password"     name="newPassword"     type="password" value={passwordForm.newPassword}     onChange={handlePasswordChange} />
+                <Field label="Confirm Password" name="confirmPassword" type="password" value={passwordForm.confirmPassword} onChange={handlePasswordChange} />
+              </div>
 
-              <Input
-                label="New Password"
-                name="newPassword"
-                type="password"
-                value={passwordForm.newPassword}
-                onChange={handlePasswordChange}
-              />
-
-              <Input
-                label="Confirm Password"
-                name="confirmPassword"
-                type="password"
-                value={passwordForm.confirmPassword}
-                onChange={handlePasswordChange}
-              />
-
-              <button style={buttonStyle} onClick={handleUpdatePassword}>
-                Update Password
+              <button className="os-btn" onClick={handleUpdatePassword}>
+                <Lock size={14} /> Update Password
               </button>
             </section>
 
             {/* NOTIFICATIONS */}
-            <section id="notifications" style={cardStyle}>
-              <div style={titleStyle}>
-                <Bell color="#f97316" /> Notifications
+            <section id="notifications" className="os-card">
+              <div className="os-card-title">
+                <div className="os-card-title-icon" style={{ background: "#fff7ed" }}>
+                  <Bell size={18} color="#f97316" />
+                </div>
+                Email Notifications
               </div>
 
-              <Checkbox
-                label="New Registrations"
-                checked={settings.emailNotifications.newRegistrations}
-                onChange={(val) =>
-                  setSettings({
-                    ...settings,
-                    emailNotifications: {
-                      ...settings.emailNotifications,
-                      newRegistrations: val
-                    }
-                  })
-                }
-              />
-
-              <Checkbox
-                label="Event Reminders"
-                checked={settings.emailNotifications.eventReminders}
-                onChange={(val) =>
-                  setSettings({
-                    ...settings,
-                    emailNotifications: {
-                      ...settings.emailNotifications,
-                      eventReminders: val
-                    }
-                  })
-                }
-              />
+              {[
+                { key: "newRegistrations", label: "New Registrations", sub: "Get notified when a student registers for your event" },
+                { key: "eventReminders",   label: "Event Reminders",   sub: "Receive reminders before your events start" },
+              ].map(({ key, label, sub }) => (
+                <div className="os-notif-row" key={key}>
+                  <div>
+                    <p className="os-notif-label">{label}</p>
+                    <p className="os-notif-sub">{sub}</p>
+                  </div>
+                  <label className="os-toggle">
+                    <input type="checkbox"
+                      checked={settings.emailNotifications[key]}
+                      onChange={(e) => setSettings({
+                        ...settings,
+                        emailNotifications: { ...settings.emailNotifications, [key]: e.target.checked }
+                      })}
+                    />
+                    <span className="os-toggle-slider" />
+                  </label>
+                </div>
+              ))}
             </section>
 
             {/* SAVE */}
-            <div style={{ ...cardStyle, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ color: "#6b7280" }}>
-                Save your changes before leaving
-              </span>
-              <button style={buttonStyle} onClick={handleSave}>
-                {saved ? <CheckCircle2 size={18}/> : <Save size={18}/>}
+            <div className="os-card os-save-bar">
+              <span>Make sure to save your changes before leaving</span>
+              <button className="os-btn" onClick={handleSave}>
+                {saved ? <CheckCircle2 size={14} /> : <Save size={14} />}
                 {saved ? "Saved!" : "Save Changes"}
               </button>
             </div>
@@ -211,86 +402,19 @@ export default function Organizersettings() {
   );
 }
 
-/* ---------- Small Reusable Components ---------- */
-
-const navStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: 10,
-  padding: 12,
-  borderRadius: 12,
-  textDecoration: "none",
-  color: "#374151"
-};
-
-const cardStyle = {
-  background: "#fff",
-  padding: 24,
-  borderRadius: 16,
-  border: "1px solid #e5e7eb"
-};
-
-const titleStyle = {
-  display: "flex",
-  alignItems: "center",
-  gap: 10,
-  marginBottom: 20,
-  fontSize: 18
-};
-
-const buttonStyle = {
-  background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
-  color: "#fff",
-  border: "none",
-  padding: "10px 18px",
-  borderRadius: 12,
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  gap: 8
-};
-
-function Input({ label, showEye, toggleEye, ...props }) {
+/* ── Reusable Field ── */
+function Field({ label, showEye, toggleEye, eyeOpen, ...props }) {
   return (
-    <div style={{ marginBottom: 16 }}>
+    <div className="os-field">
       <label>{label}</label>
-      <div style={{ position: "relative" }}>
-        <input
-          {...props}
-          style={{
-            width: "100%",
-            padding: 12,
-            borderRadius: 12,
-            border: "1px solid #e5e7eb"
-          }}
-        />
+      <div className={showEye ? "os-pw-wrap" : ""}>
+        <input {...props} />
         {showEye && (
-          <button
-            type="button"
-            onClick={toggleEye}
-            style={{
-              position: "absolute",
-              right: 10,
-              top: "50%",
-              transform: "translateY(-50%)",
-              background: "none",
-              border: "none",
-              cursor: "pointer"
-            }}
-          >
-            <Eye size={18} />
+          <button type="button" className="os-eye-btn" onClick={toggleEye}>
+            {eyeOpen ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         )}
       </div>
-    </div>
-  );
-}
-
-function Checkbox({ label, checked, onChange }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0" }}>
-      <span>{label}</span>
-      <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} />
     </div>
   );
 }

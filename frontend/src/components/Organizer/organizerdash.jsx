@@ -5,129 +5,71 @@ import Sidebar from "./osidebar";
 export default function OrganizerDash() {
   return (
     <div style={{ display: "flex" }}>
-      {/* Sidebar */}
       <Sidebar />
 
-      {/* Main Content */}
-      <div
-        style={{
-          marginLeft: "18vw",
-          padding: "30px",
-          background: "#f3f4f6",
-          minHeight: "100vh",
-          width: "calc(100% - 18vw)", // ← add this
-          boxSizing: "border-box", // ← add this
-        }}
-      >
+      <div style={{
+        marginLeft: "18%",
+        padding: "3%",
+        background: "#f3f4f6",
+        minHeight: "100vh",
+        width: "82%",
+        boxSizing: "border-box",
+      }}>
         {/* Header */}
-        <h1 style={{ fontSize: "28px", fontWeight: "600" }}>Dashboard</h1>
-
-        <p style={{ color: "#6b7280", marginTop: "-5px" }}>
+        <h1 style={{ fontSize: "3.2vh", fontWeight: "600" }}>Dashboard</h1>
+        <p style={{ color: "#6b7280", marginTop: "-0.5%" }}>
           Welcome back! Here's what's happening with your events
         </p>
 
         {/* Stats */}
         <div style={statsGrid}>
-          <StatCard
-            icon={<FaCalendarAlt />}
-            value="12"
-            label="Total Events"
-            color="#6366F1"
-          />
-
-          <StatCard
-            icon={<FaUsers />}
-            value="2,847"
-            label="Total Participants"
-            color="#22C55E"
-          />
-
-          <StatCard
-            icon={<FaEye />}
-            value="18,549"
-            label="Total Views"
-            color="#A855F7"
-          />
+          <StatCard icon={<FaCalendarAlt />} value="12"     label="Total Events"        color="#6366F1" />
+          <StatCard icon={<FaUsers />}       value="2,847"  label="Total Participants"   color="#22C55E" />
+          <StatCard icon={<FaEye />}         value="18,549" label="Total Views"          color="#A855F7" />
         </div>
 
         {/* Top Performing Events */}
         <div style={card}>
-          <h3 style={{ marginBottom: "15px" }}>🏆 Top Performing Events</h3>
-
-          <EventRow
-            rank="#1"
-            title="AI Innovation Challenge 2025"
-            users="156"
-            views="2847"
-            percent="92%"
-          />
-
-          <EventRow
-            rank="#2"
-            title="Web3 Summit Hackathon"
-            users="342"
-            views="4521"
-            percent="87%"
-          />
-
-          <EventRow
-            rank="#3"
-            title="Healthcare Innovation Sprint"
-            users="128"
-            views="1893"
-            percent="84%"
-          />
+          <h3 style={{ marginBottom: "2%" }}>🏆 Top Performing Events</h3>
+          <EventRow rank="#1" title="AI Innovation Challenge 2025"  users="156" views="2847" percent="92%" />
+          <EventRow rank="#2" title="Web3 Summit Hackathon"         users="342" views="4521" percent="87%" />
+          <EventRow rank="#3" title="Healthcare Innovation Sprint"  users="128" views="1893" percent="84%" />
         </div>
       </div>
     </div>
   );
 }
 
-/* ================= COMPONENTS ================= */
-
-const StatCard = ({ icon, value, label, badge, color }) => (
+const StatCard = ({ icon, value, label, color }) => (
   <div style={statCard}>
     <div style={statTop}>
       <div style={{ ...iconBox, background: `${color}15`, color }}>{icon}</div>
     </div>
-
-    <h2 style={{ margin: "10px 0 0" }}>{value}</h2>
-    <p style={{ color: "#6b7280", marginTop: "4px" }}>{label}</p>
+    <h2 style={{ margin: "2% 0 0", fontSize: "3.5vh" }}>{value}</h2>
+    <p style={{ color: "#6b7280", marginTop: "1%", fontSize: "1.6vh" }}>{label}</p>
   </div>
 );
 
 const EventRow = ({ rank, title, users, views, percent }) => (
   <div style={eventRow}>
     <div style={rankBadge}>{rank}</div>
-
     <div style={{ flex: 1 }}>
-      <p style={{ margin: 0, fontWeight: 500 }}>{title}</p>
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
-          marginTop: "4px",
-          color: "#6b7280",
-        }}
-      >
-        <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+      <p style={{ margin: 0, fontWeight: 500, fontSize: "1.7vh" }}>{title}</p>
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "3%",
+        marginTop: "0.8%",
+        color: "#6b7280",
+        fontSize: "1.4vh",
+      }}>
+        <span style={{ display: "flex", alignItems: "center", gap: "1%" }}>
           <FaUsers size={14} /> {users}
         </span>
-
-        <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+        <span style={{ display: "flex", alignItems: "center", gap: "1%" }}>
           <FaEye size={14} /> {views}
         </span>
-
-        <span
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "4px",
-            color: "#16A34A",
-          }}
-        >
+        <span style={{ display: "flex", alignItems: "center", gap: "1%", color: "#16A34A" }}>
           <FaArrowUp size={12} /> {percent}
         </span>
       </div>
@@ -135,19 +77,17 @@ const EventRow = ({ rank, title, users, views, percent }) => (
   </div>
 );
 
-/* ================= STYLES ================= */
-
 const statsGrid = {
   display: "grid",
   gridTemplateColumns: "repeat(3, 1fr)",
-  gap: "20px",
-  marginTop: "25px",
+  gap: "2%",
+  marginTop: "2.5%",
 };
 
 const statCard = {
   background: "#fff",
-  padding: "20px",
-  borderRadius: "14px",
+  padding: "3%",
+  borderRadius: "1.8vh",
   boxShadow: "0 6px 14px rgba(0,0,0,0.05)",
 };
 
@@ -158,45 +98,36 @@ const statTop = {
 };
 
 const iconBox = {
-  fontSize: "20px",
-  padding: "10px",
-  borderRadius: "10px",
-};
-
-const badgeStyle = {
-  fontSize: "12px",
-  background: "#E8F9EE",
-  color: "#16A34A",
-  padding: "4px 8px",
-  borderRadius: "20px",
-  display: "flex",
-  alignItems: "center",
-  gap: "4px",
+  fontSize: "2.2vh",
+  padding: "1.2%",
+  borderRadius: "1.2vh",
 };
 
 const card = {
-  marginTop: "30px",
+  marginTop: "3%",
   background: "#fff",
-  padding: "20px",
-  borderRadius: "14px",
+  padding: "3%",
+  borderRadius: "1.8vh",
 };
 
 const eventRow = {
   display: "flex",
   alignItems: "center",
-  gap: "15px",
-  padding: "14px 0",
+  gap: "2%",
+  padding: "1.8% 0",
   borderBottom: "1px solid #eee",
 };
 
 const rankBadge = {
   background: "linear-gradient(135deg, #6366F1, #A855F7)",
   color: "#fff",
-  width: "36px",
-  height: "36px",
+  width: "4.5vh",
+  height: "4.5vh",
   borderRadius: "50%",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   fontWeight: "600",
+  fontSize: "1.5vh",
+  flexShrink: 0,
 };

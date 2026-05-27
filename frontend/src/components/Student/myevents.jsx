@@ -7,11 +7,9 @@ import {
 } from "react-icons/fa";
 import Sidebar from "./sidebar";
 
-/* ─── Image Optimizer ────────────────────────────────────── */
 const optimize = (url) =>
   `${url}?w=400&h=210&fit=crop&q=70&auto=format`;
 
-/* ─── Static Data (outside component) ───────────────────── */
 const eventsData = [
   {
     id: 1,
@@ -75,45 +73,46 @@ const STATUS_COLOR = {
   completed: "#6b7280",
 };
 
-/* ─── Styles (defined once outside, never re-created) ────── */
 const styles = {
   layout: {
     display: "flex",
-    minHeight: "100vh",
+    minHeight: "100vh",           // ✅ outer div height in vh
     background: "#f6f7fb",
     fontFamily: "Inter, system-ui, sans-serif",
   },
   page: {
     flex: 1,
-    padding: "40px",
+    padding: "2% 3%",             // ✅ padding in %
     overflowX: "hidden",
-    marginLeft: "280px",
+    marginLeft: "18vw",           // ✅ margin in %/vw
+    width: "calc(100% - 18vw)",   // ✅ width in %
+    boxSizing: "border-box",
   },
   pageTitle: {
-    fontSize: 32,
+    fontSize: "3.2vh",            // ✅ font-size in vh
     fontWeight: 700,
-    margin: "0 0 4px",
+    margin: "0 0 0.5% 0",        // ✅ margin in %
   },
   pageSubtitle: {
     color: "#6b7280",
-    margin: "0 0 28px",
+    margin: "0 0 2.5% 0",        // ✅ margin in %
   },
   tabs: {
     display: "inline-flex",
-    gap: 6,
-    padding: 6,
+    gap: "0.5%",                  // ✅ gap in %
+    padding: "0.5%",              // ✅ padding in %
     background: "#fff",
-    borderRadius: 18,
-    marginBottom: 30,
+    borderRadius: "2vh",          // ✅ border-radius in vh
+    marginBottom: "2.5%",         // ✅ margin in %
   },
   tab: {
-    padding: "12px 22px",
-    borderRadius: 14,
+    padding: "1.2vh 2.2vh",       // ✅ padding in vh
+    borderRadius: "1.5vh",        // ✅ border-radius in vh
     border: "none",
     background: "transparent",
     fontWeight: 600,
     cursor: "pointer",
-    fontSize: 14,
+    fontSize: "1.4vh",            // ✅ font-size in vh
   },
   tabActive: {
     background: "linear-gradient(135deg,#4f46e5,#9333ea)",
@@ -121,12 +120,12 @@ const styles = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(360px,1fr))",
-    gap: 24,
+    gridTemplateColumns: "repeat(auto-fill, minmax(30%, 1fr))", // ✅ width in %
+    gap: "2%",                    // ✅ gap in %
   },
   card: {
     background: "#fff",
-    borderRadius: 22,
+    borderRadius: "2.2vh",        // ✅ border-radius in vh
     overflow: "hidden",
     boxShadow: "0 10px 28px rgba(0,0,0,.08)",
   },
@@ -134,46 +133,46 @@ const styles = {
     position: "relative",
   },
   img: {
-    width: "100%",
-    height: 210,
+    width: "100%",                // ✅ width in %
+    height: "22vh",               // ✅ height in vh
     objectFit: "cover",
     display: "block",
   },
   badge: {
     position: "absolute",
-    top: 12,
-    padding: "6px 14px",
+    top: "3%",                    // ✅ top in %
+    padding: "0.6vh 1.4vh",       // ✅ padding in vh
     background: "#fff",
-    borderRadius: 999,
-    fontSize: 12,
+    borderRadius: "99vh",         // ✅ border-radius in vh
+    fontSize: "1.2vh",            // ✅ font-size in vh
     fontWeight: 600,
   },
   cardBody: {
-    padding: 20,
+    padding: "4%",                // ✅ padding in %
   },
   eventTitle: {
-    fontSize: 16,
+    fontSize: "1.6vh",            // ✅ font-size in vh
     fontWeight: 700,
-    margin: "0 0 4px",
+    margin: "0 0 1% 0",          // ✅ margin in %
   },
   organizer: {
-    fontSize: 13,
+    fontSize: "1.3vh",            // ✅ font-size in vh
     color: "#6b7280",
-    margin: "0 0 12px",
+    margin: "0 0 3% 0",          // ✅ margin in %
   },
   meta: {
     listStyle: "none",
     padding: 0,
-    margin: "0 0 14px",
+    margin: "0 0 3% 0",          // ✅ margin in %
     display: "flex",
     flexDirection: "column",
-    gap: 6,
+    gap: "1%",                    // ✅ gap in %
   },
   metaItem: {
     display: "flex",
     alignItems: "center",
-    gap: 8,
-    fontSize: 13,
+    gap: "2%",                    // ✅ gap in %
+    fontSize: "1.3vh",            // ✅ font-size in vh
     color: "#374151",
   },
   metaIcon: {
@@ -182,52 +181,47 @@ const styles = {
   },
   teamBox: {
     background: "#f3f4f6",
-    borderRadius: 14,
-    padding: "12px 16px",
+    borderRadius: "1.4vh",        // ✅ border-radius in vh
+    padding: "3% 4%",             // ✅ padding in %
     display: "flex",
     justifyContent: "space-between",
-    fontSize: 13,
-    marginBottom: 14,
+    fontSize: "1.3vh",            // ✅ font-size in vh
+    marginBottom: "3%",           // ✅ margin in %
   },
   btn: {
-    width: "100%",
-    padding: 14,
-    borderRadius: 14,
+    width: "100%",                // ✅ width in %
+    padding: "1.4vh 0",           // ✅ padding in vh
+    borderRadius: "1.4vh",        // ✅ border-radius in vh
     border: "none",
     fontWeight: 600,
     cursor: "pointer",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    gap: 10,
-    fontSize: 14,
+    gap: "2%",                    // ✅ gap in %
+    fontSize: "1.4vh",            // ✅ font-size in vh
     color: "#fff",
   },
 };
 
-/* ─── EventCard (memoized) ───────────────────────────────── */
 const EventCard = React.memo(({ event }) => {
   const statusKey = event.status.toLowerCase();
   return (
     <div style={styles.card}>
-      {/* Image */}
       <div style={styles.cardImage}>
         <img
           src={event.image}
           alt={event.title}
           loading="lazy"
           decoding="async"
-          width="400"
-          height="210"
           style={styles.img}
         />
-        <span style={{ ...styles.badge, left: 12, color: STATUS_COLOR[statusKey] }}>
+        <span style={{ ...styles.badge, left: "3%", color: STATUS_COLOR[statusKey] }}>
           {event.status}
         </span>
-        <span style={{ ...styles.badge, right: 12 }}>{event.prize}</span>
+        <span style={{ ...styles.badge, right: "3%" }}>{event.prize}</span>
       </div>
 
-      {/* Body */}
       <div style={styles.cardBody}>
         <h3 style={styles.eventTitle}>{event.title}</h3>
         <p style={styles.organizer}>{event.organizer}</p>
@@ -269,7 +263,6 @@ const EventCard = React.memo(({ event }) => {
   );
 });
 
-/* ─── Main Page ──────────────────────────────────────────── */
 export default function MyEvents() {
   const [activeTab, setActiveTab] = useState("All");
 
@@ -291,7 +284,6 @@ export default function MyEvents() {
           Manage and track your registered hackathons
         </p>
 
-        {/* Tabs */}
         <div style={styles.tabs}>
           {TABS.map((tab) => (
             <button
@@ -307,9 +299,8 @@ export default function MyEvents() {
           ))}
         </div>
 
-        {/* Grid */}
         {filteredEvents.length === 0 ? (
-          <p style={{ color: "#9ca3af" }}>No events in this category.</p>
+          <p style={{ color: "#9ca3af", fontSize: "1.4vh" }}>No events in this category.</p>
         ) : (
           <div style={styles.grid}>
             {filteredEvents.map((event) => (

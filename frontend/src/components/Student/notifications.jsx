@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import Sidebar from "../Student/sidebar";  // ✅ uses the real shared sidebar
+import Sidebar from "../Student/sidebar";
 
-/* ---------------- NOTIFICATION ICONS ---------------- */
 import { HiSparkles } from "react-icons/hi2";
 import { FiClock, FiCheckCircle, FiCalendar, FiCheck } from "react-icons/fi";
 
-/* =====================================================
-   GROUPING LOGIC
-===================================================== */
 const groupNotifications = (notifications) => {
   const today = [];
   const thisWeek = [];
@@ -23,9 +19,6 @@ const groupNotifications = (notifications) => {
   return { today, thisWeek, earlier };
 };
 
-/* =====================================================
-   SAMPLE DATA (replace with your real data/import)
-===================================================== */
 const initialNotifications = [
   {
     id: 1, type: "event", unread: true,
@@ -53,9 +46,6 @@ const initialNotifications = [
   },
 ];
 
-/* =====================================================
-   MAIN NOTIFICATION PAGE
-===================================================== */
 export default function Notifications() {
   const [notifications, setNotifications] = useState(initialNotifications);
   const [filter, setFilter] = useState("all");
@@ -76,52 +66,70 @@ export default function Notifications() {
     <div key={item.id} style={{
       background: item.unread ? "#f0f4ff" : "#fff",
       border: item.unread ? "1.5px solid #a5b4fc" : "1px solid #e5e7eb",
-      borderRadius: 16, padding: "18px 20px", marginBottom: 14,
+      borderRadius: "2vh",
+      padding: "2.5% 3%",
+      marginBottom: "2%",
     }}>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "2%" }}>
         {/* Icon */}
         <div style={{
-          width: 42, height: 42, borderRadius: 12, flexShrink: 0,
-          display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20,
-          background: item.type === "event"   ? "#ede9fe"
-                    : item.type === "warning"  ? "#fff7ed"
-                    : item.type === "success"  ? "#f0fdf4"
+          width: "5%",
+          height: "5vh",
+          borderRadius: "1.5vh",
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "2.2vh",
+          minWidth: 36,
+          background: item.type === "event"    ? "#ede9fe"
+                    : item.type === "warning"   ? "#fff7ed"
+                    : item.type === "success"   ? "#f0fdf4"
                     : "#eff6ff",
-          color:      item.type === "event"   ? "#7c3aed"
-                    : item.type === "warning"  ? "#ea580c"
-                    : item.type === "success"  ? "#16a34a"
+          color:      item.type === "event"    ? "#7c3aed"
+                    : item.type === "warning"   ? "#ea580c"
+                    : item.type === "success"   ? "#16a34a"
                     : "#2563eb",
         }}>
-          {item.type === "event"   && <HiSparkles />}
-          {item.type === "warning" && <FiClock />}
-          {item.type === "success" && <FiCheckCircle />}
-          {item.type === "calendar"&& <FiCalendar />}
+          {item.type === "event"    && <HiSparkles />}
+          {item.type === "warning"  && <FiClock />}
+          {item.type === "success"  && <FiCheckCircle />}
+          {item.type === "calendar" && <FiCalendar />}
         </div>
 
         {/* Content */}
         <div style={{ flex: 1 }}>
-          <h3 style={{ margin: "0 0 4px", fontSize: 15, fontWeight: 600, color: "#111827" }}>
+          <h3 style={{ margin: "0 0 0.5% 0", fontSize: "1.7vh", fontWeight: 600, color: "#111827" }}>
             {item.title}
           </h3>
-          <p style={{ margin: "0 0 8px", fontSize: 13, color: "#6b7280", lineHeight: 1.5 }}>
+          <p style={{ margin: "0 0 1% 0", fontSize: "1.4vh", color: "#6b7280", lineHeight: 1.5 }}>
             {item.message}
           </p>
           {item.tag && (
             <span style={{
-              fontSize: 12, padding: "3px 10px", borderRadius: 20,
-              background: "#ede9fe", color: "#6d28d9", marginRight: 8,
+              fontSize: "1.2vh",
+              padding: "0.4% 1.2%",
+              borderRadius: "2.5vh",
+              background: "#ede9fe",
+              color: "#6d28d9",
+              marginRight: "1%",
             }}>
               {item.tag}
             </span>
           )}
-          <span style={{ fontSize: 12, color: "#9ca3af" }}>{item.time}</span>
+          <span style={{ fontSize: "1.2vh", color: "#9ca3af" }}>{item.time}</span>
         </div>
 
         {/* Mark read button */}
         {item.unread && (
           <button onClick={() => markAsRead(item.id)} style={{
-            background: "none", border: "1px solid #d1d5db", borderRadius: 8,
-            padding: "6px 8px", cursor: "pointer", color: "#6b7280", flexShrink: 0,
+            background: "none",
+            border: "1px solid #d1d5db",
+            borderRadius: "1vh",
+            padding: "0.8% 1%",
+            cursor: "pointer",
+            color: "#6b7280",
+            flexShrink: 0,
           }}>
             <FiCheck />
           </button>
@@ -130,11 +138,17 @@ export default function Notifications() {
 
       {/* Action button */}
       {item.action && (
-        <div style={{ marginTop: 12 }}>
+        <div style={{ marginTop: "1.5%" }}>
           <button style={{
-            width: "100%", padding: "10px 0", borderRadius: 10, border: "none",
+            width: "100%",
+            padding: "1.2% 0",
+            borderRadius: "1.2vh",
+            border: "none",
             background: "linear-gradient(90deg, #3b82f6, #8b5cf6)",
-            color: "#fff", fontWeight: 600, cursor: "pointer", fontSize: 14,
+            color: "#fff",
+            fontWeight: 600,
+            cursor: "pointer",
+            fontSize: "1.4vh",
           }}>
             View Event
           </button>
@@ -144,30 +158,58 @@ export default function Notifications() {
   );
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh", background: "#f7f8fc", fontFamily: "Inter, sans-serif" }}>
+    <div style={{
+      display: "flex",
+      minHeight: "100vh",
+      background: "#f7f8fc",
+      fontFamily: "Inter, sans-serif",
+    }}>
       <Sidebar />
 
-      <div style={{ marginLeft: "18vw", minWidth: 0, flex: 1, padding: "32px 28px" }}>
+      <div style={{
+        marginLeft: "18%",
+        minWidth: 0,
+        flex: 1,
+        padding: "3% 4%",
+      }}>
         {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          marginBottom: "3%",
+        }}>
           <div>
-            <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700, color: "#111827" }}>Notifications</h1>
-            <p style={{ margin: "4px 0 0", color: "#6b7280" }}>Stay updated with your hackathon activities</p>
+            <h1 style={{ margin: 0, fontSize: "3vh", fontWeight: 700, color: "#111827" }}>
+              Notifications
+            </h1>
+            <p style={{ margin: "0.5% 0 0", color: "#6b7280", fontSize: "1.5vh" }}>
+              Stay updated with your hackathon activities
+            </p>
           </div>
           <button onClick={markAllAsRead} style={{
-            background: "none", border: "1px solid #e5e7eb", borderRadius: 10,
-            padding: "8px 16px", cursor: "pointer", color: "#6b7280", fontSize: 13,
+            background: "none",
+            border: "1px solid #e5e7eb",
+            borderRadius: "1.2vh",
+            padding: "1% 2%",
+            cursor: "pointer",
+            color: "#6b7280",
+            fontSize: "1.4vh",
           }}>
             Mark all as read
           </button>
         </div>
 
         {/* Tabs */}
-        <div style={{ display: "flex", gap: 10, marginBottom: 24 }}>
+        <div style={{ display: "flex", gap: "1%", marginBottom: "3%" }}>
           {["all", "unread"].map((tab) => (
             <button key={tab} onClick={() => setFilter(tab)} style={{
-              padding: "8px 20px", borderRadius: 20, border: "1px solid #e5e7eb",
-              cursor: "pointer", fontWeight: 500, fontSize: 14,
+              padding: "1% 2.5%",
+              borderRadius: "2.5vh",
+              border: "1px solid #e5e7eb",
+              cursor: "pointer",
+              fontWeight: 500,
+              fontSize: "1.4vh",
               background: filter === tab ? "linear-gradient(90deg, #3b82f6, #8b5cf6)" : "#fff",
               color: filter === tab ? "#fff" : "#374151",
             }}>
@@ -180,27 +222,33 @@ export default function Notifications() {
 
         {/* Notification List */}
         {filtered.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "60px 0", color: "#9ca3af" }}>
-            <h2>No notifications</h2>
-            <p>You're all caught up!</p>
+          <div style={{ textAlign: "center", padding: "8% 0", color: "#9ca3af" }}>
+            <h2 style={{ fontSize: "2vh" }}>No notifications</h2>
+            <p style={{ fontSize: "1.4vh" }}>You're all caught up!</p>
           </div>
         ) : (
           <>
             {today.length > 0 && (
               <>
-                <h2 style={{ fontSize: 14, fontWeight: 600, color: "#6b7280", marginBottom: 12 }}>Today</h2>
+                <h2 style={{ fontSize: "1.4vh", fontWeight: 600, color: "#6b7280", marginBottom: "1.5%" }}>
+                  Today
+                </h2>
                 {today.map(renderCard)}
               </>
             )}
             {thisWeek.length > 0 && (
               <>
-                <h2 style={{ fontSize: 14, fontWeight: 600, color: "#6b7280", marginBottom: 12 }}>This Week</h2>
+                <h2 style={{ fontSize: "1.4vh", fontWeight: 600, color: "#6b7280", marginBottom: "1.5%" }}>
+                  This Week
+                </h2>
                 {thisWeek.map(renderCard)}
               </>
             )}
             {earlier.length > 0 && (
               <>
-                <h2 style={{ fontSize: 14, fontWeight: 600, color: "#6b7280", marginBottom: 12 }}>Earlier</h2>
+                <h2 style={{ fontSize: "1.4vh", fontWeight: 600, color: "#6b7280", marginBottom: "1.5%" }}>
+                  Earlier
+                </h2>
                 {earlier.map(renderCard)}
               </>
             )}
