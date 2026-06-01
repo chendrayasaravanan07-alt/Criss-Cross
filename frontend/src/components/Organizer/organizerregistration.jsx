@@ -4,6 +4,8 @@ import {
   FaUser, FaBuilding, FaPhone, FaGlobe, FaCheckCircle
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const STEPS = ["Account", "Organization", "Focus Areas"];
 
@@ -29,9 +31,51 @@ export default function OrganizerRegistration() {
     email: "", password: "", confirm: "",
     name: "", organization: "", role: "", phone: "", website: "", bio: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleRegister = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/organizer/register",
+      {
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        organization: form.organization,
+        role: form.role,
+        phone: form.phone,
+        website: form.website,
+        bio: form.bio,
+        eventTypes: selectedTypes,
+        domains: selectedDomains,
+      }
+    );
+
+    localStorage.setItem(
+      "organizerToken",
+      response.data.token
+    );
+
+    localStorage.setItem(
+      "organizer",
+      JSON.stringify(response.data.organizer)
+    );
+
+    alert("Organizer Registered Successfully");
+
+    navigate("/organizer/dashboard");
+  } catch (error) {
+    console.log(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Registration Failed"
+    );
+  }
+};
 
   const toggleType = (t) =>
     setSelectedTypes((prev) =>
@@ -212,6 +256,7 @@ export default function OrganizerRegistration() {
               <div style={s.chipGrid}>
                 {EVENT_TYPES.map((type) => (
                   <button
+                    type="button"
                     key={type}
                     onClick={() => toggleType(type)}
                     style={{
@@ -238,6 +283,7 @@ export default function OrganizerRegistration() {
               <div style={s.chipGrid}>
                 {DOMAIN_OPTIONS.map((domain) => (
                   <button
+                    type="button"
                     key={domain}
                     onClick={() => toggleDomain(domain)}
                     style={{
@@ -279,11 +325,15 @@ export default function OrganizerRegistration() {
               Continue →
             </button>
           ) : (
-            <Link to="/organizer" style={{ textDecoration: "none", flex: 1 }}>
-              <button style={{ ...s.nextBtn, width: "100%" }}>
-                🚀 Create Organizer Account
-              </button>
-            </Link>
+            <button
+  style={{
+    ...s.nextBtn,
+    width: "100%"
+  }}
+  onClick={handleRegister}
+>
+  🚀 Create Organizer Account
+</button>
           )}
         </div>
 

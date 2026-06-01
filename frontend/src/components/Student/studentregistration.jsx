@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaLink, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaUser, FaUniversity, FaMapMarkerAlt, FaCheckCircle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const STEPS = ["Account", "Profile", "Interests"];
 
@@ -27,9 +28,55 @@ export default function StudentRegistration() {
     email: "", password: "", confirm: "",
     name: "", university: "", degree: "", location: "", bio: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleRegister = async () => {
+  try {
+
+    const response = await axios.post(
+      "http://localhost:5000/api/student/register",
+      {
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        university: form.university,
+        degree: form.degree,
+        location: form.location,
+        bio: form.bio,
+        skills: selectedSkills,
+        interests: selectedInterests,
+      }
+    );
+
+    console.log(response.data);
+
+    localStorage.setItem(
+      "studentToken",
+      response.data.token
+    );
+
+    localStorage.setItem(
+      "student",
+      JSON.stringify(response.data.student)
+    );
+
+    alert("Registration Successful");
+
+    navigate("/student/dashboard");
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Registration Failed"
+    );
+  }
+};
 
   const toggleSkill = (s) =>
     setSelectedSkills((prev) =>
@@ -165,7 +212,7 @@ export default function StudentRegistration() {
               </label>
               <div style={s.chipGrid}>
                 {SKILL_OPTIONS.map((skill) => (
-                  <button key={skill} onClick={() => toggleSkill(skill)} style={{
+                  <button key={skill} type="button" onClick={() => toggleSkill(skill)} style={{
                     ...s.chip,
                     background: selectedSkills.includes(skill)
                       ? "linear-gradient(135deg, #3b82f6, #9333ea)" : "#f0f0f8",
@@ -214,9 +261,15 @@ export default function StudentRegistration() {
               Continue →
             </button>
           ) : (
-            <Link to="/student/dashboard" style={{ textDecoration: "none", flex: 1 }}>
-              <button style={{ ...s.nextBtn, width: "100%" }}>🚀 Create Account</button>
-            </Link>
+            <button
+              style={{
+                ...s.nextBtn,
+                width: "100%"
+              }}
+              onClick={handleRegister}
+            >
+              🚀 Create Account
+            </button>
           )}
         </div>
 

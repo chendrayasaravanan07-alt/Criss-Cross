@@ -1,9 +1,49 @@
 import React, { useState } from "react";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaLink } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function OrganizerLogin() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/organizer/login",
+      {
+        email,
+        password,
+      }
+    );
+
+    localStorage.setItem(
+      "organizerToken",
+      response.data.token
+    );
+
+    localStorage.setItem(
+      "organizer",
+      JSON.stringify(response.data.organizer)
+    );
+
+    alert("Login Successful");
+
+    navigate("/organizer/dashboard");
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Login Failed"
+    );
+  }
+};
 
   const containerStyle = {
     height: "100vh",
@@ -113,6 +153,8 @@ export default function OrganizerLogin() {
             type="email"
             placeholder="organizer@company.com"
             style={inputStyle}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -124,6 +166,8 @@ export default function OrganizerLogin() {
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             style={inputStyle}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {showPassword ? (
             <FaEyeSlash
@@ -157,9 +201,12 @@ export default function OrganizerLogin() {
         </div>
 
         {/* Button */}
-        <Link to="/organizer" style={{ textDecoration: "none" }}>
-          <button style={buttonStyle}>Sign In →</button>
-        </Link>
+        <button
+  style={buttonStyle}
+  onClick={handleLogin}
+>
+  Sign In →
+</button>
 
         {/* Footer — links to /organizer-reg */}
         <p style={{ marginTop: "20px", textAlign: "center" }}>

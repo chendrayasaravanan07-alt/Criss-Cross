@@ -4,6 +4,8 @@ import {
   FaUser, FaKey, FaCheckCircle
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const STEPS = ["Account", "Identity", "Access Key"];
 
@@ -23,9 +25,49 @@ export default function AdminRegistration() {
     name: "", employeeId: "", department: "",
     accessKey: "",
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleRegister = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/register",
+      {
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        employeeId: form.employeeId,
+        department: form.department,
+        role: selectedRole,
+        accessKey: form.accessKey,
+      }
+    );
+
+    localStorage.setItem(
+      "adminToken",
+      response.data.token
+    );
+
+    localStorage.setItem(
+      "admin",
+      JSON.stringify(response.data.admin)
+    );
+
+    alert("Admin Registration Successful");
+
+    navigate("/admin/dashboard");
+
+  } catch (error) {
+    console.log(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Registration Failed"
+    );
+  }
+};
 
   const isStep0Valid =
     form.email && form.password && form.confirm && form.password === form.confirm;
@@ -269,18 +311,18 @@ export default function AdminRegistration() {
               Continue →
             </button>
           ) : (
-            <Link to="/admin" style={{ textDecoration: "none", flex: 1 }}>
-              <button
-                style={{
-                  ...s.nextBtn,
-                  width: "100%",
-                  opacity: isStep2Valid ? 1 : 0.5,
-                  cursor: isStep2Valid ? "pointer" : "not-allowed",
-                }}
-              >
-                🔐 Complete Registration
-              </button>
-            </Link>
+            <button
+  style={{
+    ...s.nextBtn,
+    width: "100%",
+    opacity: isStep2Valid ? 1 : 0.5,
+    cursor: isStep2Valid ? "pointer" : "not-allowed",
+  }}
+  disabled={!isStep2Valid}
+  onClick={handleRegister}
+>
+  🔐 Complete Registration
+</button>
           )}
         </div>
 

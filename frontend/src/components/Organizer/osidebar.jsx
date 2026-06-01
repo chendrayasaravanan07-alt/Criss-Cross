@@ -6,7 +6,7 @@ import {
 } from "react-icons/fa";
 
 const mainMenuItems = [
-  { name: "Dashboard",    icon: <FaHome />,        path: "/organizer" },
+  { name: "Dashboard",    icon: <FaHome />,        path: "/organizer/dashboard" },
   { name: "My Events",    icon: <FaCalendarAlt />, path: "/organizer/myevents" },
   { name: "Participants", icon: <FaUsers />,        path: "/organizer/participants" },
   { name: "Settings",     icon: <FaCog />,          path: "/organizer/settings" },

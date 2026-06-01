@@ -7,10 +7,57 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
+const [form, setForm] = useState({
+  email: "",
+  password: "",
+});
+
+const handleChange = (e) => {
+  setForm({
+    ...form,
+    [e.target.name]: e.target.value,
+  });
+};
+
+const handleLogin = async () => {
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/login",
+      {
+        email: form.email,
+        password: form.password,
+      }
+    );
+
+    localStorage.setItem(
+      "adminToken",
+      response.data.token
+    );
+
+    localStorage.setItem(
+      "admin",
+      JSON.stringify(response.data.admin)
+    );
+
+    alert("Login Successful");
+
+    navigate("/admin/dashboard");
+  } catch (error) {
+    console.log(error);
+
+    alert(
+      error.response?.data?.message ||
+      "Login Failed"
+    );
+  }
+};
   const containerStyle = {
     height: "100vh",
     display: "flex",
@@ -114,8 +161,10 @@ export default function AdminLogin() {
           <FaEnvelope color="#9ca3af" />
           <input
             type="email"
+            name="email" value={form.email}
             placeholder="admin@criss-cross.com"
             style={inputStyle}
+            onChange={handleChange}
           />
         </div>
 
@@ -125,8 +174,10 @@ export default function AdminLogin() {
           <FaLock color="#9ca3af" />
           <input
             type={showPassword ? "text" : "password"}
+            name="password" value={form.password}
             placeholder="Enter your admin password"
             style={inputStyle}
+            onChange={handleChange}
           />
           {showPassword ? (
             <FaEyeSlash
@@ -160,9 +211,9 @@ export default function AdminLogin() {
         </div>
 
         {/* Button */}
-        <Link to="/admin/dashboard" style={{ textDecoration: "none" }}>
-          <button style={buttonStyle}>Sign In as Admin →</button>
-        </Link>
+        <button style={buttonStyle} onClick={handleLogin}>
+          Sign In as Admin →
+        </button>
 
         {/* Footer — links to /admin-reg */}
         <p style={{ marginTop: "20px", textAlign: "center", fontSize: "14px", color: "#6b7280" }}>

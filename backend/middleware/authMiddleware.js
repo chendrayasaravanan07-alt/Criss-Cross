@@ -1,26 +1,70 @@
 import jwt from "jsonwebtoken";
-import User from "../models/User.js";
+import Admin from "../models/Admin.js";
 
-const protect = async (req, res, next) => {
-  let token;
+export const protect = (...roles) => {
 
-  if (req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")) {
-    
-    token = req.headers.authorization.split(" ")[1];
+  return async (req, res, next) => {
 
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await User.findById(decoded.id).select("-password");
+
+      let token;
+
+      // CHECK TOKEN
+      if (
+        req.headers.authorization &&
+        req.headers.authorization.startsWith("Bearer")
+      ) {
+        token = req.headers.authorization.split(" ")[1];
+      }
+
+      // NO TOKEN
+      if (!token) {
+        return res.status(401).json({
+          success: false,
+          message: "No token provided",
+        });
+      }
+
+      // VERIFY TOKEN
+      const decoded = jwt.verify(
+        token,
+        process.env.JWT_SECRET
+      );
+
+      // FIND ADMIN
+      const admin = await Admin.findById(decoded.id).select("-password");
+
+      if (!admin) {
+        return res.status(404).json({
+          success: false,
+          message: "Admin not found",
+        });
+      }
+
+      // STORE USER
+      req.user = admin;
+
+      // ROLE CHECK
+      if (
+        roles.length > 0 &&
+        !roles.includes("admin")
+      ) {
+        return res.status(403).json({
+          success: false,
+          message: "Access denied",
+        });
+      }
+
       next();
+
     } catch (error) {
-      res.status(401).json({ message: "Not authorized" });
+
+      console.log("AUTH ERROR:", error);
+
+      return res.status(401).json({
+        success: false,
+        message: "Invalid token",
+      });
     }
-  }
-
-  if (!token) {
-    res.status(401).json({ message: "No token" });
-  }
+  };
 };
-
-export default protect;

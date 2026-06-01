@@ -19,10 +19,12 @@ const organizerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-organizerSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return ;
+organizerSchema.pre("save", async function () {
+
+  if (!this.isModified("password")) return;
+
   this.password = await bcrypt.hash(this.password, 12);
-  next();
+
 });
 
 organizerSchema.methods.matchPassword = async function (enteredPassword) {
