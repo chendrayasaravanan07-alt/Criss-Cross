@@ -54,7 +54,7 @@ const App = () => {
         <Route path="/admin-login" element={<AdminLogin />} />
 
         {/* Organizer routes */}
-        <Route path="/organizer" element={<OrganizerDashboard />} />
+        <Route path="/organizer/dashboard" element={<OrganizerDashboard />} />
         <Route path="/organizer/myevents" element={<OrganizerEvents />} />
         <Route
           path="/organizer/participants"

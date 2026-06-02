@@ -8,7 +8,8 @@ const adminSchema = new mongoose.Schema(
     password:   { type: String, required: true, minlength: 8 },
     employeeId: { type: String, required: true, unique: true },
     department: { type: String, default: "" },
-    adminRole:  {
+    accessKey:  { type: String, required: true },
+    role:  {
       type: String,
       enum: ["Super Admin", "Event Moderator", "User Manager", "Content Reviewer", "Support Admin", "Analytics Admin"],
       required: true,
@@ -17,10 +18,16 @@ const adminSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-adminSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return ;
+adminSchema.pre("save", async function () {
+
+  // IF PASSWORD NOT MODIFIED
+  if (!this.isModified("password")) {
+    return;
+  }
+
+  // HASH PASSWORD
   this.password = await bcrypt.hash(this.password, 12);
-  next();
+
 });
 
 adminSchema.methods.matchPassword = async function (enteredPassword) {

@@ -1,9 +1,49 @@
 import React, { useState } from "react";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaLink } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function StudentLogin() {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+const handleLogin = async () => {
+  try {
+    setLoading(true);
+
+    const res = await axios.post(
+      "http://localhost:5000/api/student/login",
+      {
+        email,
+        password,
+      }
+    );
+
+    if (res.data.success) {
+      localStorage.setItem("studentToken", res.data.token);
+
+      localStorage.setItem(
+        "studentData",
+        JSON.stringify(res.data.student)
+      );
+
+      alert("Login Successful");
+
+      navigate("/student/dashboard");
+    }
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Login Failed"
+    );
+  } finally {
+    setLoading(false);
+  }
+};
 
   const containerStyle = {
     height: "100vh",
@@ -96,6 +136,8 @@ export default function StudentLogin() {
             type="email"
             placeholder="you@university.edu"
             style={inputStyle}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
@@ -107,6 +149,8 @@ export default function StudentLogin() {
             type={showPassword ? "text" : "password"}
             placeholder="Enter your password"
             style={inputStyle}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {showPassword ? (
             <FaEyeSlash
@@ -138,9 +182,13 @@ export default function StudentLogin() {
         </div>
 
         {/* Button */}
-        <Link to="/student/dashboard" style={{ textDecoration: "none" }}>
-          <button style={buttonStyle}>Sign In →</button>
-        </Link>
+        <button
+  style={buttonStyle}
+  onClick={handleLogin}
+  disabled={loading}
+>
+  {loading ? "Signing In..." : "Sign In →"}
+</button>
 
         {/* Footer */}
         <p style={{ marginTop: "3%", textAlign: "center", fontSize: "1.4vh" }}>
