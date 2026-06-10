@@ -1,34 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "./sidebar";
+import axios from "axios";
 
 function StudentProfile() {
   const [isEditing, setIsEditing] = useState(false);
 
+  const token = localStorage.getItem("studentToken");
+  const storedStudent = localStorage.getItem("studentData") || localStorage.getItem("student");
+  const studentData = storedStudent ? JSON.parse(storedStudent) : null;
+  const studentId = studentData?._id || studentData?.id;
+
   const [profile, setProfile] = useState({
-    name: "Alex Morgan",
-    degree: "Computer Science",
-    bio: "Passionate about AI and building innovative solutions.",
-    email: "alex.morgan@university.edu",
-    location: "San Francisco, CA",
+    name: "",
+    degree: "",
+    bio: "",
+    email: "",
+    location: "",
     image: "https://i.pravatar.cc/150?img=12",
   });
 
-  const [skills, setSkills] = useState([
-    "React", "Node.js", "Python", "Machine Learning",
-    "UI/UX Design", "Docker", "AWS"
-  ]);
-
-  const [interests, setInterests] = useState([
-    "AI & ML", "Web Dev", "Healthcare", "Sustainability"
-  ]);
+  const [skills, setSkills] = useState([]);
+  const [interests, setInterests] = useState([]);
 
   const [newSkill, setNewSkill] = useState("");
   const [newInterest, setNewInterest] = useState("");
 
+  useEffect(() => {
+    if (!studentId || !token) {
+      console.warn("User is not logged in or token/ID is missing");
+      return;
+    }
+
+    const fetchProfile = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/student-profile/${studentId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        if (res.data.success) {
+          const data = res.data.data;
+          setProfile({
+            name: data.name || "",
+            degree: data.degree || "",
+            bio: data.bio || "",
+            email: data.email || "",
+            location: data.location || "",
+            image: data.profileImage || "https://i.pravatar.cc/150?img=12",
+          });
+          setSkills(data.skills || []);
+          setInterests(data.interests || []);
+        }
+      } catch (error) {
+        console.error("Error fetching profile details:", error);
+      }
+    };
+
+    fetchProfile();
+  }, [studentId, token]);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfile({ ...profile, image: URL.createObjectURL(file) });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfile({ ...profile, image: reader.result });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -47,6 +85,49 @@ function StudentProfile() {
     if (newInterest.trim()) {
       setInterests([...interests, newInterest]);
       setNewInterest("");
+    }
+  };
+
+  const handleSave = async () => {
+    if (!studentId || !token) {
+      alert("Please log in to update your profile.");
+      return;
+    }
+
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/api/student-profile/${studentId}`,
+        {
+          name: profile.name,
+          degree: profile.degree,
+          bio: profile.bio,
+          email: profile.email,
+          location: profile.location,
+          profileImage: profile.image,
+          skills: skills,
+          interests: interests,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      if (res.data.success) {
+        alert("Profile updated successfully!");
+        const updatedStudent = res.data.data;
+        if (localStorage.getItem("studentData")) {
+          localStorage.setItem("studentData", JSON.stringify(updatedStudent));
+        }
+        if (localStorage.getItem("student")) {
+          localStorage.setItem("student", JSON.stringify(updatedStudent));
+        }
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert(error.response?.data?.message || "Failed to update profile");
     }
   };
 
@@ -102,7 +183,7 @@ function StudentProfile() {
 
             <button
               style={styles.editBtnLeft}
-              onClick={() => setIsEditing(!isEditing)}
+              onClick={() => isEditing ? handleSave() : setIsEditing(true)}
             >
               {isEditing ? "Save" : "Edit"}
             </button>
