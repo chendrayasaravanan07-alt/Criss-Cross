@@ -7,6 +7,7 @@ import connectDB from "./config/db.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import studentRoutes from "./routes/studentRoutes.js";
 import organizerRoutes from "./routes/organizerRoutes.js";
+import studentProfileRoutes from "./routes/studentProfileRoutes.js";
 
 dotenv.config();
 connectDB();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use("/api/admin", adminRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/organizer", organizerRoutes);
+app.use("/api/student-profile", studentProfileRoutes);
 
 app.get("/", (req, res) => res.send("Criss-Cross API Running"));
 
