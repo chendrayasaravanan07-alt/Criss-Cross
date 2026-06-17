@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import Admin from "../models/Admin.js";
 import Student from "../models/Student.js";
+import Organizer from "../models/Organizer.js";
 
 export const protect = (...roles) => {
 
@@ -120,6 +121,64 @@ export const protectStudent = async (req, res, next) => {
 
   } catch (error) {
     console.log("STUDENT AUTH ERROR:", error);
+
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired token",
+    });
+  }
+};
+
+export const protectOrganizer = async (req, res, next) => {
+  try {
+    let token;
+
+    // CHECK TOKEN
+    if (
+      req.headers.authorization &&
+      req.headers.authorization.startsWith("Bearer")
+    ) {
+      token = req.headers.authorization.split(" ")[1];
+    }
+
+    // NO TOKEN
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "No token provided",
+      });
+    }
+
+    // VERIFY TOKEN
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
+
+    // ROLE CHECK
+    if (decoded.role !== "organizer") {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied: Organizers only",
+      });
+    }
+
+    // FIND ORGANIZER
+    const organizer = await Organizer.findById(decoded.id).select("-password");
+
+    if (!organizer) {
+      return res.status(404).json({
+        success: false,
+        message: "Organizer not found",
+      });
+    }
+
+    // STORE ORGANIZER
+    req.user = organizer;
+    next();
+
+  } catch (error) {
+    console.log("ORGANIZER AUTH ERROR:", error);
 
     return res.status(401).json({
       success: false,
